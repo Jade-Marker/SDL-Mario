@@ -5,8 +5,6 @@
 #include "PowBlock.h"
 
 //Todo
-//Fix memory leak with level 1 (can see if you look at memory usage and spam enter) (goes back to atleast week 3!?)
-//Remove unused angle stuff from Source.cpp
 //Set coins to die when collecting them
 //Refactor character so that the code that handles frame stuff is in Character
 //Add points to mario when killing coin/enemy
@@ -34,7 +32,16 @@ GameScreenLevel1::~GameScreenLevel1()
 	delete mPowBlock;
 	mPowBlock = NULL;
 
+	delete mLevelMap;
+	mLevelMap = NULL;
+
+	for (int i = 0; i < mEnemies.size(); i++)
+		delete mEnemies[i];
 	mEnemies.clear();
+
+	for (int i = 0; i < mCoins.size(); i++)
+		delete mCoins[i];
+	mCoins.clear();
 }
 
 void GameScreenLevel1::Render()
@@ -248,6 +255,7 @@ void GameScreenLevel1::UpdateEnemies(float deltaTime, SDL_Event e)
 
 		if (enemyIndexToDelete != -1)
 		{
+			delete mEnemies[enemyIndexToDelete];
 			mEnemies.erase(mEnemies.begin() + enemyIndexToDelete);
 		}
 	}

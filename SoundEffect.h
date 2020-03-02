@@ -8,7 +8,7 @@
 class SoundEffect
 {
 private:
-	Mix_Chunk* sound;
+	Mix_Chunk* mSound;
 
 public:
 	SoundEffect();

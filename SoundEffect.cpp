@@ -1,22 +1,22 @@
 #include "SoundEffect.h"
 
 SoundEffect::SoundEffect():
-	sound(nullptr)
+	mSound(nullptr)
 {
 }
 
 SoundEffect::~SoundEffect()
 {
-	if (sound != nullptr)
+	if (mSound != nullptr)
 	{
-		Mix_FreeChunk(sound);
-		sound = nullptr;
+		Mix_FreeChunk(mSound);
+		mSound = nullptr;
 	}
 }
 
 void SoundEffect::Play(int loops)
 {
-	Mix_PlayChannel(-1, sound, loops);
+	Mix_PlayChannel(-1, mSound, loops);
 }
 
 void SoundEffect::Stop()
@@ -25,8 +25,8 @@ void SoundEffect::Stop()
 
 bool SoundEffect::Load(std::string path)
 {
-	sound = Mix_LoadWAV(path.c_str());
-	if (sound == nullptr)
+	mSound = Mix_LoadWAV(path.c_str());
+	if (mSound == nullptr)
 	{
 		std::cout << "Failed to load " << path << " Error: " << Mix_GetError();
 		return false;

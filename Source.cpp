@@ -21,14 +21,12 @@ Mix_Music* gMusic = NULL;
 //Function Prototypes
 bool InitSDL();
 void CloseSDL();
-bool Update(double& angle);
-void Render(double angle);
+bool Update();
+void Render();
 void LoadMusic(string path);
 
 int main(int argc, char* args[])
 {
-	double angle = 0.0;
-
 	//Check if SDL was set up correctly
 	if (InitSDL())
 	{
@@ -49,8 +47,8 @@ int main(int argc, char* args[])
 		//Game Loop
 		while (!quit)
 		{
-			Render(angle);
-			quit = Update(angle);
+			Render();
+			quit = Update();
 		}
 	}
 
@@ -138,7 +136,7 @@ void CloseSDL()
 	SDL_Quit();
 }
 
-bool Update(double& angle)
+bool Update()
 {
 	//Get the new time
 	Uint32 newTime = SDL_GetTicks();
@@ -156,21 +154,6 @@ bool Update(double& angle)
 	case SDL_QUIT:
 		return true;
 		break;
-
-	case SDL_MOUSEBUTTONDOWN:
-		return (e.button.button == SDL_BUTTON_RIGHT);
-		break;
-
-	case SDL_KEYUP:
-		if (e.key.keysym.sym == SDLK_q)
-			return true;
-		break;
-	case SDL_KEYDOWN:
-		if (e.key.keysym.sym == SDLK_d)
-			angle += 5.0;
-		if (e.key.keysym.sym == SDLK_a)
-			angle -= 5.0;
-		break;
 	}
 
 	gameScreenManager->Update((float)(newTime - gOldTime) / 1000.0f, e);
@@ -181,7 +164,7 @@ bool Update(double& angle)
 	return false;
 }
 
-void Render(double angle)
+void Render()
 {
 	//Clear the screen - black
 	SDL_SetRenderDrawColor(gRenderer, 0x00, 0x00, 0x00, 0x00);
