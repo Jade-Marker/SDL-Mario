@@ -8,7 +8,7 @@
 //Set coins to die when collecting them
 //Refactor character so that the code that handles frame stuff is in Character
 //Add points to mario when killing coin/enemy
-//Implement another enemy
+//Implement another enemy (get sprite from here: https://www.spriters-resource.com/arcade/mariobros/sheet/93677/)
 //Refactor character so that mario and luigi are of type playableCHaracter inherited from character so that other inherited don't have control map, etc
 
 
