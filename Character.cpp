@@ -13,6 +13,9 @@ Character::Character(SDL_Renderer* renderer, std::string imagePath, Vector2D sta
 	mInputMap[JUMP] = jumpKey;
 	mInputMap[RIGHT] = rightKey;
 	mInputMap[LEFT] = leftKey;
+
+	jumpSound = new SoundEffect();
+	jumpSound->Load("SFX/Munch.wav");
 }
 
 Character::~Character()
@@ -153,6 +156,8 @@ void Character::Jump()
 		mJumpForce = INITIAL_JUMP_FORCE;
 		mJumping = true;
 		mCanJump = false;
+
+		jumpSound->Play(0);
 	}
 }
 

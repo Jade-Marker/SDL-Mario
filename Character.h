@@ -6,6 +6,8 @@
 #include "Commons.h"
 #include "LevelMap.h"
 
+#include "SoundEffect.h"
+
 class Texture2D;
 
 class Character
@@ -18,6 +20,8 @@ protected:
 	LevelMap* mCurrentLevelMap;
 
 	const float mMovementSpeed;
+	
+	SoundEffect* jumpSound;
 
 protected:
 	SDL_Renderer* mRenderer;

@@ -5,6 +5,8 @@
 #include "PowBlock.h"
 
 //Todo
+//Fix bug where pressing enter constantly restarts level
+//Remove unused angle stuff from Source.cpp
 //Set coins to die when collecting them
 //Refactor character so that the code that handles frame stuff is in Character
 //Add points to mario when killing coin/enemy

@@ -7,6 +7,8 @@
 #include "Commons.h"
 #include "GameScreenManager.h"
 
+#include "SoundEffect.h"
+
 using namespace::std;
 
 //Globals
@@ -30,9 +32,12 @@ int main(int argc, char* args[])
 	//Check if SDL was set up correctly
 	if (InitSDL())
 	{
-		LoadMusic("Music/Mario.mp3");
+		/*LoadMusic("Music/Mario.mp3");
 		if (Mix_PlayingMusic() == 0)
-			Mix_PlayMusic(gMusic, -1);
+			Mix_PlayMusic(gMusic, -1);*/
+		SoundEffect music;
+		music.Load("Music/Mario.ogg");
+		music.Play(-1);
 
 		//Set up the game screen manager - start with level1
 		gameScreenManager = new GameScreenManager(gRenderer, SCREEN_INTRO);
@@ -128,6 +133,7 @@ void CloseSDL()
 	gWindow = NULL;
 
 	//Quit SDL subsystems
+	Mix_Quit();
 	IMG_Quit();
 	SDL_Quit();
 }
