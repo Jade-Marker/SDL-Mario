@@ -2,7 +2,9 @@
 #include <iostream>
 #include "Texture2D.h"
 
-GameScreenIntro::GameScreenIntro(SDL_Renderer* renderer): GameScreen(renderer)
+GameScreenIntro::GameScreenIntro(SDL_Renderer* renderer, GameScreenManager* manager): 
+	GameScreen(renderer),
+	mManager(manager)
 {
 	SetUpLevel();
 }
@@ -21,7 +23,12 @@ void GameScreenIntro::Render()
 
 void GameScreenIntro::Update(float deltaTime, SDL_Event e)
 {
-
+	switch (e.type)
+	{
+	case SDL_KEYDOWN:
+		if (e.key.keysym.sym == SDLK_RETURN)
+			mManager->ChangeScreen(SCREEN_LEVEL1);
+	}
 }
 
 bool GameScreenIntro::SetUpLevel()

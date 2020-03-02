@@ -24,6 +24,8 @@ Character::~Character()
 
 	delete mTexture;
 	mTexture = NULL;
+
+	delete jumpSound;
 }
 
 void Character::Render()

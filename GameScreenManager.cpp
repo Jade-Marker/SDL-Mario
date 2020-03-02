@@ -29,9 +29,6 @@ void GameScreenManager::Update(float deltaTime, SDL_Event e)
 	//Handle any events
 	switch (e.type)
 	{
-	case SDL_KEYDOWN:
-		if (e.key.keysym.sym == SDLK_RETURN)
-			ChangeScreen(SCREEN_LEVEL1);
 	}
 }
 
@@ -48,7 +45,7 @@ void GameScreenManager::ChangeScreen(SCREENS newScreen)
 	switch (newScreen)
 	{
 	case SCREEN_INTRO:
-		tempScreen = (GameScreen*)new GameScreenIntro(mRenderer);
+		tempScreen = (GameScreen*)new GameScreenIntro(mRenderer, this);
 		mCurrentScreen = (GameScreen*)tempScreen;
 		tempScreen = NULL;
 		break;

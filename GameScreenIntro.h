@@ -3,6 +3,7 @@
 #include <SDL.h>
 #include "Commons.h"
 #include "GameScreen.h"
+#include "GameScreenManager.h"
 
 class Texture2D;
 
@@ -10,9 +11,10 @@ class GameScreenIntro : GameScreen
 {
 private:
 	Texture2D* mBackgroundTexture;
+	GameScreenManager* mManager;
 
 public:
-	GameScreenIntro(SDL_Renderer* renderer);
+	GameScreenIntro(SDL_Renderer* renderer, GameScreenManager* manager);
 	~GameScreenIntro();
 
 	void Render();

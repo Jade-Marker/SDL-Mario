@@ -5,7 +5,7 @@
 #include "PowBlock.h"
 
 //Todo
-//Fix bug where pressing enter constantly restarts level
+//Fix memory leak with level 1 (can see if you look at memory usage and spam enter) (goes back to atleast week 3!?)
 //Remove unused angle stuff from Source.cpp
 //Set coins to die when collecting them
 //Refactor character so that the code that handles frame stuff is in Character
