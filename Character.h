@@ -26,17 +26,15 @@ protected:
 protected:
 	SDL_Renderer* mRenderer;
 	Vector2D mPosition;
-	Vector2D mVelocity;
 	Texture2D* mTexture;
 	bool mJumping;
 	bool mCanJump;
-	std::map<INPUT_TYPE, int> mInputMap;
 	float mCollisionRadius;
 	float mJumpForce;
-	CHARACTERSTATE state;
+
 
 public:
-	Character(SDL_Renderer* renderer, std::string imagePath, Vector2D startPosition, int jumpKey, int rightKey, int leftKey, LevelMap* map, float moveSpeed);
+	Character(SDL_Renderer* renderer, std::string imagePath, Vector2D startPosition, LevelMap* map, float moveSpeed);
 	~Character();
 
 	virtual void Render();

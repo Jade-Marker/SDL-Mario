@@ -2,17 +2,13 @@
 #include "Texture2D.h"
 #include "Constants.h"
 
-Character::Character(SDL_Renderer* renderer, std::string imagePath, Vector2D startPosition, int jumpKey, int rightKey, int leftKey, LevelMap* map, float moveSpeed) :
-	mRenderer(renderer), mPosition(startPosition), mVelocity(), mFacingDirection(FACING_RIGHT),
+Character::Character(SDL_Renderer* renderer, std::string imagePath, Vector2D startPosition, LevelMap* map, float moveSpeed) :
+	mRenderer(renderer), mPosition(startPosition), mFacingDirection(FACING_RIGHT),
 	mMovingLeft(false), mMovingRight(false), mJumping(false), mCanJump(false), mCollisionRadius(15.0f),
-	mCurrentLevelMap(map), mJumpForce(0.0f), mMovementSpeed(moveSpeed), state(IDLE)
+	mCurrentLevelMap(map), mJumpForce(0.0f), mMovementSpeed(moveSpeed)
 {
 	mTexture = new Texture2D(mRenderer);
 	mTexture->LoadFromFile(imagePath);
-
-	mInputMap[JUMP] = jumpKey;
-	mInputMap[RIGHT] = rightKey;
-	mInputMap[LEFT] = leftKey;
 
 	jumpSound = new SoundEffect();
 	jumpSound->Load("SFX/Munch.wav");
@@ -30,11 +26,6 @@ Character::~Character()
 
 void Character::Render()
 {
-	if (mFacingDirection == FACING_RIGHT)
-		mTexture->Render(mPosition, SDL_FLIP_NONE, 0.0);
-	else
-		mTexture->Render(mPosition, SDL_FLIP_HORIZONTAL, 0.0);
-
 }
 
 void Character::Update(float deltaTime, SDL_Event e)
@@ -44,21 +35,6 @@ void Character::Update(float deltaTime, SDL_Event e)
 	//Handle any events
 	switch (e.type)
 	{
-	case SDL_KEYDOWN:
-		if (key == mInputMap[LEFT])
-			mMovingLeft = true;
-		else if (key == mInputMap[RIGHT])
-			mMovingRight = true;
-		break;
-
-	case SDL_KEYUP:
-		if (key == mInputMap[LEFT])
-			mMovingLeft = false;
-		else if (key == mInputMap[RIGHT])
-			mMovingRight = false;
-		else if (key == mInputMap[JUMP])
-			Jump();
-		break;
 	}
 
 	//Deal with jumping first
@@ -88,9 +64,6 @@ void Character::Update(float deltaTime, SDL_Event e)
 	else
 		mCanJump = true;
 	//Collided with ground so we can jump again
-
-
-	//AddGravity(deltaTime);
 }
 
 void Character::SetPosition(Vector2D newPosition)
@@ -127,16 +100,6 @@ void Character::CancelJump()
 {
 	mJumping = false;
 	mCanJump = true;
-}
-
-void Character::SetState(CHARACTERSTATE newState)
-{
-	state = newState;
-}
-
-CHARACTERSTATE Character::GetState()
-{
-	return state;
 }
 
 void Character::MoveLeft(float deltaTime)

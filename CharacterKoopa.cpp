@@ -1,7 +1,7 @@
 #include "CharacterKoopa.h"
 
 CharacterKoopa::CharacterKoopa(SDL_Renderer* renderer, std::string imagePath, Vector2D startPosition, LevelMap* map, FACING startFacing, float movementSpeed) :
-	Character(renderer, imagePath, startPosition, 0, 0, 0, map, movementSpeed)
+	Character(renderer, imagePath, startPosition, map, movementSpeed)
 {
 	mFacingDirection = startFacing;
 	//mMovementSpeed = movementSpeed;

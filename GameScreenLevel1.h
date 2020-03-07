@@ -5,6 +5,7 @@
 #include "GameScreen.h"
 #include "Character.h"
 #include "LevelMap.h"
+#include "CharacterPlayable.h"
 #include "CharacterKoopa.h"
 #include "CharacterCoin.h"
 
@@ -17,8 +18,8 @@ class GameScreenLevel1 : GameScreen
 {
 private:
 	Texture2D* mBackgroundTexture;
-	Character* mMarioCharacter;
-	Character* mLuigiCharacter;
+	CharacterPlayable* mMarioCharacter;
+	CharacterPlayable* mLuigiCharacter;
 	LevelMap* mLevelMap;
 	PowBlock* mPowBlock;
 

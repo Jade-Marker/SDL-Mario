@@ -9,7 +9,6 @@
 //Refactor character so that the code that handles frame stuff is in Character
 //Add points to mario when killing coin/enemy
 //Implement another enemy (get sprite from here: https://www.spriters-resource.com/arcade/mariobros/sheet/93677/)
-//Refactor character so that mario and luigi are of type playableCHaracter inherited from character so that other inherited don't have control map, etc
 
 
 GameScreenLevel1::GameScreenLevel1(SDL_Renderer* renderer) : GameScreen(renderer), mLevelMap(NULL)
@@ -135,8 +134,8 @@ bool GameScreenLevel1::SetUpLevel()
 
 	//Set up the player character
 	//myCharacter = new Character(mRenderer, "Images/Mario.png", Vector2D(64, 330));
-	mMarioCharacter = new Character(mRenderer, "Images/Mario.png", Vector2D(64, 330), SDLK_w, SDLK_d, SDLK_a, mLevelMap, MOVEMENTSPEED);
-	mLuigiCharacter = new Character(mRenderer, "Images/Luigi.png", Vector2D(128, 330), SDLK_UP, SDLK_RIGHT, SDLK_LEFT, mLevelMap, MOVEMENTSPEED);
+	mMarioCharacter = new CharacterPlayable(mRenderer, "Images/Mario.png", Vector2D(64, 330), SDLK_w, SDLK_d, SDLK_a, mLevelMap, MOVEMENTSPEED);
+	mLuigiCharacter = new CharacterPlayable(mRenderer, "Images/Luigi.png", Vector2D(128, 330), SDLK_UP, SDLK_RIGHT, SDLK_LEFT, mLevelMap, MOVEMENTSPEED);
 
 	//Set up our POW block
 	mPowBlock = new PowBlock(mRenderer, mLevelMap);

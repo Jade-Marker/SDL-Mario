@@ -129,6 +129,7 @@
     <ClCompile Include="Character.cpp" />
     <ClCompile Include="CharacterCoin.cpp" />
     <ClCompile Include="CharacterKoopa.cpp" />
+    <ClCompile Include="CharacterPlayable.cpp" />
     <ClCompile Include="Collisions.cpp" />
     <ClCompile Include="GameScreen.cpp" />
     <ClCompile Include="GameScreenIntro.cpp" />
@@ -150,6 +151,7 @@
     <ClInclude Include="Character.h" />
     <ClInclude Include="CharacterCoin.h" />
     <ClInclude Include="CharacterKoopa.h" />
+    <ClInclude Include="CharacterPlayable.h" />
     <ClInclude Include="Collisions.h" />
     <ClInclude Include="Commons.h" />
     <ClInclude Include="Constants.h" />

@@ -1,7 +1,7 @@
 #include "CharacterCoin.h"
 
 CharacterCoin::CharacterCoin(SDL_Renderer* renderer, std::string imagePath, Vector2D startPosition, LevelMap* map, FACING moveDirection, float movementSpeed):
-	Character(renderer, imagePath, startPosition, 0, 0, 0, map, movementSpeed)
+	Character(renderer, imagePath, startPosition, map, movementSpeed)
 {
 	mPosition = startPosition;
 
