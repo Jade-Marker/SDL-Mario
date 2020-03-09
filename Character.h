@@ -9,6 +9,7 @@
 #include "SoundEffect.h"
 
 class Texture2D;
+class CharacterPlayable;
 
 class Character
 {
@@ -39,6 +40,7 @@ public:
 
 	virtual void Render();
 	virtual void Update(float deltaTime, SDL_Event e);
+	virtual void OnPlayerCollision(CharacterPlayable* player);
 
 	void SetPosition(Vector2D newPosition);
 	Vector2D GetPosition();
@@ -49,9 +51,6 @@ public:
 
 	bool IsJumping();
 	void CancelJump();
-
-	void SetState(CHARACTERSTATE newState);
-	CHARACTERSTATE GetState();
 
 protected:
 	virtual void MoveLeft(float deltaTime);

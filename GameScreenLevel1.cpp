@@ -5,7 +5,6 @@
 #include "PowBlock.h"
 
 //Todo
-//Create a virtual onPlayerCollision function for character so that collisions with other players/enemies/coins can be handled by the object being collided with
 //Create a CharacterEnemy class that coins/koopas inherit from so that they can be stored in one vector
 //Refactor character so that the code that handles frame stuff is in Character
 //Add points to mario when killing coin/enemy
@@ -107,7 +106,10 @@ void GameScreenLevel1::Update(float deltaTime, SDL_Event e)
 	mLuigiCharacter->Update(deltaTime, e);
 
 	if (Collisions::Instance()->Circle(mMarioCharacter->GetCollisionCircle(), mLuigiCharacter->GetCollisionCircle()))
-		std::cout << "Colliding" << std::endl;
+	{
+		mMarioCharacter->OnPlayerCollision(mLuigiCharacter);
+		mLuigiCharacter->OnPlayerCollision(mMarioCharacter);
+	}
 
 	UpdatePOWBlock();
 }
@@ -231,17 +233,11 @@ void GameScreenLevel1::UpdateEnemies(float deltaTime, SDL_Event e)
 			{
 				if (Collisions::Instance()->Circle(mEnemies[i], mMarioCharacter))
 				{
-					if (mEnemies[i]->GetInjured())
-						mEnemies[i]->SetAlive(false);
-					else
-						mMarioCharacter->SetState(PLAYER_DEATH);
+					mEnemies[i]->OnPlayerCollision(mMarioCharacter);
 				}
 				else if (Collisions::Instance()->Circle(mEnemies[i], mLuigiCharacter))
 				{
-					if (mEnemies[i]->GetInjured())
-						mEnemies[i]->SetAlive(false);
-					else
-						mLuigiCharacter->SetState(PLAYER_DEATH);
+					mEnemies[i]->OnPlayerCollision(mLuigiCharacter);
 				}
 			}
 
@@ -286,13 +282,11 @@ void GameScreenLevel1::UpdateCoins(float deltaTime, SDL_Event e)
 			{
 				if (Collisions::Instance()->Circle(mCoins[i], mMarioCharacter))
 				{
-					std::cout << "Mario collected a coin" << std::endl;
-					mCoins[i]->SetAlive(false);
+					mCoins[i]->OnPlayerCollision(mMarioCharacter);
 				}
 				else if (Collisions::Instance()->Circle(mCoins[i], mLuigiCharacter))
 				{
-					std::cout << "Luigi collected a coin" << std::endl;
-					mCoins[i]->SetAlive(false);
+					mCoins[i]->OnPlayerCollision(mLuigiCharacter);
 				}
 			}
 

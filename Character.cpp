@@ -1,6 +1,7 @@
 #include "Character.h"
 #include "Texture2D.h"
 #include "Constants.h"
+#include "CharacterPlayable.h"
 
 Character::Character(SDL_Renderer* renderer, std::string imagePath, Vector2D startPosition, LevelMap* map, float moveSpeed) :
 	mRenderer(renderer), mPosition(startPosition), mFacingDirection(FACING_RIGHT),
@@ -64,6 +65,10 @@ void Character::Update(float deltaTime, SDL_Event e)
 	else
 		mCanJump = true;
 	//Collided with ground so we can jump again
+}
+
+void Character::OnPlayerCollision(CharacterPlayable* player)
+{
 }
 
 void Character::SetPosition(Vector2D newPosition)

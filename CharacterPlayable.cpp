@@ -1,7 +1,7 @@
 #include "CharacterPlayable.h"
 
 CharacterPlayable::CharacterPlayable(SDL_Renderer* renderer, std::string imagePath, Vector2D startPosition, int jumpKey, int rightKey, int leftKey, LevelMap* map, float moveSpeed):
-	Character(renderer, imagePath, startPosition, map, moveSpeed), state(IDLE)
+	Character(renderer, imagePath, startPosition, map, moveSpeed), mState(IDLE), mScore(0)
 {
 	mInputMap[JUMP] = jumpKey;
 	mInputMap[RIGHT] = rightKey;
@@ -43,12 +43,23 @@ void CharacterPlayable::Update(float deltaTime, SDL_Event e)
 	}
 }
 
+void CharacterPlayable::OnPlayerCollision(CharacterPlayable* player)
+{
+	std::cout << "Colliding with other player" << std::endl;
+}
+
 void CharacterPlayable::SetState(CHARACTERSTATE newState)
 {
-	state = newState;
+	mState = newState;
 }
 
 CHARACTERSTATE CharacterPlayable::GetState()
 {
-	return state;
+	return mState;
+}
+
+void CharacterPlayable::IncrementScore(int value)
+{
+	mScore += value;
+	std::cout << "Score: " << mScore << std::endl;
 }

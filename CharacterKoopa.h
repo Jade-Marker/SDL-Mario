@@ -21,6 +21,7 @@ public:
 	void Jump();
 	void Render();
 	void Update(float deltaTime, SDL_Event e);
+	virtual void OnPlayerCollision(CharacterPlayable* player);
 	void SetAlive(bool value);
 	bool GetAlive();
 	bool GetInjured();

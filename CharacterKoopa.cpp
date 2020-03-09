@@ -1,4 +1,5 @@
 #include "CharacterKoopa.h"
+#include "CharacterPlayable.h"
 
 CharacterKoopa::CharacterKoopa(SDL_Renderer* renderer, std::string imagePath, Vector2D startPosition, LevelMap* map, FACING startFacing, float movementSpeed) :
 	Character(renderer, imagePath, startPosition, map, movementSpeed)
@@ -90,6 +91,18 @@ void CharacterKoopa::Update(float deltaTime, SDL_Event e)
 		if (mInjuredTime <= 0.0)
 			FlipRightwayUp();
 	}
+}
+
+void CharacterKoopa::OnPlayerCollision(CharacterPlayable* player)
+{
+	/*if (mEnemies[i]->GetInjured())
+		mEnemies[i]->SetAlive(false);
+	else
+		mMarioCharacter->SetState(PLAYER_DEATH);*/
+	if (GetInjured())
+		SetAlive(false);
+	else
+		player->SetState(PLAYER_DEATH);
 }
 
 void CharacterKoopa::SetAlive(bool value)
