@@ -58,9 +58,10 @@ void CharacterCoin::Update(float deltaTime, SDL_Event e)
 
 void CharacterCoin::SetAlive(bool value)
 {
+	mAlive = value;
 }
 
 bool CharacterCoin::GetAlive()
 {
-	return false;
+	return mAlive;
 }

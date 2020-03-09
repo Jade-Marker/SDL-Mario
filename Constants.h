@@ -23,5 +23,7 @@
 
 //Enemy constants
 #define INJURED_TIME 2.5f
-#define SPAWN_TIME 10.0f
+#define ENEMY_SPAWN_TIME 10.0f
 #define ANIMATION_DELAY 0.25f
+
+#define COIN_SPAWN_TIME 15.0f

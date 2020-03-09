@@ -5,7 +5,8 @@
 #include "PowBlock.h"
 
 //Todo
-//Set coins to die when collecting them
+//Create a virtual onPlayerCollision function for character so that collisions with other players/enemies/coins can be handled by the object being collided with
+//Create a CharacterEnemy class that coins/koopas inherit from so that they can be stored in one vector
 //Refactor character so that the code that handles frame stuff is in Character
 //Add points to mario when killing coin/enemy
 //Implement another enemy (get sprite from here: https://www.spriters-resource.com/arcade/mariobros/sheet/93677/)
@@ -85,30 +86,26 @@ void GameScreenLevel1::Update(float deltaTime, SDL_Event e)
 	enemySpawnTimer -= deltaTime;
 	if (enemySpawnTimer <= 0.0f)
 	{
-		enemySpawnTimer = SPAWN_TIME;
+		enemySpawnTimer = ENEMY_SPAWN_TIME;
 		CreateKoopa(Vector2D(150, 32), FACING_RIGHT, KOOPA_SPEED);
 		CreateKoopa(Vector2D(325, 32), FACING_LEFT, KOOPA_SPEED);
 	}
 
-	UpdateEnemies(deltaTime, e);
-
-	for (unsigned int i = 0; i < mCoins.size(); i++)
+	coinSpawnTimer -= deltaTime;
+	if (coinSpawnTimer <= 0.0f)
 	{
-		mCoins[i]->Update(deltaTime, e);
+		coinSpawnTimer = COIN_SPAWN_TIME;
+		CreateCoin(Vector2D(150, 32), FACING_RIGHT, COIN_SPEED);
+		CreateCoin(Vector2D(325, 32), FACING_LEFT, COIN_SPEED);
 	}
+
+	UpdateEnemies(deltaTime, e);
+	UpdateCoins(deltaTime, e);
 
 	//Update the player
 	mMarioCharacter->Update(deltaTime, e);
 	mLuigiCharacter->Update(deltaTime, e);
 
-	/*if (Collisions::Instance()->Circle(mario, luigi))
-	{
-		std::cout << "Colliding" << std::endl;
-	}*/
-	//if (Collisions::Instance()->Box(mario->GetCollisionBox(), luigi->GetCollisionBox()))
-	//{
-	//	std::cout << "Colliding" << std::endl;
-	//}
 	if (Collisions::Instance()->Circle(mMarioCharacter->GetCollisionCircle(), mLuigiCharacter->GetCollisionCircle()))
 		std::cout << "Colliding" << std::endl;
 
@@ -127,11 +124,12 @@ bool GameScreenLevel1::SetUpLevel()
 
 	CreateKoopa(Vector2D(150,32), FACING_RIGHT, KOOPA_SPEED);
 	CreateKoopa(Vector2D(325,32), FACING_LEFT, KOOPA_SPEED);
-	enemySpawnTimer = SPAWN_TIME;
+	enemySpawnTimer = ENEMY_SPAWN_TIME;
 
 	CreateCoin(Vector2D(150, 32), FACING_RIGHT, COIN_SPEED);
 	CreateCoin(Vector2D(325, 32), FACING_LEFT, COIN_SPEED);
-
+	coinSpawnTimer = COIN_SPAWN_TIME;
+	
 	//Set up the player character
 	//myCharacter = new Character(mRenderer, "Images/Mario.png", Vector2D(64, 330));
 	mMarioCharacter = new CharacterPlayable(mRenderer, "Images/Mario.png", Vector2D(64, 330), SDLK_w, SDLK_d, SDLK_a, mLevelMap, MOVEMENTSPEED);
@@ -256,6 +254,57 @@ void GameScreenLevel1::UpdateEnemies(float deltaTime, SDL_Event e)
 		{
 			delete mEnemies[enemyIndexToDelete];
 			mEnemies.erase(mEnemies.begin() + enemyIndexToDelete);
+		}
+	}
+}
+
+void GameScreenLevel1::UpdateCoins(float deltaTime, SDL_Event e)
+{
+	if (!mCoins.empty())
+	{
+		int coinIndexToDelete = -1;
+		for (unsigned int i = 0; i < mCoins.size(); i++)
+		{
+			//Check if coin is on the bottom row of tiles
+			if (mCoins[i]->GetPosition().y > 300.0f)
+			{
+				if (mCoins[i]->GetPosition().x < (float)(-mCoins[i]->GetCollisionBox().width * 0.5f) ||
+					mCoins[i]->GetPosition().x > SCREEN_WIDTH - (float)(mCoins[i]->GetCollisionBox().width * 0.55f))
+					mCoins[i]->SetAlive(false);
+			}
+
+			//Now do the update
+			mCoins[i]->Update(deltaTime, e);
+
+			//Check to see if the coin collides with the player
+			if ((mCoins[i]->GetPosition().y > 300.0f || mCoins[i]->GetPosition().y <= 64.0f) &&
+				mCoins[i]->GetPosition().x < 64.0f || mCoins[i]->GetPosition().x > SCREEN_WIDTH - 96.0f)
+			{
+				//ignore the collisions if the coin is behind a pipe?
+			}
+			else
+			{
+				if (Collisions::Instance()->Circle(mCoins[i], mMarioCharacter))
+				{
+					std::cout << "Mario collected a coin" << std::endl;
+					mCoins[i]->SetAlive(false);
+				}
+				else if (Collisions::Instance()->Circle(mCoins[i], mLuigiCharacter))
+				{
+					std::cout << "Luigi collected a coin" << std::endl;
+					mCoins[i]->SetAlive(false);
+				}
+			}
+
+			//If the coin is no longer alive, then schedule it for deletion
+			if (!mCoins[i]->GetAlive())
+				coinIndexToDelete = i;
+		}
+
+		if (coinIndexToDelete != -1)
+		{
+			delete mCoins[coinIndexToDelete];
+			mCoins.erase(mCoins.begin() + coinIndexToDelete);
 		}
 	}
 }

@@ -32,6 +32,7 @@ private:
 	float enemySpawnTimer;
 
 	std::vector<CharacterCoin*> mCoins;
+	float coinSpawnTimer;
 
 public:
 	GameScreenLevel1(SDL_Renderer* renderer);
@@ -46,6 +47,7 @@ private:
 	void UpdatePOWBlock();
 	void DoScreenshake();
 	void UpdateEnemies(float deltaTime, SDL_Event e);
+	void UpdateCoins(float deltaTime, SDL_Event e);
 	void CreateKoopa(Vector2D position, FACING direction, float speed);
 	void CreateCoin(Vector2D position, FACING direction, float speed);
 };
