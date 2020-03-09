@@ -27,3 +27,4 @@
 #define ANIMATION_DELAY 0.25f
 
 #define COIN_SPAWN_TIME 15.0f
+#define COIN_SCORE 1

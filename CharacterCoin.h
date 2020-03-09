@@ -1,16 +1,16 @@
 #pragma once
 
 #include "Character.h"
+#include "CharacterEnemy.h"
 #include "Commons.h"
 #include "Texture2D.h"
 
-class CharacterCoin : public Character
+class CharacterCoin : public CharacterEnemy
 {
 private:
 	float mSingleSpriteWidth;
 	float mSingleSpriteHeight;
 	
-	bool mAlive;
 	float mFrameDelay;
 	int mCurrentFrame;
 
@@ -20,7 +20,5 @@ public:
 	void Render();
 	void Update(float deltaTime, SDL_Event e);
 	virtual void OnPlayerCollision(CharacterPlayable* player);
-	void SetAlive(bool value);
-	bool GetAlive();
 };
 

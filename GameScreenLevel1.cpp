@@ -5,9 +5,7 @@
 #include "PowBlock.h"
 
 //Todo
-//Create a CharacterEnemy class that coins/koopas inherit from so that they can be stored in one vector
 //Refactor character so that the code that handles frame stuff is in Character
-//Add points to mario when killing coin/enemy
 //Implement another enemy (get sprite from here: https://www.spriters-resource.com/arcade/mariobros/sheet/93677/)
 
 
@@ -34,13 +32,9 @@ GameScreenLevel1::~GameScreenLevel1()
 	delete mLevelMap;
 	mLevelMap = NULL;
 
-	for (int i = 0; i < mEnemies.size(); i++)
-		delete mEnemies[i];
-	mEnemies.clear();
-
-	for (int i = 0; i < mCoins.size(); i++)
-		delete mCoins[i];
-	mCoins.clear();
+	for (int i = 0; i < mEnemiesAndCoins.size(); i++)
+		delete mEnemiesAndCoins[i];
+	mEnemiesAndCoins.clear();
 }
 
 void GameScreenLevel1::Render()
@@ -49,14 +43,9 @@ void GameScreenLevel1::Render()
 	mBackgroundTexture->Render(Vector2D(0, mBackgroundYPos), SDL_FLIP_NONE);
 
 	//Draw the enemies
-	for (unsigned int i = 0; i < mEnemies.size(); i++)
+	for (unsigned int i = 0; i < mEnemiesAndCoins.size(); i++)
 	{
-		mEnemies[i]->Render();
-	}
-
-	for (unsigned int i = 0; i < mCoins.size(); i++)
-	{
-		mCoins[i]->Render();
+		mEnemiesAndCoins[i]->Render();
 	}
 
 	//Draw the character
@@ -98,8 +87,8 @@ void GameScreenLevel1::Update(float deltaTime, SDL_Event e)
 		CreateCoin(Vector2D(325, 32), FACING_LEFT, COIN_SPEED);
 	}
 
-	UpdateEnemies(deltaTime, e);
-	UpdateCoins(deltaTime, e);
+	//Update enemies and coins
+	UpdateEnemiesAndCoins(deltaTime, e);
 
 	//Update the player
 	mMarioCharacter->Update(deltaTime, e);
@@ -199,106 +188,57 @@ void GameScreenLevel1::DoScreenshake()
 	mScreenshakeTime = SCREENSHAKE_DURATION;
 	mWobble = 0.0f;
 
-	for (unsigned int i = 0; i < mEnemies.size(); i++)
+	for (unsigned int i = 0; i < mEnemiesAndCoins.size(); i++)
 	{
-		mEnemies[i]->TakeDamage();
+		mEnemiesAndCoins[i]->TakeDamage();
 	}
 }
 
-void GameScreenLevel1::UpdateEnemies(float deltaTime, SDL_Event e)
+void GameScreenLevel1::UpdateEnemiesAndCoins(float deltaTime, SDL_Event e)
 {
-	if (!mEnemies.empty())
+	if (!mEnemiesAndCoins.empty())
 	{
 		int enemyIndexToDelete = -1;
-		for (unsigned int i = 0; i < mEnemies.size(); i++)
+		for (unsigned int i = 0; i < mEnemiesAndCoins.size(); i++)
 		{
 			//Check if enemy is on the bottom row of tiles
-			if (mEnemies[i]->GetPosition().y > 300.0f)
+			if (mEnemiesAndCoins[i]->GetPosition().y > 300.0f)
 			{
-				if (mEnemies[i]->GetPosition().x < (float)(-mEnemies[i]->GetCollisionBox().width * 0.5f) ||
-					mEnemies[i]->GetPosition().x > SCREEN_WIDTH - (float)(mEnemies[i]->GetCollisionBox().width * 0.55f))
-					mEnemies[i]->SetAlive(false);
+				if (mEnemiesAndCoins[i]->GetPosition().x < (float)(-mEnemiesAndCoins[i]->GetCollisionBox().width * 0.5f) ||
+					mEnemiesAndCoins[i]->GetPosition().x > SCREEN_WIDTH - (float)(mEnemiesAndCoins[i]->GetCollisionBox().width * 0.55f))
+					mEnemiesAndCoins[i]->SetAlive(false);
 			}
 
 			//Now do the update
-			mEnemies[i]->Update(deltaTime, e);
+			mEnemiesAndCoins[i]->Update(deltaTime, e);
 
 			//Check to see if the enemy collides with the player
-			if ((mEnemies[i]->GetPosition().y > 300.0f || mEnemies[i]->GetPosition().y <= 64.0f) &&
-				mEnemies[i]->GetPosition().x < 64.0f || mEnemies[i]->GetPosition().x > SCREEN_WIDTH - 96.0f)
+			if ((mEnemiesAndCoins[i]->GetPosition().y > 300.0f || mEnemiesAndCoins[i]->GetPosition().y <= 64.0f) &&
+				mEnemiesAndCoins[i]->GetPosition().x < 64.0f || mEnemiesAndCoins[i]->GetPosition().x > SCREEN_WIDTH - 96.0f)
 			{
 				//ignore the collisions if the enemy is behind a pipe?
 			}
 			else 
 			{
-				if (Collisions::Instance()->Circle(mEnemies[i], mMarioCharacter))
+				if (Collisions::Instance()->Circle(mEnemiesAndCoins[i], mMarioCharacter))
 				{
-					mEnemies[i]->OnPlayerCollision(mMarioCharacter);
+					mEnemiesAndCoins[i]->OnPlayerCollision(mMarioCharacter);
 				}
-				else if (Collisions::Instance()->Circle(mEnemies[i], mLuigiCharacter))
+				else if (Collisions::Instance()->Circle(mEnemiesAndCoins[i], mLuigiCharacter))
 				{
-					mEnemies[i]->OnPlayerCollision(mLuigiCharacter);
+					mEnemiesAndCoins[i]->OnPlayerCollision(mLuigiCharacter);
 				}
 			}
 
 			//If the enemy is no longer alive, then schedule it for deletion
-			if (!mEnemies[i]->GetAlive())
+			if (!mEnemiesAndCoins[i]->GetAlive())
 				enemyIndexToDelete = i;
 		}
 
 		if (enemyIndexToDelete != -1)
 		{
-			delete mEnemies[enemyIndexToDelete];
-			mEnemies.erase(mEnemies.begin() + enemyIndexToDelete);
-		}
-	}
-}
-
-void GameScreenLevel1::UpdateCoins(float deltaTime, SDL_Event e)
-{
-	if (!mCoins.empty())
-	{
-		int coinIndexToDelete = -1;
-		for (unsigned int i = 0; i < mCoins.size(); i++)
-		{
-			//Check if coin is on the bottom row of tiles
-			if (mCoins[i]->GetPosition().y > 300.0f)
-			{
-				if (mCoins[i]->GetPosition().x < (float)(-mCoins[i]->GetCollisionBox().width * 0.5f) ||
-					mCoins[i]->GetPosition().x > SCREEN_WIDTH - (float)(mCoins[i]->GetCollisionBox().width * 0.55f))
-					mCoins[i]->SetAlive(false);
-			}
-
-			//Now do the update
-			mCoins[i]->Update(deltaTime, e);
-
-			//Check to see if the coin collides with the player
-			if ((mCoins[i]->GetPosition().y > 300.0f || mCoins[i]->GetPosition().y <= 64.0f) &&
-				mCoins[i]->GetPosition().x < 64.0f || mCoins[i]->GetPosition().x > SCREEN_WIDTH - 96.0f)
-			{
-				//ignore the collisions if the coin is behind a pipe?
-			}
-			else
-			{
-				if (Collisions::Instance()->Circle(mCoins[i], mMarioCharacter))
-				{
-					mCoins[i]->OnPlayerCollision(mMarioCharacter);
-				}
-				else if (Collisions::Instance()->Circle(mCoins[i], mLuigiCharacter))
-				{
-					mCoins[i]->OnPlayerCollision(mLuigiCharacter);
-				}
-			}
-
-			//If the coin is no longer alive, then schedule it for deletion
-			if (!mCoins[i]->GetAlive())
-				coinIndexToDelete = i;
-		}
-
-		if (coinIndexToDelete != -1)
-		{
-			delete mCoins[coinIndexToDelete];
-			mCoins.erase(mCoins.begin() + coinIndexToDelete);
+			delete mEnemiesAndCoins[enemyIndexToDelete];
+			mEnemiesAndCoins.erase(mEnemiesAndCoins.begin() + enemyIndexToDelete);
 		}
 	}
 }
@@ -306,11 +246,11 @@ void GameScreenLevel1::UpdateCoins(float deltaTime, SDL_Event e)
 void GameScreenLevel1::CreateKoopa(Vector2D position, FACING direction, float speed)
 {
 	CharacterKoopa* koopaCharacter = new CharacterKoopa(mRenderer, "Images/Koopa.png", position, mLevelMap, direction, speed);
-	mEnemies.push_back(koopaCharacter);
+	mEnemiesAndCoins.push_back(koopaCharacter);
 }
 
 void GameScreenLevel1::CreateCoin(Vector2D position, FACING direction, float speed)
 {
 	CharacterCoin* coinCharacter = new CharacterCoin(mRenderer, "Images/Coin.png", position, mLevelMap, direction, speed);
-	mCoins.push_back(coinCharacter);
+	mEnemiesAndCoins.push_back(coinCharacter);
 }

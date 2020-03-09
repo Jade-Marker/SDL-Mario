@@ -2,7 +2,7 @@
 #include "CharacterPlayable.h"
 
 CharacterKoopa::CharacterKoopa(SDL_Renderer* renderer, std::string imagePath, Vector2D startPosition, LevelMap* map, FACING startFacing, float movementSpeed) :
-	Character(renderer, imagePath, startPosition, map, movementSpeed)
+	CharacterEnemy(renderer, imagePath, startPosition, map, movementSpeed)
 {
 	mFacingDirection = startFacing;
 	//mMovementSpeed = movementSpeed;
@@ -103,16 +103,6 @@ void CharacterKoopa::OnPlayerCollision(CharacterPlayable* player)
 		SetAlive(false);
 	else
 		player->SetState(PLAYER_DEATH);
-}
-
-void CharacterKoopa::SetAlive(bool value)
-{
-	mAlive = value;
-}
-
-bool CharacterKoopa::GetAlive()
-{
-	return mAlive;
 }
 
 bool CharacterKoopa::GetInjured()

@@ -28,10 +28,8 @@ private:
 	float mWobble;
 	float mBackgroundYPos;
 
-	std::vector<CharacterKoopa*> mEnemies;
+	std::vector<CharacterEnemy*> mEnemiesAndCoins;
 	float enemySpawnTimer;
-
-	std::vector<CharacterCoin*> mCoins;
 	float coinSpawnTimer;
 
 public:
@@ -46,8 +44,7 @@ private:
 	void SetLevelMap();
 	void UpdatePOWBlock();
 	void DoScreenshake();
-	void UpdateEnemies(float deltaTime, SDL_Event e);
-	void UpdateCoins(float deltaTime, SDL_Event e);
+	void UpdateEnemiesAndCoins(float deltaTime, SDL_Event e);
 	void CreateKoopa(Vector2D position, FACING direction, float speed);
 	void CreateCoin(Vector2D position, FACING direction, float speed);
 };

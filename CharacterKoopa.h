@@ -1,18 +1,18 @@
 #pragma once
 
 #include "Character.h"
+#include "CharacterEnemy.h"
 #include "Commons.h"
 #include "Texture2D.h"
 
 class CharacterKoopa :
-	public Character
+	public CharacterEnemy
 {
 private:
 	float mSingleSpriteWidth;
 	float mSingleSpriteHeight;
 	bool mInjured;
 	float mInjuredTime;
-	bool mAlive;
 
 public:
 	CharacterKoopa(SDL_Renderer* renderer, std::string imagePath, Vector2D startPosition, LevelMap* map, FACING startFacing, float movementSpeed);
@@ -22,8 +22,6 @@ public:
 	void Render();
 	void Update(float deltaTime, SDL_Event e);
 	virtual void OnPlayerCollision(CharacterPlayable* player);
-	void SetAlive(bool value);
-	bool GetAlive();
 	bool GetInjured();
 
 private:

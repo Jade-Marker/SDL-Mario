@@ -2,7 +2,7 @@
 #include "CharacterPlayable.h"
 
 CharacterCoin::CharacterCoin(SDL_Renderer* renderer, std::string imagePath, Vector2D startPosition, LevelMap* map, FACING moveDirection, float movementSpeed):
-	Character(renderer, imagePath, startPosition, map, movementSpeed)
+	CharacterEnemy(renderer, imagePath, startPosition, map, movementSpeed)
 {
 	mPosition = startPosition;
 
@@ -60,15 +60,5 @@ void CharacterCoin::Update(float deltaTime, SDL_Event e)
 void CharacterCoin::OnPlayerCollision(CharacterPlayable* player)
 {
 	SetAlive(false);
-	player->IncrementScore(1);
-}
-
-void CharacterCoin::SetAlive(bool value)
-{
-	mAlive = value;
-}
-
-bool CharacterCoin::GetAlive()
-{
-	return mAlive;
+	player->IncrementScore(COIN_SCORE);
 }

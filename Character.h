@@ -36,7 +36,7 @@ protected:
 
 public:
 	Character(SDL_Renderer* renderer, std::string imagePath, Vector2D startPosition, LevelMap* map, float moveSpeed);
-	~Character();
+	virtual ~Character();
 
 	virtual void Render();
 	virtual void Update(float deltaTime, SDL_Event e);
