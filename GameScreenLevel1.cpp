@@ -5,7 +5,6 @@
 #include "PowBlock.h"
 
 //Todo
-//Clean up constructors and check consistency of member variable naming
 //Fix bug where player can jump without landing
 //Fix bug where player can intersect with level
 //Implement another enemy (get sprite from here: https://www.spriters-resource.com/arcade/mariobros/sheet/93677/)
@@ -77,18 +76,18 @@ void GameScreenLevel1::Update(float deltaTime, SDL_Event e)
 		}
 	}
 
-	enemySpawnTimer -= deltaTime;
-	if (enemySpawnTimer <= 0.0f)
+	mEnemySpawnTimer -= deltaTime;
+	if (mEnemySpawnTimer <= 0.0f)
 	{
-		enemySpawnTimer = ENEMY_SPAWN_TIME;
+		mEnemySpawnTimer = ENEMY_SPAWN_TIME;
 		CreateKoopa(Vector2D(150, 32), FACING_RIGHT, KOOPA_SPEED);
 		CreateKoopa(Vector2D(325, 32), FACING_LEFT, KOOPA_SPEED);
 	}
 
-	coinSpawnTimer -= deltaTime;
-	if (coinSpawnTimer <= 0.0f)
+	mCoinSpawnTimer -= deltaTime;
+	if (mCoinSpawnTimer <= 0.0f)
 	{
-		coinSpawnTimer = COIN_SPAWN_TIME;
+		mCoinSpawnTimer = COIN_SPAWN_TIME;
 		CreateCoin(Vector2D(150, 32), FACING_RIGHT, COIN_SPEED);
 		CreateCoin(Vector2D(325, 32), FACING_LEFT, COIN_SPEED);
 	}
@@ -121,11 +120,11 @@ bool GameScreenLevel1::SetUpLevel()
 
 	CreateKoopa(Vector2D(150,32), FACING_RIGHT, KOOPA_SPEED);
 	CreateKoopa(Vector2D(325,32), FACING_LEFT, KOOPA_SPEED);
-	enemySpawnTimer = ENEMY_SPAWN_TIME;
+	mEnemySpawnTimer = ENEMY_SPAWN_TIME;
 
 	CreateCoin(Vector2D(150, 32), FACING_RIGHT, COIN_SPEED);
 	CreateCoin(Vector2D(325, 32), FACING_LEFT, COIN_SPEED);
-	coinSpawnTimer = COIN_SPAWN_TIME;
+	mCoinSpawnTimer = COIN_SPAWN_TIME;
 	
 	//Set up the player character
 	//myCharacter = new Character(mRenderer, "Images/Mario.png", Vector2D(64, 330));

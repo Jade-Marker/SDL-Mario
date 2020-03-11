@@ -2,14 +2,9 @@
 #include "CharacterPlayable.h"
 
 CharacterKoopa::CharacterKoopa(SDL_Renderer* renderer, std::string imagePath, Vector2D startPosition, LevelMap* map, FACING startFacing, float movementSpeed, float frameDelay, int noOfFrames) :
-	CharacterEnemy(renderer, imagePath, startPosition, map, movementSpeed, frameDelay, noOfFrames, false)
+	CharacterEnemy(renderer, imagePath, startPosition, map, movementSpeed, frameDelay, noOfFrames, false), mInjured(false), mInjuredTime(0)
 {
 	mFacingDirection = startFacing;
-	mPosition = startPosition;
-
-	mInjured = false;
-	mAlive = true;
-
 	mCurrentFrame = KOOPA_MOVING_FRAME;
 }
 

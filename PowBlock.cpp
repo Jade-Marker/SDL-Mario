@@ -1,7 +1,7 @@
 #include "PowBlock.h"
 
 PowBlock::PowBlock(SDL_Renderer* renderer, LevelMap* map):
-	mRenderer(renderer)
+	mRenderer(renderer), mLevelMap(map), mNumberOfHitsLeft(3), mPosition((SCREEN_WIDTH * 0.5f) - mSingleSpriteWidth * 0.5f, 260)
 {
 	std::string imagePath = "Images/PowBlock.png";
 	mTexture = new Texture2D(renderer);
@@ -11,11 +11,8 @@ PowBlock::PowBlock(SDL_Renderer* renderer, LevelMap* map):
 		return;
 	}
 
-	mLevelMap = map;
 	mSingleSpriteWidth = mTexture->GetWidth() / 3;
 	mSingleSpriteHeight = mTexture->GetHeight();
-	mNumberOfHitsLeft = 3;
-	mPosition = Vector2D((SCREEN_WIDTH * 0.5f) - mSingleSpriteWidth * 0.5f, 260);
 }
 
 PowBlock::~PowBlock()

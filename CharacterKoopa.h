@@ -9,8 +9,6 @@ class CharacterKoopa :
 	public CharacterEnemy
 {
 private:
-	float mSingleSpriteWidth;
-	float mSingleSpriteHeight;
 	bool mInjured;
 	float mInjuredTime;
 

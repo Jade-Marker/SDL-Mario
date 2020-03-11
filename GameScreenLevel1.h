@@ -29,8 +29,8 @@ private:
 	float mBackgroundYPos;
 
 	std::vector<CharacterEnemy*> mEnemiesAndCoins;
-	float enemySpawnTimer;
-	float coinSpawnTimer;
+	float mEnemySpawnTimer;
+	float mCoinSpawnTimer;
 
 public:
 	GameScreenLevel1(SDL_Renderer* renderer);

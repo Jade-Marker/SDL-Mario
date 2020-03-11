@@ -14,25 +14,34 @@ class CharacterPlayable;
 class Character
 {
 protected:
-//private:
+	//movement variables
 	FACING mFacingDirection;
 	bool mMovingLeft;
 	bool mMovingRight;
-	LevelMap* mCurrentLevelMap;
-
-	const float mMovementSpeed;
-	
-	SoundEffect* mJumpSound;
-
-protected:
-	SDL_Renderer* mRenderer;
 	Vector2D mPosition;
-	Texture2D* mTexture;
+
+	//constant movement variables
+	const float cMovementSpeed;
+
+	//jumping variables
 	bool mJumping;
+
+	//SFX
+	SoundEffect* mJumpSound;
 	bool mCanJump;
-	float mCollisionRadius;
 	float mJumpForce;
 
+	//collision variables
+	float mCollisionRadius;
+
+	//Level variables
+	LevelMap* mCurrentLevelMap;
+	
+	//Display variables
+	SDL_Renderer* mRenderer;
+	Texture2D* mTexture;
+
+	//Animation variables
 	float mSingleSpriteWidth;
 	float mSingleSpriteHeight;
 	float mFrameDelay;
@@ -41,7 +50,7 @@ protected:
 	bool mAnimating;
 
 public:
-	Character(SDL_Renderer* renderer, std::string imagePath, Vector2D startPosition, LevelMap* map, float moveSpeed, float frameDelay = 0.0f, int noOfFrames = 0, bool animating = true);
+	Character(SDL_Renderer* renderer, std::string imagePath, Vector2D startPosition, LevelMap* map, float moveSpeed, float frameDelay = 0.0f, int noOfFrames = 1, bool animating = true);
 	virtual ~Character();
 
 	virtual void Render();

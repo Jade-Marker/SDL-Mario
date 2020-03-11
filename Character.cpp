@@ -6,7 +6,8 @@
 Character::Character(SDL_Renderer* renderer, std::string imagePath, Vector2D startPosition, LevelMap* map, float moveSpeed, float frameDelay, int noOfFrames, bool animating) :
 	mRenderer(renderer), mPosition(startPosition), mFacingDirection(FACING_RIGHT),
 	mMovingLeft(false), mMovingRight(false), mJumping(false), mCanJump(false), mCollisionRadius(15.0f),
-	mCurrentLevelMap(map), mJumpForce(0.0f), mMovementSpeed(moveSpeed), mFrameDelay(frameDelay), mNumFrames(noOfFrames), mAnimating(animating)
+	mCurrentLevelMap(map), mJumpForce(0.0f), cMovementSpeed(moveSpeed), 
+	mFrameDelay(frameDelay), mNumFrames(noOfFrames), mAnimating(animating), mCurrentFrame(0), mSingleSpriteWidth(0), mSingleSpriteHeight(0)
 {
 	mTexture = new Texture2D(mRenderer);
 	mTexture->LoadFromFile(imagePath);
@@ -14,12 +15,8 @@ Character::Character(SDL_Renderer* renderer, std::string imagePath, Vector2D sta
 	mJumpSound = new SoundEffect();
 	mJumpSound->Load("SFX/Munch.wav");
 
-	if (noOfFrames != 0)
-	{
-		mSingleSpriteWidth = mTexture->GetWidth() / noOfFrames;
-		mSingleSpriteHeight = mTexture->GetHeight();
-		mCurrentFrame = 0;
-	}
+	mSingleSpriteWidth = mTexture->GetWidth() / noOfFrames;
+	mSingleSpriteHeight = mTexture->GetHeight();
 }
 
 Character::~Character()
@@ -84,7 +81,7 @@ void Character::Update(float deltaTime, SDL_Event e)
 		mCanJump = true;
 	//Collided with ground so we can jump again
 
-	if (mNumFrames != 0 && mAnimating)
+	if (mNumFrames > 1 && mAnimating)
 	{
 		mFrameDelay -= deltaTime;
 		if (mFrameDelay <= 0.0f)
@@ -142,13 +139,13 @@ void Character::CancelJump()
 
 void Character::MoveLeft(float deltaTime)
 {
-	mPosition.x -= mMovementSpeed * deltaTime;
+	mPosition.x -= cMovementSpeed * deltaTime;
 	mFacingDirection = FACING_LEFT;
 }
 
 void Character::MoveRight(float deltaTime)
 {
-	mPosition.x += mMovementSpeed * deltaTime;
+	mPosition.x += cMovementSpeed * deltaTime;
 	mFacingDirection = FACING_RIGHT;
 }
 

@@ -4,11 +4,9 @@
 
 using namespace std;
 
-Texture2D::Texture2D(SDL_Renderer* renderer)
+Texture2D::Texture2D(SDL_Renderer* renderer):
+	mRenderer(renderer), mTexture(NULL), mWidth(0), mHeight(0)
 {
-	mRenderer = renderer;
-	mTexture = NULL;
-	mWidth = 0;	mHeight = 0;
 }
 
 Texture2D::~Texture2D()
