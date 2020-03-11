@@ -1,7 +1,7 @@
 #include "CharacterEnemy.h"
 
-CharacterEnemy::CharacterEnemy(SDL_Renderer* renderer, std::string imagePath, Vector2D startPosition, LevelMap* map, float moveSpeed):
-	Character(renderer, imagePath, startPosition, map, moveSpeed)
+CharacterEnemy::CharacterEnemy(SDL_Renderer* renderer, std::string imagePath, Vector2D startPosition, LevelMap* map, float moveSpeed, float frameDelay, int noOfFrames, bool animating):
+	Character(renderer, imagePath, startPosition, map, moveSpeed, frameDelay, noOfFrames, animating)
 {
 }
 

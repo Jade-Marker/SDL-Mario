@@ -22,7 +22,7 @@ protected:
 
 	const float mMovementSpeed;
 	
-	SoundEffect* jumpSound;
+	SoundEffect* mJumpSound;
 
 protected:
 	SDL_Renderer* mRenderer;
@@ -33,9 +33,15 @@ protected:
 	float mCollisionRadius;
 	float mJumpForce;
 
+	float mSingleSpriteWidth;
+	float mSingleSpriteHeight;
+	float mFrameDelay;
+	int mCurrentFrame;
+	int mNumFrames;
+	bool mAnimating;
 
 public:
-	Character(SDL_Renderer* renderer, std::string imagePath, Vector2D startPosition, LevelMap* map, float moveSpeed);
+	Character(SDL_Renderer* renderer, std::string imagePath, Vector2D startPosition, LevelMap* map, float moveSpeed, float frameDelay = 0.0f, int noOfFrames = 0, bool animating = true);
 	virtual ~Character();
 
 	virtual void Render();

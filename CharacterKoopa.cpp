@@ -1,18 +1,16 @@
 #include "CharacterKoopa.h"
 #include "CharacterPlayable.h"
 
-CharacterKoopa::CharacterKoopa(SDL_Renderer* renderer, std::string imagePath, Vector2D startPosition, LevelMap* map, FACING startFacing, float movementSpeed) :
-	CharacterEnemy(renderer, imagePath, startPosition, map, movementSpeed)
+CharacterKoopa::CharacterKoopa(SDL_Renderer* renderer, std::string imagePath, Vector2D startPosition, LevelMap* map, FACING startFacing, float movementSpeed, float frameDelay, int noOfFrames) :
+	CharacterEnemy(renderer, imagePath, startPosition, map, movementSpeed, frameDelay, noOfFrames, false)
 {
 	mFacingDirection = startFacing;
-	//mMovementSpeed = movementSpeed;
 	mPosition = startPosition;
 
 	mInjured = false;
 	mAlive = true;
 
-	mSingleSpriteWidth = mTexture->GetWidth() / 2;	//2 sprites on this spritesheet in 1 row
-	mSingleSpriteHeight = mTexture->GetHeight();
+	mCurrentFrame = KOOPA_MOVING_FRAME;
 }
 
 CharacterKoopa::~CharacterKoopa()
@@ -23,6 +21,7 @@ void CharacterKoopa::TakeDamage()
 {
 	mInjured = true;
 	mInjuredTime = INJURED_TIME;
+	mCurrentFrame = KOOPA_DAMAGED_FRAME;
 	Jump();
 }
 
@@ -35,29 +34,6 @@ void CharacterKoopa::Jump()
 		mJumping = true;
 		mCanJump = false;
 	}
-}
-
-void CharacterKoopa::Render()
-{
-	//Variable to hold the left position of the sprite we want to draw
-	int left = 0;
-
-	//If injured move the left position to be the left position of the second image on the spritesheet
-	if (mInjured)
-		left = mSingleSpriteWidth;
-
-	//Get the portion of the spritesheet you want to draw
-	//								{XPos, YPos, WidthOfSingleSprite, HeightOfSingleSprite}
-	SDL_Rect portionOfSpriteSheet = { left, 0, mSingleSpriteWidth, mSingleSpriteHeight };
-
-	//Determine where you want it drawn
-	SDL_Rect destRect = { (int)(mPosition.x), (int)(mPosition.y), mSingleSpriteWidth, mSingleSpriteHeight };
-
-	//Then draw it facing the correct direction
-	if (mFacingDirection == FACING_RIGHT)
-		mTexture->Render(portionOfSpriteSheet, destRect, SDL_FLIP_NONE);
-	else
-		mTexture->Render(portionOfSpriteSheet, destRect, SDL_FLIP_HORIZONTAL);
 }
 
 void CharacterKoopa::Update(float deltaTime, SDL_Event e)
@@ -95,10 +71,6 @@ void CharacterKoopa::Update(float deltaTime, SDL_Event e)
 
 void CharacterKoopa::OnPlayerCollision(CharacterPlayable* player)
 {
-	/*if (mEnemies[i]->GetInjured())
-		mEnemies[i]->SetAlive(false);
-	else
-		mMarioCharacter->SetState(PLAYER_DEATH);*/
 	if (GetInjured())
 		SetAlive(false);
 	else
@@ -117,6 +89,7 @@ void CharacterKoopa::FlipRightwayUp()
 	else if (mFacingDirection == FACING_LEFT)
 		mFacingDirection = FACING_RIGHT;
 
+	mCurrentFrame = KOOPA_MOVING_FRAME;
 	mInjured = false;
 	Jump();
 }

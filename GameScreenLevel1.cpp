@@ -5,8 +5,14 @@
 #include "PowBlock.h"
 
 //Todo
-//Refactor character so that the code that handles frame stuff is in Character
+//Clean up constructors and check consistency of member variable naming
+//Fix bug where player can jump without landing
+//Fix bug where player can intersect with level
 //Implement another enemy (get sprite from here: https://www.spriters-resource.com/arcade/mariobros/sheet/93677/)
+//Reading in level map from file
+//Tileset loading/drawing a 2d array using said tileset
+//Sort SFX for player/enemies/coins
+//Drawing text to the screen
 
 
 GameScreenLevel1::GameScreenLevel1(SDL_Renderer* renderer) : GameScreen(renderer), mLevelMap(NULL)
@@ -245,12 +251,12 @@ void GameScreenLevel1::UpdateEnemiesAndCoins(float deltaTime, SDL_Event e)
 
 void GameScreenLevel1::CreateKoopa(Vector2D position, FACING direction, float speed)
 {
-	CharacterKoopa* koopaCharacter = new CharacterKoopa(mRenderer, "Images/Koopa.png", position, mLevelMap, direction, speed);
+	CharacterKoopa* koopaCharacter = new CharacterKoopa(mRenderer, "Images/Koopa.png", position, mLevelMap, direction, speed, ANIMATION_DELAY, KOOPA_FRAME_COUNT);
 	mEnemiesAndCoins.push_back(koopaCharacter);
 }
 
 void GameScreenLevel1::CreateCoin(Vector2D position, FACING direction, float speed)
 {
-	CharacterCoin* coinCharacter = new CharacterCoin(mRenderer, "Images/Coin.png", position, mLevelMap, direction, speed);
+	CharacterCoin* coinCharacter = new CharacterCoin(mRenderer, "Images/Coin.png", position, mLevelMap, direction, speed, ANIMATION_DELAY, COIN_FRAME_COUNT);
 	mEnemiesAndCoins.push_back(coinCharacter);
 }

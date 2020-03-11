@@ -7,7 +7,7 @@ protected:
 	bool mAlive;
 
 public:
-	CharacterEnemy(SDL_Renderer* renderer, std::string imagePath, Vector2D startPosition, LevelMap* map, float moveSpeed);
+	CharacterEnemy(SDL_Renderer* renderer, std::string imagePath, Vector2D startPosition, LevelMap* map, float moveSpeed, float frameDelay, int noOfFrames, bool animating);
 	virtual ~CharacterEnemy();
 
 	virtual void TakeDamage();

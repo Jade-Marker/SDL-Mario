@@ -3,16 +3,23 @@
 #include "Constants.h"
 #include "CharacterPlayable.h"
 
-Character::Character(SDL_Renderer* renderer, std::string imagePath, Vector2D startPosition, LevelMap* map, float moveSpeed) :
+Character::Character(SDL_Renderer* renderer, std::string imagePath, Vector2D startPosition, LevelMap* map, float moveSpeed, float frameDelay, int noOfFrames, bool animating) :
 	mRenderer(renderer), mPosition(startPosition), mFacingDirection(FACING_RIGHT),
 	mMovingLeft(false), mMovingRight(false), mJumping(false), mCanJump(false), mCollisionRadius(15.0f),
-	mCurrentLevelMap(map), mJumpForce(0.0f), mMovementSpeed(moveSpeed)
+	mCurrentLevelMap(map), mJumpForce(0.0f), mMovementSpeed(moveSpeed), mFrameDelay(frameDelay), mNumFrames(noOfFrames), mAnimating(animating)
 {
 	mTexture = new Texture2D(mRenderer);
 	mTexture->LoadFromFile(imagePath);
 
-	jumpSound = new SoundEffect();
-	jumpSound->Load("SFX/Munch.wav");
+	mJumpSound = new SoundEffect();
+	mJumpSound->Load("SFX/Munch.wav");
+
+	if (noOfFrames != 0)
+	{
+		mSingleSpriteWidth = mTexture->GetWidth() / noOfFrames;
+		mSingleSpriteHeight = mTexture->GetHeight();
+		mCurrentFrame = 0;
+	}
 }
 
 Character::~Character()
@@ -22,11 +29,22 @@ Character::~Character()
 	delete mTexture;
 	mTexture = NULL;
 
-	delete jumpSound;
+	delete mJumpSound;
 }
 
 void Character::Render()
 {
+	int left = mCurrentFrame * mSingleSpriteWidth;
+
+	//Get the portion of the spritesheet you want to draw
+	//								{XPos, YPos, WidthOfSingleSprite, HeightOfSingleSprite}
+	SDL_Rect portionOfSpriteSheet = { left, 0, mSingleSpriteWidth, mSingleSpriteHeight };
+	SDL_Rect destRect = { (int)(mPosition.x), (int)(mPosition.y), mSingleSpriteWidth, mSingleSpriteHeight };
+
+	if (mFacingDirection == FACING_RIGHT)
+		mTexture->Render(portionOfSpriteSheet, destRect, SDL_FLIP_NONE);
+	else
+		mTexture->Render(portionOfSpriteSheet, destRect, SDL_FLIP_HORIZONTAL);
 }
 
 void Character::Update(float deltaTime, SDL_Event e)
@@ -65,6 +83,21 @@ void Character::Update(float deltaTime, SDL_Event e)
 	else
 		mCanJump = true;
 	//Collided with ground so we can jump again
+
+	if (mNumFrames != 0 && mAnimating)
+	{
+		mFrameDelay -= deltaTime;
+		if (mFrameDelay <= 0.0f)
+		{
+			//Reset frame delay count
+			mFrameDelay = ANIMATION_DELAY;
+			mCurrentFrame++;
+
+			//Loop frame around if it goes beyond the number of frames
+			if (mCurrentFrame > mNumFrames - 1)
+				mCurrentFrame = 0;
+		}
+	}
 }
 
 void Character::OnPlayerCollision(CharacterPlayable* player)
@@ -127,7 +160,7 @@ void Character::Jump()
 		mJumping = true;
 		mCanJump = false;
 
-		jumpSound->Play(0);
+		mJumpSound->Play(0);
 	}
 }
 
