@@ -33,3 +33,6 @@
 #define COIN_SPAWN_TIME 15.0f
 #define COIN_SCORE 1
 #define COIN_FRAME_COUNT 5
+
+//Pow block constants
+#define POW_COLLISION_INCREASE 0.53125f

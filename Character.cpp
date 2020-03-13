@@ -56,14 +56,19 @@ void Character::Update(float deltaTime, SDL_Event e)
 	//Deal with jumping first
 	if (mJumping)
 	{
-		//Adjust the position
-		mPosition.y -= mJumpForce * deltaTime;
+		if (mCurrentLevelMap->GetTileAt(mPosition.y / TILE_HEIGHT, (mPosition.x + (mTexture->GetWidth() * 0.5f)) / TILE_WIDTH) == 0) {
 
-		//Reduce the jump force
-		mJumpForce -= JUMP_FORCE_DECREMENT * deltaTime;
+			//Adjust the position
+			mPosition.y -= mJumpForce * deltaTime;
 
-		//Has the jump force reduced to zero?
-		if (mJumpForce <= 0.0f)
+			//Reduce the jump force
+			mJumpForce -= JUMP_FORCE_DECREMENT * deltaTime;
+
+			//Has the jump force reduced to zero?
+			if (mJumpForce <= 0.0f)
+				mJumping = false;
+		}
+		else
 			mJumping = false;
 	}
 
