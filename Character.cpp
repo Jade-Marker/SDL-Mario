@@ -151,7 +151,7 @@ void Character::MoveRight(float deltaTime)
 
 void Character::Jump()
 {
-	if (!mJumping)
+	if (!mJumping && mCanJump)
 	{
 		mJumpForce = INITIAL_JUMP_FORCE;
 		mJumping = true;

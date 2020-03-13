@@ -5,7 +5,7 @@
 #include "PowBlock.h"
 
 //Todo
-//Fix bug where player can jump without landing
+//Fix bug where player can jump through blocks
 //Fix bug where player can intersect with level
 //Implement another enemy (get sprite from here: https://www.spriters-resource.com/arcade/mariobros/sheet/93677/)
 //Reading in level map from file
