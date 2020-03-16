@@ -5,7 +5,9 @@
 #include "PowBlock.h"
 
 //Todo
-//Fix bug where player can intersect with level
+//Fix bug with gravity where player can fall through the sides of blocks
+//Fix bug where hitting the pow block at the sides doesn't work
+//Clean up code with constants
 //Implement another enemy (get sprite from here: https://www.spriters-resource.com/arcade/mariobros/sheet/93677/)
 //Reading in level map from file
 //Tileset loading/drawing a 2d array using said tileset

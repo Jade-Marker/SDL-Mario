@@ -7,6 +7,7 @@
 #include "LevelMap.h"
 
 #include "SoundEffect.h"
+#include "Collisions.h"
 
 class Texture2D;
 class CharacterPlayable;

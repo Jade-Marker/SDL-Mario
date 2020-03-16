@@ -77,8 +77,8 @@ void Character::Update(float deltaTime, SDL_Event e)
 	else if (mMovingRight)
 		MoveRight(deltaTime);
 
-	int centralXPosition = (int)(mPosition.x + (mTexture->GetWidth() * 0.5f)) / TILE_WIDTH;
-	int footPosition = (int)(mPosition.y + mTexture->GetHeight()) / TILE_HEIGHT;
+	int centralXPosition = (int)(roundf(mPosition.x + (mSingleSpriteWidth * 0.5f))) / TILE_WIDTH;
+	int footPosition = (int)(mPosition.y + mSingleSpriteHeight) / TILE_HEIGHT;
 
 	if (mCurrentLevelMap->GetTileAt(footPosition, centralXPosition) == 0)
 		AddGravity(deltaTime);
@@ -144,14 +144,30 @@ void Character::CancelJump()
 
 void Character::MoveLeft(float deltaTime)
 {
-	mPosition.x -= cMovementSpeed * deltaTime;
+	int xPos = (int)(roundf(mPosition.x - mSingleSpriteWidth * 0.5f)) / TILE_WIDTH;
+	int yPosUpper = (int)(roundf(mPosition.y)) / TILE_HEIGHT;
+	int yPosMid = (int)(roundf(mPosition.y + mSingleSpriteHeight * 0.5f)) / TILE_HEIGHT;
+	int yPosLower = (int)(roundf(mPosition.y + mSingleSpriteHeight * 0.75f)) / TILE_HEIGHT;
+
 	mFacingDirection = FACING_LEFT;
+	if (mCurrentLevelMap->GetTileAt(yPosUpper, xPos) == 0 && mCurrentLevelMap->GetTileAt(yPosMid, xPos) == 0 && mCurrentLevelMap->GetTileAt(yPosLower, xPos) == 0)
+	{
+		mPosition.x -= cMovementSpeed * deltaTime;
+	}
 }
 
 void Character::MoveRight(float deltaTime)
 {
-	mPosition.x += cMovementSpeed * deltaTime;
+	int xPos = (int)(roundf(mPosition.x + mSingleSpriteWidth * 1.5f)) / TILE_WIDTH;
+	int yPosUpper = (int)(roundf(mPosition.y)) / TILE_HEIGHT;
+	int yPosMid = (int)(roundf(mPosition.y + mSingleSpriteHeight * 0.5f)) / TILE_HEIGHT;
+	int yPosLower = (int)(roundf(mPosition.y + mSingleSpriteHeight * 0.75f)) / TILE_HEIGHT;
+
 	mFacingDirection = FACING_RIGHT;
+	if (mCurrentLevelMap->GetTileAt(yPosUpper, xPos) == 0 && mCurrentLevelMap->GetTileAt(yPosMid, xPos) == 0 && mCurrentLevelMap->GetTileAt(yPosLower, xPos) == 0)
+	{
+		mPosition.x += cMovementSpeed * deltaTime;
+	}
 }
 
 void Character::Jump()
@@ -171,9 +187,9 @@ void Character::AddGravity(float deltaTime)
 	mPosition.y += GRAVITY * deltaTime;
 	mCanJump = false;
 
-	if (mPosition.y > SCREEN_HEIGHT - mTexture->GetHeight())
+	if (mPosition.y > SCREEN_HEIGHT - mSingleSpriteHeight)
 	{
-		mPosition.y = SCREEN_HEIGHT - mTexture->GetHeight();
+		mPosition.y = SCREEN_HEIGHT - mSingleSpriteHeight;
 		mCanJump = true;
 	}
 }
