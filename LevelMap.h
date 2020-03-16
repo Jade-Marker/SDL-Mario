@@ -13,6 +13,7 @@ public:
 	TILE GetTileAt(unsigned int h, unsigned int w);
 	void ChangeTileAt(unsigned int row, unsigned int column, TILE newValue);
 	void Render(float yOffset);
+	bool TileIsPassable(TILE tile);
 
 private:
 	SDL_Renderer* mRenderer;

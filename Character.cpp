@@ -56,7 +56,7 @@ void Character::Update(float deltaTime, SDL_Event e)
 	//Deal with jumping first
 	if (mJumping)
 	{
-		if (mCurrentLevelMap->GetTileAt(mPosition.y / TILE_HEIGHT, (mPosition.x + (mSingleSpriteWidth * 0.5f)) / TILE_WIDTH) == EMPTY) {
+		if (mCurrentLevelMap->TileIsPassable(mCurrentLevelMap->GetTileAt(mPosition.y / TILE_HEIGHT, (mPosition.x + (mSingleSpriteWidth * 0.5f)) / TILE_WIDTH))) {
 
 			//Adjust the position
 			mPosition.y -= mJumpForce * deltaTime;
@@ -80,7 +80,7 @@ void Character::Update(float deltaTime, SDL_Event e)
 	int centralXPosition = (int)(roundf(mPosition.x + (mSingleSpriteWidth * 0.5f))) / TILE_WIDTH;
 	int footPosition = (int)(mPosition.y + mSingleSpriteHeight) / TILE_HEIGHT;
 	
-	if (mCurrentLevelMap->GetTileAt(footPosition, centralXPosition) == EMPTY)
+	if (mCurrentLevelMap->TileIsPassable(mCurrentLevelMap->GetTileAt(footPosition, centralXPosition)))
 		AddGravity(deltaTime);
 	else
 		mCanJump = true;
@@ -150,7 +150,9 @@ void Character::MoveLeft(float deltaTime)
 	int yPosLower = (int)(roundf(mPosition.y + mSingleSpriteHeight * 0.75f)) / TILE_HEIGHT;
 
 	mFacingDirection = FACING_LEFT;
-	if (mCurrentLevelMap->GetTileAt(yPosUpper, xPos) == EMPTY && mCurrentLevelMap->GetTileAt(yPosMid, xPos) == EMPTY && mCurrentLevelMap->GetTileAt(yPosLower, xPos) == EMPTY)
+	if (mCurrentLevelMap->TileIsPassable(mCurrentLevelMap->GetTileAt(yPosUpper, xPos)) &&
+		mCurrentLevelMap->TileIsPassable(mCurrentLevelMap->GetTileAt(yPosMid, xPos)) &&
+			mCurrentLevelMap->TileIsPassable(mCurrentLevelMap->GetTileAt(yPosLower, xPos)))
 	{
 		mPosition.x -= cMovementSpeed * deltaTime;
 	}
@@ -164,7 +166,9 @@ void Character::MoveRight(float deltaTime)
 	int yPosLower = (int)(roundf(mPosition.y + mSingleSpriteHeight * 0.75f)) / TILE_HEIGHT;
 
 	mFacingDirection = FACING_RIGHT;
-	if (mCurrentLevelMap->GetTileAt(yPosUpper, xPos) == EMPTY && mCurrentLevelMap->GetTileAt(yPosMid, xPos) == EMPTY && mCurrentLevelMap->GetTileAt(yPosLower, xPos) == EMPTY)
+	if (mCurrentLevelMap->TileIsPassable(mCurrentLevelMap->GetTileAt(yPosUpper, xPos)) &&
+		mCurrentLevelMap->TileIsPassable(mCurrentLevelMap->GetTileAt(yPosMid, xPos)) &&
+		mCurrentLevelMap->TileIsPassable(mCurrentLevelMap->GetTileAt(yPosLower, xPos)))
 	{
 		mPosition.x += cMovementSpeed * deltaTime;
 	}

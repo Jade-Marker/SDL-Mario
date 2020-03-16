@@ -64,3 +64,21 @@ void LevelMap::Render(float yOffset)
 		}
 	}
 }
+
+bool LevelMap::TileIsPassable(TILE tile)
+{
+	switch (tile)
+	{
+	case EMPTY:
+	case PIPE_ENTRANCE_LOWER_RIGHT:
+	case PIPE_ENTRANCE_UPPER_RIGHT:
+	case PIPE_ENTRANCE_LOWER_LEFT:
+	case PIPE_ENTRANCE_UPPER_LEFT:
+	case PIPE_BODY_LOWER:
+	case PIPE_BODY_UPPER:
+		return true;
+
+	default:
+		return false;
+	}
+}
