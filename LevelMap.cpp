@@ -23,6 +23,31 @@ LevelMap::LevelMap(SDL_Renderer* renderer, std::string imagePath, TILE map[MAP_H
 	}
 }
 
+LevelMap::LevelMap(SDL_Renderer* renderer, std::string imagePath, std::string mapPath):
+	mRenderer(renderer)
+{
+	mTexture = new Texture2D(renderer);
+	mTexture->LoadFromFile(imagePath);
+
+	//Allocate memory for the level map
+	mMap = new TILE * [MAP_HEIGHT];
+	for (unsigned int i = 0; i < MAP_HEIGHT; i++)
+	{
+		mMap[i] = new TILE[MAP_WIDTH];
+	}
+
+	std::ifstream inFile(mapPath);
+	std::string tile;
+	for (int y = 0; y < MAP_HEIGHT; y++)
+	{
+		for (int x = 0; x < MAP_WIDTH; x++)
+		{
+			std::getline(inFile, tile, ',');	//file is a csv, so using ',' as the delimiter means that each getline gives us an individual tile
+			mMap[y][x] = (TILE)std::stoi(tile);
+		}
+	}
+}
+
 LevelMap::~LevelMap()
 {
 	for (unsigned int i = 0; i < MAP_HEIGHT; i++)

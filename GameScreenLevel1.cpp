@@ -5,9 +5,9 @@
 #include "PowBlock.h"
 
 //Todo
+//Update levelMap so that map width/height isn't a constant
 //Fix bug with gravity where player can fall through the sides of blocks
 //Implement another enemy (get sprite from here: https://www.spriters-resource.com/arcade/mariobros/sheet/93677/)
-//Reading in level map from file
 //Sort SFX for player/enemies/coins
 //Drawing text to the screen
 
@@ -160,7 +160,8 @@ void GameScreenLevel1::SetLevelMap()
 		delete mLevelMap;
 
 	//Set the new one
-	mLevelMap = new LevelMap(mRenderer, "Images/tileset.png", map);
+	//mLevelMap = new LevelMap(mRenderer, "Images/tileset.png", map);
+	mLevelMap = new LevelMap(mRenderer, "Images/tileset.png", "Levels/Level1.txt");
 }
 
 void GameScreenLevel1::UpdatePOWBlock()
