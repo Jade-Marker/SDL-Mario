@@ -2,17 +2,21 @@
 
 #include "Constants.h"
 #include "Commons.h"
+#include "Texture2D.h"
 
 class LevelMap
 {
 public:
-	LevelMap(COLLISION_TILE map[MAP_HEIGHT][MAP_WIDTH]);
+	LevelMap(SDL_Renderer* renderer, std::string imagePath, TILE map[MAP_HEIGHT][MAP_WIDTH]);
 	~LevelMap();
 
-	COLLISION_TILE GetTileAt(unsigned int h, unsigned int w);
-	void ChangeTileAt(unsigned int row, unsigned int column, COLLISION_TILE newValue);
+	TILE GetTileAt(unsigned int h, unsigned int w);
+	void ChangeTileAt(unsigned int row, unsigned int column, TILE newValue);
+	void Render(float yOffset);
 
 private:
-	COLLISION_TILE** mMap;
+	SDL_Renderer* mRenderer;
+	Texture2D* mTexture;
+	TILE** mMap;
 };
 

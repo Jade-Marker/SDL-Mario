@@ -1,14 +1,16 @@
 #include "LevelMap.h"
 
-//When making a map, remember:
-//0 = Empty area, 1 = Blocked area
-LevelMap::LevelMap(COLLISION_TILE map[MAP_HEIGHT][MAP_WIDTH])
+LevelMap::LevelMap(SDL_Renderer* renderer, std::string imagePath, TILE map[MAP_HEIGHT][MAP_WIDTH]):
+	mRenderer(renderer)
 {
+	mTexture = new Texture2D(renderer);
+	mTexture->LoadFromFile(imagePath);
+
 	//Allocate memory for the level map
-	mMap = new COLLISION_TILE* [MAP_HEIGHT];
+	mMap = new TILE* [MAP_HEIGHT];
 	for (unsigned int i = 0; i < MAP_HEIGHT; i++)
 	{
-		mMap[i] = new COLLISION_TILE[MAP_WIDTH];
+		mMap[i] = new TILE[MAP_WIDTH];
 	}
 
 	//Populate the array
@@ -31,7 +33,7 @@ LevelMap::~LevelMap()
 	delete[]mMap;
 }
 
-COLLISION_TILE LevelMap::GetTileAt(unsigned int h, unsigned int w)
+TILE LevelMap::GetTileAt(unsigned int h, unsigned int w)
 {
 	if (h < MAP_HEIGHT && w < MAP_WIDTH)
 	{
@@ -41,8 +43,24 @@ COLLISION_TILE LevelMap::GetTileAt(unsigned int h, unsigned int w)
 	return EMPTY;
 }
 
-void LevelMap::ChangeTileAt(unsigned int row, unsigned int column, COLLISION_TILE newValue)
+void LevelMap::ChangeTileAt(unsigned int row, unsigned int column, TILE newValue)
 {
 	if (row < MAP_HEIGHT && column < MAP_WIDTH)
 		mMap[row][column] = newValue;
+}
+
+void LevelMap::Render(float yOffset)
+{
+	for (int y = 0; y < MAP_HEIGHT; y++)
+	{
+		for (int x = 0; x < MAP_WIDTH; x++)
+		{
+			int left = TILE_WIDTH * mMap[y][x];
+
+			SDL_Rect portionOfTileSet = { left, 0, TILE_WIDTH, TILE_HEIGHT };
+			SDL_Rect destRect = { (int)(x * TILE_WIDTH), (int)(y * TILE_HEIGHT + yOffset), TILE_WIDTH, TILE_HEIGHT };
+
+			mTexture->Render(portionOfTileSet, destRect, SDL_FLIP_NONE);
+		}
+	}
 }
