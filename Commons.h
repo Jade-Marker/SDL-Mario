@@ -91,3 +91,9 @@ enum CHARACTERSTATE
 	PLAYER_DEATH = 0,
 	IDLE
 };
+
+enum COLLISION_TILE
+{
+	EMPTY = 0,
+	FILLED = 1
+};

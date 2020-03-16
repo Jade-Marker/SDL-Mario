@@ -6,8 +6,6 @@
 
 //Todo
 //Fix bug with gravity where player can fall through the sides of blocks
-//Update character classes to use mSingleSpriteWidth/Height instead of textuer.getHeight/Width
-//Clean up code with constants
 //Implement another enemy (get sprite from here: https://www.spriters-resource.com/arcade/mariobros/sheet/93677/)
 //Reading in level map from file
 //Tileset loading/drawing a 2d array using said tileset
@@ -142,19 +140,20 @@ bool GameScreenLevel1::SetUpLevel()
 
 void GameScreenLevel1::SetLevelMap()
 {
-	int map[MAP_HEIGHT][MAP_WIDTH] = {	{ 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0 },
-										{ 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0 },
-										{ 1,1,1,1,1,1,0,0,0,0,1,1,1,1,1,1 },
-										{ 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0 },
-										{ 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0 },
-										{ 0,0,0,0,1,1,1,1,1,1,1,1,0,0,0,0 },
-										{ 1,1,0,0,0,0,0,0,0,0,0,0,0,0,1,1 },
-										{ 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0 },
-										{ 0,0,0,0,0,0,0,1,1,0,0,0,0,0,0,0 },
-										{ 1,1,1,1,1,1,0,0,0,0,1,1,1,1,1,1 },
-										{ 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0 },
-										{ 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0 },
-										{ 1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1 } };
+	COLLISION_TILE map[MAP_HEIGHT][MAP_WIDTH] = {	
+										{ EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY },
+										{ EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY },
+										{ FILLED,FILLED,FILLED,FILLED,FILLED,FILLED,EMPTY, EMPTY, EMPTY, EMPTY, FILLED,FILLED,FILLED,FILLED,FILLED,FILLED },
+										{ EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY },
+										{ EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY },
+										{ EMPTY, EMPTY, EMPTY, EMPTY, FILLED,FILLED,FILLED,FILLED,FILLED,FILLED,FILLED,FILLED,EMPTY, EMPTY, EMPTY, EMPTY },
+										{ FILLED,FILLED,EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, FILLED,FILLED },
+										{ EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY },
+										{ EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, FILLED,FILLED,EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY },
+										{ FILLED,FILLED,FILLED,FILLED,FILLED,FILLED,EMPTY, EMPTY, EMPTY, EMPTY, FILLED,FILLED,FILLED,FILLED,FILLED,FILLED },
+										{ EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY },
+										{ EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY },
+										{ FILLED,FILLED,FILLED,FILLED,FILLED,FILLED,FILLED,FILLED,FILLED,FILLED,FILLED,FILLED,FILLED,FILLED,FILLED,FILLED } };
 
 	//Clear up any old map
 	if (mLevelMap != NULL)

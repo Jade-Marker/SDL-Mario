@@ -36,3 +36,4 @@
 
 //Pow block constants
 #define POW_COLLISION_INCREASE 0.53125f
+#define POW_HITS 3
