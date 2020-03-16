@@ -11,9 +11,13 @@ public:
 	PowBlock(SDL_Renderer* renderer, LevelMap* map);
 	~PowBlock();
 	void Render();
-	Rect2D GetCollisionBox() { return Rect2D(mPosition.x, mPosition.y, mSingleSpriteWidth, mSingleSpriteHeight + POW_COLLISION_INCREASE * mSingleSpriteHeight); };
 	void TakeAHit();
 	bool IsAvailable() { return mNumberOfHitsLeft > 0; };
+	Rect2D GetCollisionBox() {
+		return Rect2D(
+			mPosition.x - mSingleSpriteWidth * POW_COLLISION_INCREASE, mPosition.y,
+			mSingleSpriteWidth + 2 * POW_COLLISION_INCREASE * mSingleSpriteWidth, mSingleSpriteHeight + POW_COLLISION_INCREASE * mSingleSpriteHeight);
+	};
 
 private:
 	SDL_Renderer* mRenderer;
