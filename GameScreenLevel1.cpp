@@ -5,7 +5,6 @@
 #include "PowBlock.h"
 
 //Todo
-//Update levelMap so that map width/height isn't a constant
 //Fix bug with gravity where player can fall through the sides of blocks
 //Implement another enemy (get sprite from here: https://www.spriters-resource.com/arcade/mariobros/sheet/93677/)
 //Sort SFX for player/enemies/coins

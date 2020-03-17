@@ -18,10 +18,15 @@ public:
 	void ChangeTileAt(unsigned int row, unsigned int column, TILE newValue);
 	void Render(float yOffset);
 	bool TileIsPassable(TILE tile);
+	int const GetWidth() { return mMapWidth; };
+	int const GetHeight() { return mMapHeight; };
 
 private:
 	SDL_Renderer* mRenderer;
 	Texture2D* mTexture;
 	TILE** mMap;
+	int mMapHeight;
+	int mMapWidth;
+
 };
 
