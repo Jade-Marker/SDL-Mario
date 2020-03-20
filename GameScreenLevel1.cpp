@@ -5,16 +5,19 @@
 #include "PowBlock.h"
 
 //Todo
+//Make it so if you hit the bottom of a platform, it turns over the enemies standing on it and shows an animation
+//Clean up music and sound effect code
 //Fix bug with gravity where player can fall through the sides of blocks
 //Implement another enemy (get sprite from here: https://www.spriters-resource.com/arcade/mariobros/sheet/93677/)
 //Sort SFX for player/enemies/coins
-//Drawing text to the screen
 
 
 GameScreenLevel1::GameScreenLevel1(SDL_Renderer* renderer) : GameScreen(renderer), mLevelMap(NULL)
 {
 	SetLevelMap();
 	SetUpLevel();
+
+	text = new Font(renderer, "Fonts/Press Start 2P.png", 32, 32, ' ');
 }
 
 GameScreenLevel1::~GameScreenLevel1()
@@ -56,6 +59,8 @@ void GameScreenLevel1::Render()
 	mLuigiCharacter->Render();
 
 	mPowBlock->Render();
+
+	text->DrawString("Hello World!", Vector2D(80, 2));
 }
 
 void GameScreenLevel1::Update(float deltaTime, SDL_Event e)

@@ -8,6 +8,7 @@
 #include "CharacterPlayable.h"
 #include "CharacterKoopa.h"
 #include "CharacterCoin.h"
+#include "Font.h"
 
 #include <vector>
 
@@ -31,6 +32,8 @@ private:
 	std::vector<CharacterEnemy*> mEnemiesAndCoins;
 	float mEnemySpawnTimer;
 	float mCoinSpawnTimer;
+
+	Font* text;
 
 public:
 	GameScreenLevel1(SDL_Renderer* renderer);

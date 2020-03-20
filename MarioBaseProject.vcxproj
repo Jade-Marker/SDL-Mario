@@ -132,6 +132,7 @@
     <ClCompile Include="CharacterKoopa.cpp" />
     <ClCompile Include="CharacterPlayable.cpp" />
     <ClCompile Include="Collisions.cpp" />
+    <ClCompile Include="Font.cpp" />
     <ClCompile Include="GameScreen.cpp" />
     <ClCompile Include="GameScreenIntro.cpp" />
     <ClCompile Include="GameScreenLevel1.cpp" />
@@ -157,6 +158,7 @@
     <ClInclude Include="Collisions.h" />
     <ClInclude Include="Commons.h" />
     <ClInclude Include="Constants.h" />
+    <ClInclude Include="Font.h" />
     <ClInclude Include="GameScreen.h" />
     <ClInclude Include="GameScreenIntro.h" />
     <ClInclude Include="GameScreenLevel1.h" />
