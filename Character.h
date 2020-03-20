@@ -73,5 +73,6 @@ protected:
 	virtual void MoveRight(float deltaTime);
 	virtual void Jump();
 	virtual void AddGravity(float deltaTime);
+	virtual void HitTile();
 };
 

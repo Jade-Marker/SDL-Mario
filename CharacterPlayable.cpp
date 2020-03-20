@@ -1,7 +1,7 @@
 #include "CharacterPlayable.h"
 
-CharacterPlayable::CharacterPlayable(SDL_Renderer* renderer, std::string imagePath, Vector2D startPosition, int jumpKey, int rightKey, int leftKey, LevelMap* map, float moveSpeed):
-	Character(renderer, imagePath, startPosition, map, moveSpeed), mState(IDLE), mScore(0)
+CharacterPlayable::CharacterPlayable(SDL_Renderer* renderer, std::string imagePath, Vector2D startPosition, int jumpKey, int rightKey, int leftKey, LevelMap* map, float moveSpeed, std::vector<CharacterEnemy*>* enemiesList):
+	Character(renderer, imagePath, startPosition, map, moveSpeed), mState(IDLE), mScore(0), mEnemiesList(enemiesList)
 {
 	mInputMap[JUMP] = jumpKey;
 	mInputMap[RIGHT] = rightKey;
@@ -62,4 +62,29 @@ void CharacterPlayable::IncrementScore(int value)
 {
 	mScore += value;
 	std::cout << "Score: " << mScore << std::endl;
+}
+
+void CharacterPlayable::HitTile()
+{
+	Character::HitTile();
+
+	if (mCurrentLevelMap->GetTileAt(mPosition.y / TILE_HEIGHT, (mPosition.x + (mSingleSpriteWidth * 0.5f)) / TILE_WIDTH) == PLATFORM)
+	{
+		for (int i = 0; i < mEnemiesList->size(); i++)
+		{
+			CharacterEnemy* currentEnemy = (*mEnemiesList)[i];
+			Vector2D enemyPosition = currentEnemy->GetPosition();
+
+			int playerTileX = (int)mPosition.x / TILE_WIDTH;
+			int playerTileY = (int)mPosition.y / TILE_HEIGHT;
+			int enemyTileX = (int)enemyPosition.x / TILE_WIDTH;
+			int enemyTileY = (int)enemyPosition.y / TILE_HEIGHT;
+
+			if (playerTileX == enemyTileX || playerTileX == enemyTileX + 1 || playerTileX == enemyTileX - 1)
+			{
+				if(enemyTileY == playerTileY - 1)
+					currentEnemy->TakeDamage();
+			}
+		}
+	}
 }

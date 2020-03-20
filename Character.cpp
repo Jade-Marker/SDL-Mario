@@ -69,7 +69,7 @@ void Character::Update(float deltaTime, SDL_Event e)
 				mJumping = false;
 		}
 		else
-			mJumping = false;
+			HitTile();
 	}
 
 	if (mMovingLeft)
@@ -196,4 +196,9 @@ void Character::AddGravity(float deltaTime)
 		mPosition.y = SCREEN_HEIGHT - mSingleSpriteHeight;
 		mCanJump = true;
 	}
+}
+
+void Character::HitTile()
+{
+	mJumping = false;
 }
