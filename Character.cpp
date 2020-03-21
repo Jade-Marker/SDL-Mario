@@ -156,6 +156,9 @@ void Character::MoveLeft(float deltaTime)
 	{
 		mPosition.x -= cMovementSpeed * deltaTime;
 	}
+
+	if (mPosition.x < 0)
+		ScreenWrap(deltaTime);
 }
 
 void Character::MoveRight(float deltaTime)
@@ -172,6 +175,9 @@ void Character::MoveRight(float deltaTime)
 	{
 		mPosition.x += cMovementSpeed * deltaTime;
 	}
+
+	if (mPosition.x + mSingleSpriteWidth * 0.5f > SCREEN_WIDTH)
+		ScreenWrap(deltaTime);
 }
 
 void Character::Jump()
@@ -201,4 +207,14 @@ void Character::AddGravity(float deltaTime)
 void Character::HitTile()
 {
 	mJumping = false;
+}
+
+void Character::ScreenWrap(float deltaTime)
+{
+	if (mPosition.x < -mSingleSpriteWidth)
+		mPosition.x = SCREEN_WIDTH - mSingleSpriteWidth * 0.5f;
+	else if (mPosition.x + mSingleSpriteWidth * 0.5f > SCREEN_WIDTH)
+		mPosition.x = -mSingleSpriteWidth;
+
+	mPosition.y -= GRAVITY * deltaTime;
 }

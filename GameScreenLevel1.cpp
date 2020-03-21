@@ -5,11 +5,20 @@
 #include "PowBlock.h"
 
 //Todo
+//Get enemies to render behind the pipes at the bottom
 //Get platform to animate when you hit it 
 //Clean up music and sound effect code (especially stuff in source.cpp)
 //Fix bug with gravity where player can fall through the sides of blocks
 //Implement another enemy (get sprite from here: https://www.spriters-resource.com/arcade/mariobros/sheet/93677/)
 //Sort SFX for player/enemies/coins
+//Make actual title screen
+//Player death
+//Lives
+//Fix enemy AI to be accurate to original
+//Animation for player and koopa update
+//Hitting a turned over koopa should turn it back over
+//Level 2 stuff
+
 
 
 GameScreenLevel1::GameScreenLevel1(SDL_Renderer* renderer) : GameScreen(renderer), mLevelMap(NULL)

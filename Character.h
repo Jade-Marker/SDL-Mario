@@ -74,5 +74,6 @@ protected:
 	virtual void Jump();
 	virtual void AddGravity(float deltaTime);
 	virtual void HitTile();
+	virtual void ScreenWrap(float deltaTime);
 };
 
