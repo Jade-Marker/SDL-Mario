@@ -4,6 +4,11 @@
 #define SCREEN_WIDTH 512
 #define SCREEN_HEIGHT 416
 
+//Player constants
+#define MARIO_TEXT_POS 4.0f
+#define LUIGI_TEXT_POS 0.5f * SCREEN_WIDTH
+#define SCORE_HEIGHT 4.0f
+
 //movement constants
 #define MOVEMENTSPEED 60.0f
 #define GRAVITY 96.0f

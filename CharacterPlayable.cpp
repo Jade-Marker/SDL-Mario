@@ -1,8 +1,8 @@
 #include "CharacterPlayable.h"
 
 CharacterPlayable::CharacterPlayable(SDL_Renderer* renderer, std::string imagePath, Vector2D startPosition, int jumpKey, int rightKey, int leftKey,
-	LevelMap* map, float moveSpeed, std::vector<CharacterEnemy*>* const enemiesList):
-	Character(renderer, imagePath, startPosition, map, moveSpeed), mState(IDLE), mScore(0), mEnemiesList(enemiesList)
+	LevelMap* map, float moveSpeed, std::vector<CharacterEnemy*>* const enemiesList, std::string name, float scoreXPos):
+	Character(renderer, imagePath, startPosition, map, moveSpeed), mState(IDLE), mScore(0), mEnemiesList(enemiesList), mName(name), mScoreXPos(scoreXPos)
 {
 	mInputMap[JUMP] = jumpKey;
 	mInputMap[RIGHT] = rightKey;
@@ -62,7 +62,12 @@ CHARACTERSTATE CharacterPlayable::GetState()
 void CharacterPlayable::IncrementScore(int value)
 {
 	mScore += value;
-	std::cout << "Score: " << mScore << std::endl;
+}
+
+void CharacterPlayable::RenderScore(Font* font)
+{
+	std::string output = mName + ":" + std::to_string(mScore);
+	font->DrawString(output, Vector2D(mScoreXPos, SCORE_HEIGHT), Vector2D(1.0f, 1.0f));
 }
 
 void CharacterPlayable::HitTile()

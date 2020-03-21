@@ -17,7 +17,7 @@ GameScreenLevel1::GameScreenLevel1(SDL_Renderer* renderer) : GameScreen(renderer
 	SetLevelMap();
 	SetUpLevel();
 
-	text = new Font(renderer, "Fonts/Press Start 2P.png", 32, 32, ' ');
+	scoreFont = new Font(renderer, "Fonts/Press Start 2P.png", 32, 32, ' ');
 }
 
 GameScreenLevel1::~GameScreenLevel1()
@@ -60,7 +60,8 @@ void GameScreenLevel1::Render()
 
 	mPowBlock->Render();
 
-	text->DrawString("Hello World!", Vector2D(80, 2), Vector2D(0.8f, 0.8f));
+	mMarioCharacter->RenderScore(scoreFont);
+	mLuigiCharacter->RenderScore(scoreFont);
 }
 
 void GameScreenLevel1::Update(float deltaTime, SDL_Event e)
@@ -131,8 +132,8 @@ bool GameScreenLevel1::SetUpLevel()
 	
 	//Set up the player character
 	//myCharacter = new Character(mRenderer, "Images/Mario.png", Vector2D(64, 330));
-	mMarioCharacter = new CharacterPlayable(mRenderer, "Images/Mario.png", Vector2D(64, 330), SDLK_w, SDLK_d, SDLK_a, mLevelMap, MOVEMENTSPEED, &mEnemiesAndCoins);
-	mLuigiCharacter = new CharacterPlayable(mRenderer, "Images/Luigi.png", Vector2D(128, 330), SDLK_UP, SDLK_RIGHT, SDLK_LEFT, mLevelMap, MOVEMENTSPEED, &mEnemiesAndCoins);
+	mMarioCharacter = new CharacterPlayable(mRenderer, "Images/Mario.png", Vector2D(64, 330), SDLK_w, SDLK_d, SDLK_a, mLevelMap, MOVEMENTSPEED, &mEnemiesAndCoins, "Mario", MARIO_TEXT_POS);
+	mLuigiCharacter = new CharacterPlayable(mRenderer, "Images/Luigi.png", Vector2D(128, 330), SDLK_UP, SDLK_RIGHT, SDLK_LEFT, mLevelMap, MOVEMENTSPEED, &mEnemiesAndCoins, "Luigi", LUIGI_TEXT_POS);
 
 	//Set up our POW block
 	mPowBlock = new PowBlock(mRenderer, mLevelMap);

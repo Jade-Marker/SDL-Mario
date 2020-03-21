@@ -33,7 +33,7 @@ private:
 	float mEnemySpawnTimer;
 	float mCoinSpawnTimer;
 
-	Font* text;
+	Font* scoreFont;
 
 public:
 	GameScreenLevel1(SDL_Renderer* renderer);
