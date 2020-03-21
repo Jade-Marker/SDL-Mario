@@ -14,9 +14,17 @@ CharacterKoopa::~CharacterKoopa()
 
 void CharacterKoopa::TakeDamage()
 {
-	mInjured = true;
-	mInjuredTime = INJURED_TIME;
-	mCurrentFrame = KOOPA_DAMAGED_FRAME;
+	if (!mInjured)
+	{
+		mInjured = true;
+		mInjuredTime = INJURED_TIME;
+		mCurrentFrame = KOOPA_DAMAGED_FRAME;
+	}
+	else
+	{
+		FlipRightwayUp();
+	}
+
 	Jump();
 }
 

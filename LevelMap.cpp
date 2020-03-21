@@ -83,12 +83,15 @@ void LevelMap::Render(float yOffset)
 	{
 		for (int x = 0; x < mMapWidth; x++)
 		{
-			int left = TILE_WIDTH * mMap[y][x];
+			if (mMap[y][x] != EMPTY)
+			{
+				int left = TILE_WIDTH * mMap[y][x];
 
-			SDL_Rect portionOfTileSet = { left, 0, TILE_WIDTH, TILE_HEIGHT };
-			SDL_Rect destRect = { (int)(x * TILE_WIDTH), (int)(y * TILE_HEIGHT + yOffset), TILE_WIDTH, TILE_HEIGHT };
+				SDL_Rect portionOfTileSet = { left, 0, TILE_WIDTH, TILE_HEIGHT };
+				SDL_Rect destRect = { (int)(x * TILE_WIDTH), (int)(y * TILE_HEIGHT + yOffset), TILE_WIDTH, TILE_HEIGHT };
 
-			mTexture->Render(portionOfTileSet, destRect, SDL_FLIP_NONE);
+				mTexture->Render(portionOfTileSet, destRect, SDL_FLIP_NONE);
+			}
 		}
 	}
 }

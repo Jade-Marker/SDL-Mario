@@ -5,7 +5,6 @@
 #include "PowBlock.h"
 
 //Todo
-//Get enemies to render behind the pipes at the bottom
 //Get platform to animate when you hit it 
 //Clean up music and sound effect code (especially stuff in source.cpp)
 //Fix bug with gravity where player can fall through the sides of blocks
@@ -16,7 +15,6 @@
 //Lives
 //Fix enemy AI to be accurate to original
 //Animation for player and koopa update
-//Hitting a turned over koopa should turn it back over
 //Level 2 stuff
 
 
@@ -55,7 +53,6 @@ void GameScreenLevel1::Render()
 {
 	//Draw the background
 	//mBackgroundTexture->Render(Vector2D(0, mBackgroundYPos), SDL_FLIP_NONE);
-	mLevelMap->Render(mBackgroundYPos);
 
 	//Draw the enemies
 	for (unsigned int i = 0; i < mEnemiesAndCoins.size(); i++)
@@ -71,6 +68,8 @@ void GameScreenLevel1::Render()
 
 	mMarioCharacter->RenderScore(scoreFont);
 	mLuigiCharacter->RenderScore(scoreFont);
+
+	mLevelMap->Render(mBackgroundYPos);
 }
 
 void GameScreenLevel1::Update(float deltaTime, SDL_Event e)
