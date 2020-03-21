@@ -11,7 +11,7 @@ Font::~Font()
 {
 }
 
-void Font::DrawString(std::string outputString, Vector2D position)
+void Font::DrawString(std::string outputString, Vector2D position, Vector2D scale)
 {
 	int charactersPerLine = mFontTexture->GetWidth() / mCharacterWidth;
 
@@ -25,7 +25,7 @@ void Font::DrawString(std::string outputString, Vector2D position)
 		sourceY = ((currentCharacter - mFirstCharacter) / charactersPerLine) * mCharacterHeight;
 
 		SDL_Rect portionOfFont = { sourceX, sourceY, mCharacterWidth, mCharacterHeight };
-		SDL_Rect destRect = { (int)position.x + mCharacterWidth * i, (int)position.y, mCharacterWidth, mCharacterHeight };
+		SDL_Rect destRect = { (int)position.x + mCharacterWidth * i * scale.x, (int)position.y * scale.y, mCharacterWidth * scale.x, mCharacterHeight * scale.y };
 
 		mFontTexture->Render(portionOfFont, destRect, SDL_FLIP_NONE);
 	}

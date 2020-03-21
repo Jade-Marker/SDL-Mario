@@ -14,6 +14,6 @@ public:
 	Font(SDL_Renderer* renderer, std::string fontSource, int characterWidth, int characterHeight, char firstCharacter);
 	~Font();
 
-	void DrawString(std::string outputString, Vector2D position);
+	void DrawString(std::string outputString, Vector2D position, Vector2D scale);
 };
 

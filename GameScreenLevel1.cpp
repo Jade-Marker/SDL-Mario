@@ -5,7 +5,6 @@
 #include "PowBlock.h"
 
 //Todo
-//Add some scaling to the text output
 //Get platform to animate when you hit it 
 //Clean up music and sound effect code (especially stuff in source.cpp)
 //Fix bug with gravity where player can fall through the sides of blocks
@@ -61,7 +60,7 @@ void GameScreenLevel1::Render()
 
 	mPowBlock->Render();
 
-	text->DrawString("Hello World!", Vector2D(80, 2));
+	text->DrawString("Hello World!", Vector2D(80, 2), Vector2D(0.8f, 0.8f));
 }
 
 void GameScreenLevel1::Update(float deltaTime, SDL_Event e)
