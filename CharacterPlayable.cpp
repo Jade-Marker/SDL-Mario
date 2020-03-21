@@ -1,6 +1,7 @@
 #include "CharacterPlayable.h"
 
-CharacterPlayable::CharacterPlayable(SDL_Renderer* renderer, std::string imagePath, Vector2D startPosition, int jumpKey, int rightKey, int leftKey, LevelMap* map, float moveSpeed, std::vector<CharacterEnemy*>* enemiesList):
+CharacterPlayable::CharacterPlayable(SDL_Renderer* renderer, std::string imagePath, Vector2D startPosition, int jumpKey, int rightKey, int leftKey,
+	LevelMap* map, float moveSpeed, std::vector<CharacterEnemy*>* const enemiesList):
 	Character(renderer, imagePath, startPosition, map, moveSpeed), mState(IDLE), mScore(0), mEnemiesList(enemiesList)
 {
 	mInputMap[JUMP] = jumpKey;

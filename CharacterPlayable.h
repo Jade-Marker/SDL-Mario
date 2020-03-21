@@ -16,7 +16,8 @@ private:
 
 
 public:
-	CharacterPlayable(SDL_Renderer* renderer, std::string imagePath, Vector2D startPosition, int jumpKey, int rightKey, int leftKey, LevelMap* map, float moveSpeed, std::vector<CharacterEnemy*>* enemiesList);
+	CharacterPlayable(SDL_Renderer* renderer, std::string imagePath, Vector2D startPosition, int jumpKey, int rightKey, int leftKey,
+		LevelMap* map, float moveSpeed, std::vector<CharacterEnemy*>* const enemiesList);
 	virtual void Render();
 	void Update(float deltaTime, SDL_Event e);
 	virtual void OnPlayerCollision(CharacterPlayable* player);

@@ -5,9 +5,8 @@
 #include "PowBlock.h"
 
 //Todo
-//Update Character playable so that the pointer to the enemy list is readonly
-//Get platform to animate when you hit it 
 //Add some scaling to the text output
+//Get platform to animate when you hit it 
 //Clean up music and sound effect code (especially stuff in source.cpp)
 //Fix bug with gravity where player can fall through the sides of blocks
 //Implement another enemy (get sprite from here: https://www.spriters-resource.com/arcade/mariobros/sheet/93677/)
