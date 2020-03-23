@@ -11,7 +11,6 @@
 //Implement another enemy (get sprite from here: https://www.spriters-resource.com/arcade/mariobros/sheet/93677/)
 //Sort SFX for player/enemies/coins
 //Make actual title screen
-//Player death
 //Lives
 //Fix enemy AI to be accurate to original
 //Animation for player and koopa update
@@ -61,8 +60,10 @@ void GameScreenLevel1::Render()
 	}
 
 	//Draw the character
-	mMarioCharacter->Render();
-	mLuigiCharacter->Render();
+	if(mMarioCharacter->GetState() != PLAYER_DEATH)
+		mMarioCharacter->Render();
+	if(mLuigiCharacter->GetState() != PLAYER_DEATH)
+		mLuigiCharacter->Render();
 
 	mPowBlock->Render();
 
@@ -108,10 +109,13 @@ void GameScreenLevel1::Update(float deltaTime, SDL_Event e)
 	UpdateEnemiesAndCoins(deltaTime, e);
 
 	//Update the player
-	mMarioCharacter->Update(deltaTime, e);
-	mLuigiCharacter->Update(deltaTime, e);
+	if(mMarioCharacter->GetState() != PLAYER_DEATH)
+		mMarioCharacter->Update(deltaTime, e);
+	if(mLuigiCharacter->GetState() != PLAYER_DEATH)
+		mLuigiCharacter->Update(deltaTime, e);
 
-	if (Collisions::Instance()->Circle(mMarioCharacter->GetCollisionCircle(), mLuigiCharacter->GetCollisionCircle()))
+	if (Collisions::Instance()->Circle(mMarioCharacter->GetCollisionCircle(), mLuigiCharacter->GetCollisionCircle()) &&
+		(mMarioCharacter->GetState() != PLAYER_DEATH && mLuigiCharacter->GetState() != PLAYER_DEATH))
 	{
 		mMarioCharacter->OnPlayerCollision(mLuigiCharacter);
 		mLuigiCharacter->OnPlayerCollision(mMarioCharacter);
@@ -179,7 +183,7 @@ void GameScreenLevel1::SetLevelMap()
 
 void GameScreenLevel1::UpdatePOWBlock()
 {
-	if (Collisions::Instance()->Box(mMarioCharacter->GetCollisionBox(), mPowBlock->GetCollisionBox()) && mPowBlock->IsAvailable())
+	if (Collisions::Instance()->Box(mMarioCharacter->GetCollisionBox(), mPowBlock->GetCollisionBox()) && mPowBlock->IsAvailable() && mMarioCharacter->GetState() != PLAYER_DEATH)
 	{
 		//Collided whilst jumping
 		if (mMarioCharacter->IsJumping())
@@ -189,7 +193,7 @@ void GameScreenLevel1::UpdatePOWBlock()
 			mMarioCharacter->CancelJump();
 		}
 	}
-	else if (Collisions::Instance()->Box(mLuigiCharacter->GetCollisionBox(), mPowBlock->GetCollisionBox()) && mPowBlock->IsAvailable())
+	else if (Collisions::Instance()->Box(mLuigiCharacter->GetCollisionBox(), mPowBlock->GetCollisionBox()) && mPowBlock->IsAvailable() && mLuigiCharacter->GetState() != PLAYER_DEATH)
 	{
 		//Collided whilst jumping
 		if (mLuigiCharacter->IsJumping())
@@ -239,11 +243,11 @@ void GameScreenLevel1::UpdateEnemiesAndCoins(float deltaTime, SDL_Event e)
 			}
 			else 
 			{
-				if (Collisions::Instance()->Circle(mEnemiesAndCoins[i], mMarioCharacter))
+				if (Collisions::Instance()->Circle(mEnemiesAndCoins[i], mMarioCharacter) && mMarioCharacter->GetState() != PLAYER_DEATH)
 				{
 					mEnemiesAndCoins[i]->OnPlayerCollision(mMarioCharacter);
 				}
-				else if (Collisions::Instance()->Circle(mEnemiesAndCoins[i], mLuigiCharacter))
+				else if (Collisions::Instance()->Circle(mEnemiesAndCoins[i], mLuigiCharacter) && mLuigiCharacter->GetState() != PLAYER_DEATH)
 				{
 					mEnemiesAndCoins[i]->OnPlayerCollision(mLuigiCharacter);
 				}

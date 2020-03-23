@@ -75,7 +75,10 @@ void CharacterKoopa::Update(float deltaTime, SDL_Event e)
 void CharacterKoopa::OnPlayerCollision(CharacterPlayable* player)
 {
 	if (GetInjured())
+	{
 		SetAlive(false);
+		player->IncrementScore(KOOPA_SCORE);
+	}
 	else
 		player->SetState(PLAYER_DEATH);
 }

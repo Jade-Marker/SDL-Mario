@@ -33,10 +33,11 @@
 #define KOOPA_FRAME_COUNT 2
 #define KOOPA_MOVING_FRAME 0
 #define KOOPA_DAMAGED_FRAME 1
+#define KOOPA_SCORE 1
 
 //Coin constants
 #define COIN_SPAWN_TIME 15.0f
-#define COIN_SCORE 1
+#define COIN_SCORE 2
 #define COIN_FRAME_COUNT 5
 
 //Pow block constants
