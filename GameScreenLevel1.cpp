@@ -11,7 +11,6 @@
 //Implement another enemy (get sprite from here: https://www.spriters-resource.com/arcade/mariobros/sheet/93677/)
 //Sort SFX for player/enemies/coins
 //Make actual title screen
-//Lives
 //Fix enemy AI to be accurate to original
 //Animation for player and koopa update
 //Level 2 stuff
@@ -67,8 +66,8 @@ void GameScreenLevel1::Render()
 
 	mPowBlock->Render();
 
-	mMarioCharacter->RenderScore(scoreFont);
-	mLuigiCharacter->RenderScore(scoreFont);
+	mMarioCharacter->RenderScoreAndLives(scoreFont);
+	mLuigiCharacter->RenderScoreAndLives(scoreFont);
 
 	mLevelMap->Render(mBackgroundYPos);
 }
@@ -144,8 +143,10 @@ bool GameScreenLevel1::SetUpLevel()
 	
 	//Set up the player character
 	//myCharacter = new Character(mRenderer, "Images/Mario.png", Vector2D(64, 330));
-	mMarioCharacter = new CharacterPlayable(mRenderer, "Images/Mario.png", Vector2D(64, 330), SDLK_w, SDLK_d, SDLK_a, mLevelMap, MOVEMENTSPEED, &mEnemiesAndCoins, "Mario", MARIO_TEXT_POS);
-	mLuigiCharacter = new CharacterPlayable(mRenderer, "Images/Luigi.png", Vector2D(128, 330), SDLK_UP, SDLK_RIGHT, SDLK_LEFT, mLevelMap, MOVEMENTSPEED, &mEnemiesAndCoins, "Luigi", LUIGI_TEXT_POS);
+	mMarioCharacter = new CharacterPlayable(mRenderer, "Images/Mario.png", Vector2D(64, 330), SDLK_w, SDLK_d, SDLK_a, 
+		mLevelMap, MOVEMENTSPEED, &mEnemiesAndCoins, "Mario", MARIO_TEXT_POS, INITIAL_LIVES);
+	mLuigiCharacter = new CharacterPlayable(mRenderer, "Images/Luigi.png", Vector2D(128, 330), SDLK_UP, SDLK_RIGHT, SDLK_LEFT, 
+		mLevelMap, MOVEMENTSPEED, &mEnemiesAndCoins, "Luigi", LUIGI_TEXT_POS, INITIAL_LIVES);
 
 	//Set up our POW block
 	mPowBlock = new PowBlock(mRenderer, mLevelMap);

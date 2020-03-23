@@ -80,7 +80,7 @@ void CharacterKoopa::OnPlayerCollision(CharacterPlayable* player)
 		player->IncrementScore(KOOPA_SCORE);
 	}
 	else
-		player->SetState(PLAYER_DEATH);
+		player->KillPlayer();
 }
 
 bool CharacterKoopa::GetInjured()

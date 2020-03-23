@@ -74,6 +74,20 @@ void Texture2D::Render(Vector2D newPosition, SDL_RendererFlip flip, double angle
 	SDL_RenderCopyEx(mRenderer, mTexture, NULL, &renderLocation, angle, NULL, flip);
 }
 
+void Texture2D::Render(Vector2D newPosition, SDL_RendererFlip flip, Uint8 alphaMod, double angle)
+{
+	SDL_SetTextureAlphaMod(mTexture, alphaMod);
+
+	//Set where to render the texture
+	SDL_Rect renderLocation = { newPosition.x, newPosition.y, mWidth, mHeight };
+
+	//Render to screen
+	SDL_RenderCopyEx(mRenderer, mTexture, NULL, &renderLocation, angle, NULL, flip);
+
+	SDL_SetTextureAlphaMod(mTexture, 255);
+
+}
+
 void Texture2D::Render(SDL_Rect srcRect, SDL_Rect destRect, SDL_RendererFlip flip, double angle)
 {
 	//Render to screen

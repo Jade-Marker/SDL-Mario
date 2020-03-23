@@ -1,8 +1,8 @@
 #include "CharacterPlayable.h"
 
 CharacterPlayable::CharacterPlayable(SDL_Renderer* renderer, std::string imagePath, Vector2D startPosition, int jumpKey, int rightKey, int leftKey,
-	LevelMap* map, float moveSpeed, std::vector<CharacterEnemy*>* const enemiesList, std::string name, float scoreXPos):
-	Character(renderer, imagePath, startPosition, map, moveSpeed), mState(IDLE), mScore(0), mEnemiesList(enemiesList), mName(name), mScoreXPos(scoreXPos)
+	LevelMap* map, float moveSpeed, std::vector<CharacterEnemy*>* const enemiesList, std::string name, float scoreXPos, int initialLives):
+	Character(renderer, imagePath, startPosition, map, moveSpeed), mState(IDLE), mScore(0), mEnemiesList(enemiesList), mName(name), mScoreXPos(scoreXPos), mLives(initialLives)
 {
 	mInputMap[JUMP] = jumpKey;
 	mInputMap[RIGHT] = rightKey;
@@ -11,10 +11,20 @@ CharacterPlayable::CharacterPlayable(SDL_Renderer* renderer, std::string imagePa
 
 void CharacterPlayable::Render()
 {
-	if (mFacingDirection == FACING_RIGHT)
-		mTexture->Render(mPosition, SDL_FLIP_NONE, 0.0);
-	else
-		mTexture->Render(mPosition, SDL_FLIP_HORIZONTAL, 0.0);
+	if (!mInvulnerable)
+	{
+		if (mFacingDirection == FACING_RIGHT)
+			mTexture->Render(mPosition, SDL_FLIP_NONE, 0.0);
+		else
+			mTexture->Render(mPosition, SDL_FLIP_HORIZONTAL, 0.0);
+	}
+	else 
+	{
+		if (mFacingDirection == FACING_RIGHT)
+			mTexture->Render(mPosition, SDL_FLIP_NONE, (Uint8)255 * abs(sin(INVULN_MULTIPLIER * mInvulnTimer)), 0.0);
+		else
+			mTexture->Render(mPosition, SDL_FLIP_HORIZONTAL, (Uint8)255 * abs(sin(INVULN_MULTIPLIER * mInvulnTimer)), 0.0);
+	}
 }
 
 void CharacterPlayable::Update(float deltaTime, SDL_Event e)
@@ -42,6 +52,13 @@ void CharacterPlayable::Update(float deltaTime, SDL_Event e)
 			Jump();
 		break;
 	}
+
+	if (mInvulnerable)
+	{
+		mInvulnTimer -= deltaTime;
+		if (mInvulnTimer <= 0.0f)
+			mInvulnerable = false;
+	}
 }
 
 void CharacterPlayable::OnPlayerCollision(CharacterPlayable* player)
@@ -59,15 +76,31 @@ CHARACTERSTATE CharacterPlayable::GetState()
 	return mState;
 }
 
+void CharacterPlayable::KillPlayer()
+{
+	if (!mInvulnerable)
+	{
+		mLives--;
+		mInvulnerable = true;
+		mInvulnTimer = INVULNERABILITY_TIME;
+
+		if (mLives <= 0)
+			SetState(PLAYER_DEATH);
+	}
+}
+
 void CharacterPlayable::IncrementScore(int value)
 {
 	mScore += value;
 }
 
-void CharacterPlayable::RenderScore(Font* font)
+void CharacterPlayable::RenderScoreAndLives(Font* font)
 {
-	std::string output = mName + ":" + std::to_string(mScore);
-	font->DrawString(output, Vector2D(mScoreXPos, SCORE_HEIGHT), Vector2D(1.0f, 1.0f));
+	std::string scoreString = mName + ":" + std::to_string(mScore);
+	font->DrawString(scoreString, Vector2D(mScoreXPos, SCORE_HEIGHT), Vector2D(0.5f, 0.5f));
+	
+	std::string livesString = "Lives:" + std::to_string(mLives);
+	font->DrawString(livesString, Vector2D(mScoreXPos, LIVES_HEIGHT), Vector2D(0.5f, 0.5f));
 }
 
 void CharacterPlayable::HitTile()

@@ -6,8 +6,12 @@
 
 //Player constants
 #define MARIO_TEXT_POS 4.0f
-#define LUIGI_TEXT_POS 0.5f * SCREEN_WIDTH
+#define LUIGI_TEXT_POS 0.75f * SCREEN_WIDTH
 #define SCORE_HEIGHT 4.0f
+#define INITIAL_LIVES 3
+#define LIVES_HEIGHT 40.0f
+#define INVULNERABILITY_TIME 5.0f
+#define INVULN_MULTIPLIER 4.0f
 
 //movement constants
 #define MOVEMENTSPEED 60.0f
