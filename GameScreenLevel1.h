@@ -9,6 +9,7 @@
 #include "CharacterKoopa.h"
 #include "CharacterCoin.h"
 #include "Font.h"
+#include "GameScreenManager.h"
 
 #include <vector>
 
@@ -35,8 +36,10 @@ private:
 
 	Font* scoreFont;
 
+	GameScreenManager* mManager;
+
 public:
-	GameScreenLevel1(SDL_Renderer* renderer);
+	GameScreenLevel1(SDL_Renderer* renderer, GameScreenManager* manager);
 	~GameScreenLevel1();
 
 	void Render();

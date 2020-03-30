@@ -17,7 +17,8 @@
 
 
 
-GameScreenLevel1::GameScreenLevel1(SDL_Renderer* renderer) : GameScreen(renderer), mLevelMap(NULL)
+GameScreenLevel1::GameScreenLevel1(SDL_Renderer* renderer, GameScreenManager* manager) :
+	GameScreen(renderer), mLevelMap(NULL), mManager(manager)
 {
 	SetLevelMap();
 	SetUpLevel();
@@ -121,6 +122,9 @@ void GameScreenLevel1::Update(float deltaTime, SDL_Event e)
 	}
 
 	UpdatePOWBlock();
+
+	if (mMarioCharacter->GetState() == PLAYER_DEATH && mLuigiCharacter->GetState() == PLAYER_DEATH)
+		mManager->ChangeScreen(SCREEN_GAMEOVER);
 }
 
 bool GameScreenLevel1::SetUpLevel()

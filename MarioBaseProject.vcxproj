@@ -134,6 +134,7 @@
     <ClCompile Include="Collisions.cpp" />
     <ClCompile Include="Font.cpp" />
     <ClCompile Include="GameScreen.cpp" />
+    <ClCompile Include="GameScreenGameover.cpp" />
     <ClCompile Include="GameScreenIntro.cpp" />
     <ClCompile Include="GameScreenLevel1.cpp" />
     <ClCompile Include="GameScreenManager.cpp" />
@@ -160,6 +161,7 @@
     <ClInclude Include="Constants.h" />
     <ClInclude Include="Font.h" />
     <ClInclude Include="GameScreen.h" />
+    <ClInclude Include="GameScreenGameover.h" />
     <ClInclude Include="GameScreenIntro.h" />
     <ClInclude Include="GameScreenLevel1.h" />
     <ClInclude Include="GameScreenManager.h" />
