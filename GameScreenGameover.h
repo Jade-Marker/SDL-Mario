@@ -6,6 +6,7 @@
 #include "GameScreen.h"
 #include "GameScreenManager.h"
 #include "Font.h"
+#include "ScoreManager.h"
 
 class Texture2D;
 

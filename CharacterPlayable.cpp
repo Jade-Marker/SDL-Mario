@@ -94,6 +94,11 @@ void CharacterPlayable::IncrementScore(int value)
 	mScore += value;
 }
 
+int CharacterPlayable::GetScore()
+{
+	return mScore;
+}
+
 void CharacterPlayable::RenderScoreAndLives(Font* font)
 {
 	std::string scoreString = mName + ":" + std::to_string(mScore);

@@ -124,7 +124,10 @@ void GameScreenLevel1::Update(float deltaTime, SDL_Event e)
 	UpdatePOWBlock();
 
 	if (mMarioCharacter->GetState() == PLAYER_DEATH && mLuigiCharacter->GetState() == PLAYER_DEATH)
+	{
+		ScoreManager::Instance()->SetPlayerScore(mMarioCharacter->GetScore() + mLuigiCharacter->GetScore());
 		mManager->ChangeScreen(SCREEN_GAMEOVER);
+	}
 }
 
 bool GameScreenLevel1::SetUpLevel()

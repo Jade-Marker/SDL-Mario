@@ -21,7 +21,7 @@ void GameScreenGameOver::Render()
 {
 	//Draw the background
 	//mBackgroundTexture->Render(Vector2D(), SDL_FLIP_NONE);
-	highScoreText->DrawString("You got " + std::to_string(5) + " points", Vector2D(0, 0), Vector2D(1, 1));
+	highScoreText->DrawString("You got " + std::to_string(ScoreManager::Instance()->GetPlayerScore()) + " points", Vector2D(0, 0), Vector2D(1, 1));
 }
 
 void GameScreenGameOver::Update(float deltaTime, SDL_Event e)

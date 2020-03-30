@@ -10,6 +10,7 @@
 #include "CharacterCoin.h"
 #include "Font.h"
 #include "GameScreenManager.h"
+#include "ScoreManager.h"
 
 #include <vector>
 

@@ -31,6 +31,7 @@ public:
 	CHARACTERSTATE GetState();
 	void KillPlayer();
 	void IncrementScore(int value);
+	int GetScore();
 	void RenderScoreAndLives(Font* font);
 
 private:
