@@ -1,7 +1,7 @@
 #include "SoundEffect.h"
 
 SoundEffect::SoundEffect():
-	mSound(nullptr)
+	mSound(nullptr), channel(0)
 {
 }
 
@@ -16,11 +16,16 @@ SoundEffect::~SoundEffect()
 
 void SoundEffect::Play(int loops)
 {
-	Mix_PlayChannel(-1, mSound, loops);
+	channel = Mix_PlayChannel(-1, mSound, loops);
 }
 
 void SoundEffect::Stop()
 {
+}
+
+bool SoundEffect::Playing()
+{
+	return Mix_Playing(channel);
 }
 
 bool SoundEffect::Load(std::string path)

@@ -11,6 +11,7 @@
 #include "Font.h"
 #include "GameScreenManager.h"
 #include "ScoreManager.h"
+#include "SoundList.h"
 
 #include <vector>
 

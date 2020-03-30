@@ -129,6 +129,8 @@ void GameScreenLevel1::Update(float deltaTime, SDL_Event e)
 		ScoreManager::Instance()->SetPlayerScore(mMarioCharacter->GetScore() + mLuigiCharacter->GetScore());
 		mManager->ChangeScreen(SCREEN_GAMEOVER);
 	}
+
+	SoundList::Instance()->Update();
 }
 
 bool GameScreenLevel1::SetUpLevel()

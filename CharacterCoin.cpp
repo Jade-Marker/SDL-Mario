@@ -8,6 +8,9 @@ CharacterCoin::CharacterCoin(SDL_Renderer* renderer, std::string imagePath, Vect
 		mMovingLeft = true;
 	else
 		mMovingRight = true;
+
+	mDeathSound = new SoundEffect();
+	mDeathSound->Load("SFX/coin.ogg");
 }
 
 CharacterCoin::~CharacterCoin()

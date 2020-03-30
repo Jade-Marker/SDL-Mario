@@ -6,6 +6,9 @@ CharacterKoopa::CharacterKoopa(SDL_Renderer* renderer, std::string imagePath, Ve
 {
 	mFacingDirection = startFacing;
 	mCurrentFrame = KOOPA_MOVING_FRAME;
+
+	mDeathSound = new SoundEffect();
+	mDeathSound->Load("SFX/shell.ogg");
 }
 
 CharacterKoopa::~CharacterKoopa()

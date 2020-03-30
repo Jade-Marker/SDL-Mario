@@ -9,6 +9,7 @@ class SoundEffect
 {
 private:
 	Mix_Chunk* mSound;
+	int channel;
 
 public:
 	SoundEffect();
@@ -16,7 +17,7 @@ public:
 
 	void Play(int loops);
 	void Stop();
-
+	bool Playing();
 	bool Load(std::string path);
 };
 
