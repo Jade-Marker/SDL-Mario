@@ -13,6 +13,7 @@
 //Make actual title screen
 //Fix enemy AI to be accurate to original
 //Animation for player and koopa update
+//Highscore table for end screen
 //Level 2 stuff
 
 

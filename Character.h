@@ -26,11 +26,9 @@ protected:
 
 	//jumping variables
 	bool mJumping;
-
-	//SFX
-	SoundEffect* mJumpSound;
 	bool mCanJump;
 	float mJumpForce;
+	SoundEffect* mJumpSound;
 
 	//collision variables
 	float mCollisionRadius;

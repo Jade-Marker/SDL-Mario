@@ -7,6 +7,9 @@ CharacterPlayable::CharacterPlayable(SDL_Renderer* renderer, std::string imagePa
 	mInputMap[JUMP] = jumpKey;
 	mInputMap[RIGHT] = rightKey;
 	mInputMap[LEFT] = leftKey;
+
+	mJumpSound = new SoundEffect();
+	mJumpSound->Load("SFX/jumpSound.ogg");
 }
 
 void CharacterPlayable::Render()

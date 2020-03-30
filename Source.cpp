@@ -30,9 +30,6 @@ int main(int argc, char* args[])
 	//Check if SDL was set up correctly
 	if (InitSDL())
 	{
-		/*LoadMusic("Music/Mario.mp3");
-		if (Mix_PlayingMusic() == 0)
-			Mix_PlayMusic(gMusic, -1);*/
 		SoundEffect music;
 		music.Load("Music/Mario.ogg");
 		music.Play(-1);
@@ -60,6 +57,13 @@ int main(int argc, char* args[])
 
 bool InitSDL() 
 {
+	//Initialise the Mixer
+	if (Mix_OpenAudio(44100, MIX_DEFAULT_FORMAT, 2, 512) < 0)
+	{
+		cout << "Mixer could not initialise. Error: " << Mix_GetError();
+		return false;
+	}
+
 	//Setup SDL
 	if (SDL_Init(SDL_INIT_VIDEO) < 0)
 	{
@@ -100,14 +104,6 @@ bool InitSDL()
 			cout << "Renderer could not initialise. Error: " << SDL_GetError();
 			return false;
 		}
-
-		//Initialise the Mixer
-		if (Mix_OpenAudio(44100, MIX_DEFAULT_FORMAT, 2, 2048) < 0)
-		{
-			cout << "Mixer could not initialise. Error: " << Mix_GetError();
-			return false;
-		}
-
 		return true;
 	}
 }

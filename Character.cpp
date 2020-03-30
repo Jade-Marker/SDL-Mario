@@ -12,9 +12,6 @@ Character::Character(SDL_Renderer* renderer, std::string imagePath, Vector2D sta
 	mTexture = new Texture2D(mRenderer);
 	mTexture->LoadFromFile(imagePath);
 
-	mJumpSound = new SoundEffect();
-	mJumpSound->Load("SFX/Munch.wav");
-
 	mSingleSpriteWidth = mTexture->GetWidth() / noOfFrames;
 	mSingleSpriteHeight = mTexture->GetHeight();
 }
@@ -26,7 +23,8 @@ Character::~Character()
 	delete mTexture;
 	mTexture = NULL;
 
-	delete mJumpSound;
+	if(mJumpSound)
+		delete mJumpSound;
 }
 
 void Character::Render()
@@ -188,7 +186,8 @@ void Character::Jump()
 		mJumping = true;
 		mCanJump = false;
 
-		mJumpSound->Play(0);
+		if(mJumpSound)
+			mJumpSound->Play(0);
 	}
 }
 
