@@ -47,9 +47,12 @@ protected:
 	int mCurrentFrame;
 	int mNumFrames;
 	bool mAnimating;
+	int mCurrentStartFrame;
+	int mCurrentNumOfFrames;
 
 public:
-	Character(SDL_Renderer* renderer, std::string imagePath, Vector2D startPosition, LevelMap* map, float moveSpeed, float frameDelay = 0.0f, int noOfFrames = 1, bool animating = true);
+	Character(SDL_Renderer* renderer, std::string imagePath, Vector2D startPosition, LevelMap* map, float moveSpeed,
+		float frameDelay = 0.0f, int noOfFrames = 1, bool animating = true, int currentStartFrame = 0, int currentNumOfFrames = 1);
 	virtual ~Character();
 
 	virtual void Render();

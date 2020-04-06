@@ -3,11 +3,13 @@
 #include "Constants.h"
 #include "CharacterPlayable.h"
 
-Character::Character(SDL_Renderer* renderer, std::string imagePath, Vector2D startPosition, LevelMap* map, float moveSpeed, float frameDelay, int noOfFrames, bool animating) :
+Character::Character(SDL_Renderer* renderer, std::string imagePath, Vector2D startPosition, LevelMap* map, float moveSpeed,
+	float frameDelay, int noOfFrames, bool animating, int currentStartFrame, int currentNumOfFrames) :
 	mRenderer(renderer), mPosition(startPosition), mFacingDirection(FACING_RIGHT),
 	mMovingLeft(false), mMovingRight(false), mJumping(false), mCanJump(false), mCollisionRadius(15.0f),
 	mCurrentLevelMap(map), mJumpForce(0.0f), cMovementSpeed(moveSpeed), 
-	mFrameDelay(frameDelay), mNumFrames(noOfFrames), mAnimating(animating), mCurrentFrame(0), mSingleSpriteWidth(0), mSingleSpriteHeight(0)
+	mFrameDelay(frameDelay), mNumFrames(noOfFrames), mAnimating(animating), mCurrentFrame(0),
+	mSingleSpriteWidth(0), mSingleSpriteHeight(0), mCurrentStartFrame(currentStartFrame), mCurrentNumOfFrames(currentNumOfFrames)
 {
 	mTexture = new Texture2D(mRenderer);
 	mTexture->LoadFromFile(imagePath);
@@ -84,7 +86,7 @@ void Character::Update(float deltaTime, SDL_Event e)
 		mCanJump = true;
 	//Collided with ground so we can jump again
 
-	if (mNumFrames > 1 && mAnimating)
+	if (mAnimating)
 	{
 		mFrameDelay -= deltaTime;
 		if (mFrameDelay <= 0.0f)
@@ -94,8 +96,12 @@ void Character::Update(float deltaTime, SDL_Event e)
 			mCurrentFrame++;
 
 			//Loop frame around if it goes beyond the number of frames
-			if (mCurrentFrame > mNumFrames - 1)
-				mCurrentFrame = 0;
+			if (mCurrentFrame > mCurrentStartFrame + mCurrentNumOfFrames - 1)
+				mCurrentFrame = mCurrentStartFrame;
+
+			//Skip ahead if further behind than intended
+			if (mCurrentFrame < mCurrentStartFrame)
+				mCurrentFrame = mCurrentStartFrame;
 		}
 	}
 }

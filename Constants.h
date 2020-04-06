@@ -12,6 +12,7 @@
 #define LIVES_HEIGHT 40.0f
 #define INVULNERABILITY_TIME 5.0f
 #define INVULN_MULTIPLIER 4.0f
+#define PLAYER_FRAME_DELAY 0.1f
 
 //movement constants
 #define MOVEMENTSPEED 60.0f

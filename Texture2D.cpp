@@ -93,3 +93,10 @@ void Texture2D::Render(SDL_Rect srcRect, SDL_Rect destRect, SDL_RendererFlip fli
 	//Render to screen
 	SDL_RenderCopyEx(mRenderer, mTexture, &srcRect, &destRect, angle, NULL, flip);
 }
+
+void Texture2D::Render(SDL_Rect srcRect, SDL_Rect destRect, SDL_RendererFlip flip, Uint8 alphaMod, double angle)
+{
+	SDL_SetTextureAlphaMod(mTexture, alphaMod);
+	SDL_RenderCopyEx(mRenderer, mTexture, &srcRect, &destRect, angle, NULL, flip);
+	SDL_SetTextureAlphaMod(mTexture, 255);
+}

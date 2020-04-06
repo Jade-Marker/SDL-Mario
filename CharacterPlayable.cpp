@@ -1,8 +1,9 @@
 #include "CharacterPlayable.h"
 
 CharacterPlayable::CharacterPlayable(SDL_Renderer* renderer, std::string imagePath, Vector2D startPosition, int jumpKey, int rightKey, int leftKey,
-	LevelMap* map, float moveSpeed, std::vector<CharacterEnemy*>* const enemiesList, std::string name, float scoreXPos, int initialLives):
-	Character(renderer, imagePath, startPosition, map, moveSpeed), mState(IDLE), mScore(0), mEnemiesList(enemiesList), mName(name), mScoreXPos(scoreXPos), mLives(initialLives)
+	LevelMap* map, float moveSpeed, std::vector<CharacterEnemy*>* const enemiesList, std::string name, float scoreXPos, int initialLives, float frameDelay):
+	Character(renderer, imagePath, startPosition, map, moveSpeed, frameDelay, 5, true, 0, 1),
+	mState(IDLE), mScore(0), mEnemiesList(enemiesList), mName(name), mScoreXPos(scoreXPos), mLives(initialLives)
 {
 	mInputMap[JUMP] = jumpKey;
 	mInputMap[RIGHT] = rightKey;
@@ -14,19 +15,26 @@ CharacterPlayable::CharacterPlayable(SDL_Renderer* renderer, std::string imagePa
 
 void CharacterPlayable::Render()
 {
+	int left = mCurrentFrame * mSingleSpriteWidth;
+
+	//Get the portion of the spritesheet you want to draw
+	//								{XPos, YPos, WidthOfSingleSprite, HeightOfSingleSprite}
+	SDL_Rect portionOfSpriteSheet = { left, 0, mSingleSpriteWidth, mSingleSpriteHeight };
+	SDL_Rect destRect = { (int)(mPosition.x), (int)(mPosition.y), mSingleSpriteWidth, mSingleSpriteHeight };
+	
 	if (!mInvulnerable)
 	{
 		if (mFacingDirection == FACING_RIGHT)
-			mTexture->Render(mPosition, SDL_FLIP_NONE, 0.0);
+			mTexture->Render(portionOfSpriteSheet, destRect, SDL_FLIP_NONE);
 		else
-			mTexture->Render(mPosition, SDL_FLIP_HORIZONTAL, 0.0);
+			mTexture->Render(portionOfSpriteSheet, destRect, SDL_FLIP_HORIZONTAL);
 	}
 	else 
 	{
 		if (mFacingDirection == FACING_RIGHT)
-			mTexture->Render(mPosition, SDL_FLIP_NONE, (Uint8)255 * abs(sin(INVULN_MULTIPLIER * mInvulnTimer)), 0.0);
+			mTexture->Render(portionOfSpriteSheet, destRect, SDL_FLIP_NONE, (Uint8)255 * abs(sin(INVULN_MULTIPLIER * mInvulnTimer)), 0.0f);
 		else
-			mTexture->Render(mPosition, SDL_FLIP_HORIZONTAL, (Uint8)255 * abs(sin(INVULN_MULTIPLIER * mInvulnTimer)), 0.0);
+			mTexture->Render(portionOfSpriteSheet, destRect, SDL_FLIP_HORIZONTAL, (Uint8)255 * abs(sin(INVULN_MULTIPLIER * mInvulnTimer)), 0.0f);
 	}
 }
 
@@ -62,6 +70,24 @@ void CharacterPlayable::Update(float deltaTime, SDL_Event e)
 		if (mInvulnTimer <= 0.0f)
 			mInvulnerable = false;
 	}
+
+
+	if (mJumping)
+	{
+		mCurrentNumOfFrames = 1;
+		mCurrentStartFrame = 4;
+	}
+	else if (mMovingLeft || mMovingRight)
+	{
+		mCurrentNumOfFrames = 3;
+		mCurrentStartFrame = 1;
+	}
+	else
+	{
+		mCurrentNumOfFrames = 1;
+		mCurrentStartFrame = 0;
+	}
+
 }
 
 void CharacterPlayable::OnPlayerCollision(CharacterPlayable* player)
