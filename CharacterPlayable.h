@@ -27,6 +27,7 @@ public:
 		float frameDelay, int initalNumOfFrames, int totalNumOfFrames, int startingFrame);
 	virtual void Render();
 	void Update(float deltaTime, SDL_Event e);
+	void Animate();
 	virtual void OnPlayerCollision(CharacterPlayable* player);
 	void SetState(CHARACTERSTATE newState);
 	CHARACTERSTATE GetState();

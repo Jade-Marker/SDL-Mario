@@ -11,7 +11,8 @@ protected:
 	SoundEffect* mDeathSound;
 
 public:
-	CharacterEnemy(SDL_Renderer* renderer, std::string imagePath, Vector2D startPosition, LevelMap* map, float moveSpeed, float frameDelay, int noOfFrames, bool animating);
+	CharacterEnemy(SDL_Renderer* renderer, std::string imagePath, Vector2D startPosition, LevelMap* map, float moveSpeed,
+		float frameDelay, int noOfFrames, bool animating, int startFrame, int currentNumOfFrames);
 	virtual ~CharacterEnemy();
 
 	virtual void TakeDamage();

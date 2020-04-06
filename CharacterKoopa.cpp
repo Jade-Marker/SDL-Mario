@@ -1,11 +1,11 @@
 #include "CharacterKoopa.h"
 #include "CharacterPlayable.h"
 
-CharacterKoopa::CharacterKoopa(SDL_Renderer* renderer, std::string imagePath, Vector2D startPosition, LevelMap* map, FACING startFacing, float movementSpeed, float frameDelay, int noOfFrames) :
-	CharacterEnemy(renderer, imagePath, startPosition, map, movementSpeed, frameDelay, noOfFrames, false), mInjured(false), mInjuredTime(0)
+CharacterKoopa::CharacterKoopa(SDL_Renderer* renderer, std::string imagePath, Vector2D startPosition, LevelMap* map, FACING startFacing, float movementSpeed,
+	float frameDelay, int noOfFrames, int startingFrame, int currentNumOfFrames) :
+	CharacterEnemy(renderer, imagePath, startPosition, map, movementSpeed, frameDelay, noOfFrames, true, startingFrame, currentNumOfFrames), mInjured(false), mInjuredTime(0)
 {
 	mFacingDirection = startFacing;
-	mCurrentFrame = KOOPA_MOVING_FRAME;
 
 	mDeathSound = new SoundEffect();
 	mDeathSound->Load("SFX/shell.ogg");
@@ -21,6 +21,9 @@ void CharacterKoopa::TakeDamage()
 	{
 		mInjured = true;
 		mInjuredTime = INJURED_TIME;
+
+		mCurrentNumOfFrames = KOOPA_DAMAGED_FRAME_COUNT;
+		mCurrentStartFrame = KOOPA_DAMAGED_FRAME;
 		mCurrentFrame = KOOPA_DAMAGED_FRAME;
 	}
 	else
@@ -98,7 +101,10 @@ void CharacterKoopa::FlipRightwayUp()
 	else if (mFacingDirection == FACING_LEFT)
 		mFacingDirection = FACING_RIGHT;
 
+	mCurrentNumOfFrames = KOOPA_MOVING_FRAME_COUNT;
+	mCurrentStartFrame = KOOPA_MOVING_FRAME;
 	mCurrentFrame = KOOPA_MOVING_FRAME;
+
 	mInjured = false;
 	Jump();
 }

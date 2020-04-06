@@ -5,8 +5,6 @@
 #include "PowBlock.h"
 
 //Todo
-//Animation for koopa update
-
 //Get platform to animate when you hit it 
 //Clean up music and sound effect code (especially stuff in source.cpp)
 //Fix bug with gravity where player can fall through the sides of blocks
@@ -279,7 +277,8 @@ void GameScreenLevel1::UpdateEnemiesAndCoins(float deltaTime, SDL_Event e)
 
 void GameScreenLevel1::CreateKoopa(Vector2D position, FACING direction, float speed)
 {
-	CharacterKoopa* koopaCharacter = new CharacterKoopa(mRenderer, "Images/Koopa.png", position, mLevelMap, direction, speed, ANIMATION_DELAY, KOOPA_FRAME_COUNT);
+	CharacterKoopa* koopaCharacter = new CharacterKoopa(mRenderer, "Images/Koopa.png", position, mLevelMap, direction, speed,
+		ANIMATION_DELAY, KOOPA_FRAME_COUNT, KOOPA_MOVING_FRAME, KOOPA_MOVING_FRAME_COUNT);
 	mEnemiesAndCoins.push_back(koopaCharacter);
 }
 
