@@ -23,7 +23,8 @@ private:
 
 public:
 	CharacterPlayable(SDL_Renderer* renderer, std::string imagePath, Vector2D startPosition, int jumpKey, int rightKey, int leftKey,
-		LevelMap* map, float moveSpeed, std::vector<CharacterEnemy*>* const enemiesList, std::string name, float scoreXPos, int initialLives, float frameDelay);
+		LevelMap* map, float moveSpeed, std::vector<CharacterEnemy*>* const enemiesList, std::string name, float scoreXPos, int initialLives,
+		float frameDelay, int initalNumOfFrames, int totalNumOfFrames, int startingFrame);
 	virtual void Render();
 	void Update(float deltaTime, SDL_Event e);
 	virtual void OnPlayerCollision(CharacterPlayable* player);
@@ -33,6 +34,7 @@ public:
 	void IncrementScore(int value);
 	int GetScore();
 	void RenderScoreAndLives(Font* font);
+	void UpdateState();
 
 private:
 	void HitTile();

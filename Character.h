@@ -43,6 +43,7 @@ protected:
 	//Animation variables
 	float mSingleSpriteWidth;
 	float mSingleSpriteHeight;
+	float mFrameDelayTimer;
 	float mFrameDelay;
 	int mCurrentFrame;
 	int mNumFrames;

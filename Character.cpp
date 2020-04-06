@@ -8,7 +8,7 @@ Character::Character(SDL_Renderer* renderer, std::string imagePath, Vector2D sta
 	mRenderer(renderer), mPosition(startPosition), mFacingDirection(FACING_RIGHT),
 	mMovingLeft(false), mMovingRight(false), mJumping(false), mCanJump(false), mCollisionRadius(15.0f),
 	mCurrentLevelMap(map), mJumpForce(0.0f), cMovementSpeed(moveSpeed), 
-	mFrameDelay(frameDelay), mNumFrames(noOfFrames), mAnimating(animating), mCurrentFrame(0),
+	mFrameDelay(frameDelay), mFrameDelayTimer(frameDelay), mNumFrames(noOfFrames), mAnimating(animating), mCurrentFrame(0),
 	mSingleSpriteWidth(0), mSingleSpriteHeight(0), mCurrentStartFrame(currentStartFrame), mCurrentNumOfFrames(currentNumOfFrames)
 {
 	mTexture = new Texture2D(mRenderer);
@@ -88,11 +88,11 @@ void Character::Update(float deltaTime, SDL_Event e)
 
 	if (mAnimating)
 	{
-		mFrameDelay -= deltaTime;
-		if (mFrameDelay <= 0.0f)
+		mFrameDelayTimer -= deltaTime;
+		if (mFrameDelayTimer <= 0.0f)
 		{
 			//Reset frame delay count
-			mFrameDelay = ANIMATION_DELAY;
+			mFrameDelayTimer = mFrameDelay;
 			mCurrentFrame++;
 
 			//Loop frame around if it goes beyond the number of frames

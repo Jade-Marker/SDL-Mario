@@ -1,8 +1,9 @@
 #include "CharacterPlayable.h"
 
 CharacterPlayable::CharacterPlayable(SDL_Renderer* renderer, std::string imagePath, Vector2D startPosition, int jumpKey, int rightKey, int leftKey,
-	LevelMap* map, float moveSpeed, std::vector<CharacterEnemy*>* const enemiesList, std::string name, float scoreXPos, int initialLives, float frameDelay):
-	Character(renderer, imagePath, startPosition, map, moveSpeed, frameDelay, 5, true, 0, 1),
+	LevelMap* map, float moveSpeed, std::vector<CharacterEnemy*>* const enemiesList, std::string name, float scoreXPos, int initialLives, float frameDelay,
+	int initalNumOfFrames, int totalNumOfFrames, int startingFrame):
+	Character(renderer, imagePath, startPosition, map, moveSpeed, frameDelay, totalNumOfFrames, true, startingFrame, initalNumOfFrames),
 	mState(IDLE), mScore(0), mEnemiesList(enemiesList), mName(name), mScoreXPos(scoreXPos), mLives(initialLives)
 {
 	mInputMap[JUMP] = jumpKey;
@@ -63,6 +64,7 @@ void CharacterPlayable::Update(float deltaTime, SDL_Event e)
 			Jump();
 		break;
 	}
+	UpdateState();
 
 	if (mInvulnerable)
 	{
@@ -72,22 +74,27 @@ void CharacterPlayable::Update(float deltaTime, SDL_Event e)
 	}
 
 
-	if (mJumping)
+	Animate();
+
+}
+
+void CharacterPlayable::Animate()
+{
+	if (mState == JUMPING)
 	{
-		mCurrentNumOfFrames = 1;
-		mCurrentStartFrame = 4;
+		mCurrentNumOfFrames = MARIO_JUMP_FRAME_COUNT;
+		mCurrentStartFrame = MARIO_JUMP_START_FRAME;
 	}
-	else if (mMovingLeft || mMovingRight)
+	else if (mState == MOVING)
 	{
-		mCurrentNumOfFrames = 3;
-		mCurrentStartFrame = 1;
+		mCurrentNumOfFrames = MARIO_MOVE_FRAME_COUNT;
+		mCurrentStartFrame = MARIO_MOVE_START_FRAME;
 	}
 	else
 	{
-		mCurrentNumOfFrames = 1;
-		mCurrentStartFrame = 0;
+		mCurrentNumOfFrames = MARIO_IDLE_FRAME_COUNT;
+		mCurrentStartFrame = MARIO_IDLE_START_FRAME;
 	}
-
 }
 
 void CharacterPlayable::OnPlayerCollision(CharacterPlayable* player)
@@ -135,6 +142,22 @@ void CharacterPlayable::RenderScoreAndLives(Font* font)
 	
 	std::string livesString = "Lives:" + std::to_string(mLives);
 	font->DrawString(livesString, Vector2D(mScoreXPos, LIVES_HEIGHT), Vector2D(0.5f, 0.5f));
+}
+
+void CharacterPlayable::UpdateState()
+{
+	if (mJumping)
+	{
+		mState = JUMPING;
+	}
+	else if (mMovingLeft || mMovingRight)
+	{
+		mState = MOVING;
+	}
+	else
+	{
+		mState = IDLE;
+	}
 }
 
 void CharacterPlayable::HitTile()
