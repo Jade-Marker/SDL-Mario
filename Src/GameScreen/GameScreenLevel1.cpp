@@ -5,14 +5,15 @@
 #include "PowBlock.h"
 
 //Todo
+//Fix enemy AI to be accurate to original
+//Highscore table for end screen
+//Level 2 stuff
+
 //Get platform to animate when you hit it 
 //Clean up music and sound effect code (especially stuff in source.cpp)
 //Fix bug with gravity where player can fall through the sides of blocks
 //Implement another enemy (get sprite from here: https://www.spriters-resource.com/arcade/mariobros/sheet/93677/)
 //Make actual title screen
-//Fix enemy AI to be accurate to original
-//Highscore table for end screen
-//Level 2 stuff
 
 
 

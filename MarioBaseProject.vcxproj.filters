@@ -24,61 +24,61 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="Source.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="Texture2D.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="Collisions.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="LevelMap.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="PowBlock.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="SoundEffect.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="Font.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="GameScreen.cpp">
-      <Filter>Source Files\Game Screens</Filter>
-    </ClCompile>
-    <ClCompile Include="GameScreenIntro.cpp">
-      <Filter>Source Files\Game Screens</Filter>
-    </ClCompile>
-    <ClCompile Include="GameScreenLevel1.cpp">
-      <Filter>Source Files\Game Screens</Filter>
-    </ClCompile>
-    <ClCompile Include="GameScreenManager.cpp">
-      <Filter>Source Files\Game Screens</Filter>
-    </ClCompile>
-    <ClCompile Include="Character.cpp">
+    <ClCompile Include="Src\Character\Character.cpp">
       <Filter>Source Files\Character</Filter>
     </ClCompile>
-    <ClCompile Include="CharacterCoin.cpp">
+    <ClCompile Include="Src\Character\CharacterCoin.cpp">
       <Filter>Source Files\Character</Filter>
     </ClCompile>
-    <ClCompile Include="CharacterEnemy.cpp">
+    <ClCompile Include="Src\Character\CharacterEnemy.cpp">
       <Filter>Source Files\Character</Filter>
     </ClCompile>
-    <ClCompile Include="CharacterKoopa.cpp">
+    <ClCompile Include="Src\Character\CharacterKoopa.cpp">
       <Filter>Source Files\Character</Filter>
     </ClCompile>
-    <ClCompile Include="CharacterPlayable.cpp">
+    <ClCompile Include="Src\Character\CharacterPlayable.cpp">
       <Filter>Source Files\Character</Filter>
     </ClCompile>
-    <ClCompile Include="GameScreenGameover.cpp">
+    <ClCompile Include="Src\GameScreen\GameScreen.cpp">
       <Filter>Source Files\Game Screens</Filter>
     </ClCompile>
-    <ClCompile Include="ScoreManager.cpp">
+    <ClCompile Include="Src\GameScreen\GameScreenGameover.cpp">
+      <Filter>Source Files\Game Screens</Filter>
+    </ClCompile>
+    <ClCompile Include="Src\GameScreen\GameScreenIntro.cpp">
+      <Filter>Source Files\Game Screens</Filter>
+    </ClCompile>
+    <ClCompile Include="Src\GameScreen\GameScreenLevel1.cpp">
+      <Filter>Source Files\Game Screens</Filter>
+    </ClCompile>
+    <ClCompile Include="Src\GameScreen\GameScreenManager.cpp">
+      <Filter>Source Files\Game Screens</Filter>
+    </ClCompile>
+    <ClCompile Include="Src\Sound Management\SoundEffect.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="SoundList.cpp">
+    <ClCompile Include="Src\Sound Management\SoundList.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Src\Text and Textures\Font.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Src\Text and Textures\Texture2D.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Src\Other\Collisions.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Src\Other\LevelMap.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Src\Other\PowBlock.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Src\Other\ScoreManager.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Src\Other\Source.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
@@ -97,64 +97,64 @@
     </Library>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="Constants.h">
+    <ClInclude Include="Src\Character\Character.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Commons.h">
+    <ClInclude Include="Src\Character\CharacterCoin.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Texture2D.h">
+    <ClInclude Include="Src\Character\CharacterEnemy.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="GameScreen.h">
+    <ClInclude Include="Src\Character\CharacterKoopa.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="GameScreenLevel1.h">
+    <ClInclude Include="Src\Character\CharacterPlayable.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="GameScreenManager.h">
+    <ClInclude Include="Src\GameScreen\GameScreen.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="GameScreenIntro.h">
+    <ClInclude Include="Src\GameScreen\GameScreenGameover.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Character.h">
+    <ClInclude Include="Src\GameScreen\GameScreenIntro.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Collisions.h">
+    <ClInclude Include="Src\GameScreen\GameScreenLevel1.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="LevelMap.h">
+    <ClInclude Include="Src\GameScreen\GameScreenManager.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="PowBlock.h">
+    <ClInclude Include="Src\Sound Management\SoundEffect.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="CharacterKoopa.h">
+    <ClInclude Include="Src\Sound Management\SoundList.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="CharacterCoin.h">
+    <ClInclude Include="Src\Text and Textures\Font.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="SoundEffect.h">
+    <ClInclude Include="Src\Text and Textures\Texture2D.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="CharacterPlayable.h">
+    <ClInclude Include="Src\Other\Collisions.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="CharacterEnemy.h">
+    <ClInclude Include="Src\Other\Commons.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Font.h">
+    <ClInclude Include="Src\Other\Constants.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="GameScreenGameover.h">
+    <ClInclude Include="Src\Other\LevelMap.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="ScoreManager.h">
+    <ClInclude Include="Src\Other\PowBlock.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="SoundList.h">
+    <ClInclude Include="Src\Other\ScoreManager.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
