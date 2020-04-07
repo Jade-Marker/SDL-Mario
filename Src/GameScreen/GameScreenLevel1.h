@@ -12,6 +12,7 @@
 #include "GameScreenManager.h"
 #include "ScoreManager.h"
 #include "SoundList.h"
+#include "EnemyWave.h"
 
 #include <vector>
 
@@ -33,12 +34,13 @@ private:
 	float mBackgroundYPos;
 
 	std::vector<CharacterEnemy*> mEnemiesAndCoins;
-	float mEnemySpawnTimer;
-	float mCoinSpawnTimer;
 
 	Font* scoreFont;
 
 	GameScreenManager* mManager;
+
+	std::vector<EnemyWave> mEnemyWaves;
+	int mCurrentWave;
 
 public:
 	GameScreenLevel1(SDL_Renderer* renderer, GameScreenManager* manager);
@@ -47,9 +49,12 @@ public:
 	void Render();
 	void Update(float deltaTime, SDL_Event e);
 
+	void HandleEnemyWave(float deltaTime);
+
 private:
 	bool SetUpLevel();
 	void SetLevelMap();
+	void SetUpEnemyWaves();
 	void UpdatePOWBlock();
 	void DoScreenshake();
 	void UpdateEnemiesAndCoins(float deltaTime, SDL_Event e);

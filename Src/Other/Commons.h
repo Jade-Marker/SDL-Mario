@@ -107,3 +107,10 @@ enum TILE
 	PLATFORM,
 	POW_BLOCK
 };
+
+enum ENEMIES
+{
+	KOOPA,
+	COIN
+
+};

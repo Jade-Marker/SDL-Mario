@@ -5,7 +5,6 @@
 #include "PowBlock.h"
 
 //Todo
-//Fix enemy AI to be accurate to original
 //Highscore table for end screen
 //Level 2 stuff
 
@@ -22,6 +21,8 @@ GameScreenLevel1::GameScreenLevel1(SDL_Renderer* renderer, GameScreenManager* ma
 {
 	SetLevelMap();
 	SetUpLevel();
+
+	SetUpEnemyWaves();
 
 	scoreFont = new Font(renderer, "Fonts/Press Start 2P.png", 32, 32, ' ');
 }
@@ -89,21 +90,8 @@ void GameScreenLevel1::Update(float deltaTime, SDL_Event e)
 		}
 	}
 
-	mEnemySpawnTimer -= deltaTime;
-	if (mEnemySpawnTimer <= 0.0f)
-	{
-		mEnemySpawnTimer = ENEMY_SPAWN_TIME;
-		CreateKoopa(Vector2D(150, 32), FACING_RIGHT, KOOPA_SPEED);
-		CreateKoopa(Vector2D(325, 32), FACING_LEFT, KOOPA_SPEED);
-	}
-
-	mCoinSpawnTimer -= deltaTime;
-	if (mCoinSpawnTimer <= 0.0f)
-	{
-		mCoinSpawnTimer = COIN_SPAWN_TIME;
-		CreateCoin(Vector2D(150, 32), FACING_RIGHT, COIN_SPEED);
-		CreateCoin(Vector2D(325, 32), FACING_LEFT, COIN_SPEED);
-	}
+	//Spawn in any new enemies if necessary and increment mCurrentWave if the wave is over
+	HandleEnemyWave(deltaTime);
 
 	//Update enemies and coins
 	UpdateEnemiesAndCoins(deltaTime, e);
@@ -123,13 +111,48 @@ void GameScreenLevel1::Update(float deltaTime, SDL_Event e)
 
 	UpdatePOWBlock();
 
-	if (mMarioCharacter->GetState() == PLAYER_DEATH && mLuigiCharacter->GetState() == PLAYER_DEATH)
+	if ((mMarioCharacter->GetState() == PLAYER_DEATH && mLuigiCharacter->GetState() == PLAYER_DEATH) || mCurrentWave > mEnemyWaves.size() - 1)
 	{
 		ScoreManager::Instance()->SetPlayerScore(mMarioCharacter->GetScore() + mLuigiCharacter->GetScore());
 		mManager->ChangeScreen(SCREEN_GAMEOVER);
 	}
 
 	SoundList::Instance()->Update();
+}
+
+void GameScreenLevel1::HandleEnemyWave(float deltaTime)
+{
+	std::vector<WaveComponent> current = mEnemyWaves[mCurrentWave].GetWave();
+	bool allSpawned = true;
+	for (int i = 0; i < current.size(); i++)
+	{
+		if (!current[i].spawned)
+		{
+			allSpawned = false;
+
+			current[i].spawnDelay -= deltaTime;
+
+			if (current[i].spawnDelay <= 0.0f)
+			{
+				current[i].spawned = true;
+
+				switch (current[i].enemy)
+				{
+				case KOOPA:
+					CreateKoopa(current[i].position, current[i].direction, current[i].speed);
+					break;
+
+				case COIN:
+					CreateCoin(current[i].position, current[i].direction, current[i].speed);
+					break;
+				};
+			}
+		}
+	}
+	mEnemyWaves[mCurrentWave].SetWave(current);
+
+	if (allSpawned && mEnemiesAndCoins.size() == 0)
+		mCurrentWave++;
 }
 
 bool GameScreenLevel1::SetUpLevel()
@@ -141,17 +164,8 @@ bool GameScreenLevel1::SetUpLevel()
 		std::cout << "Failed to load background texture!" << std::endl;
 		return false;
 	}
-
-	CreateKoopa(Vector2D(150,32), FACING_RIGHT, KOOPA_SPEED);
-	CreateKoopa(Vector2D(325,32), FACING_LEFT, KOOPA_SPEED);
-	mEnemySpawnTimer = ENEMY_SPAWN_TIME;
-
-	CreateCoin(Vector2D(150, 32), FACING_RIGHT, COIN_SPEED);
-	CreateCoin(Vector2D(325, 32), FACING_LEFT, COIN_SPEED);
-	mCoinSpawnTimer = COIN_SPAWN_TIME;
 	
 	//Set up the player character
-	//myCharacter = new Character(mRenderer, "Images/Mario.png", Vector2D(64, 330));
 	mMarioCharacter = new CharacterPlayable(mRenderer, "Images/Mario.png", Vector2D(64, 330), SDLK_w, SDLK_d, SDLK_a, 
 		mLevelMap, MOVEMENTSPEED, &mEnemiesAndCoins, "Mario", MARIO_TEXT_POS, INITIAL_LIVES, PLAYER_FRAME_DELAY, MARIO_IDLE_FRAME_COUNT, MARIO_FRAME_COUNT, MARIO_IDLE_START_FRAME);
 	mLuigiCharacter = new CharacterPlayable(mRenderer, "Images/Luigi.png", Vector2D(128, 330), SDLK_UP, SDLK_RIGHT, SDLK_LEFT, 
@@ -189,6 +203,38 @@ void GameScreenLevel1::SetLevelMap()
 	//Set the new one
 	//mLevelMap = new LevelMap(mRenderer, "Images/tileset.png", map);
 	mLevelMap = new LevelMap(mRenderer, "Images/tileset.png", "Levels/Level1.txt");
+}
+
+void GameScreenLevel1::SetUpEnemyWaves()
+{
+	EnemyWave wave1 = EnemyWave();
+	EnemyWave wave2 = EnemyWave();
+	EnemyWave wave3 = EnemyWave();
+
+	std::vector<WaveComponent> wave;
+	wave.push_back(WaveComponent(KOOPA, 0.0f, Vector2D(150, 32), FACING_RIGHT, KOOPA_SPEED));
+	wave.push_back(WaveComponent(KOOPA, 0.0f, Vector2D(325, 32), FACING_LEFT, KOOPA_SPEED));
+	wave.push_back(WaveComponent(COIN, 10.0f, Vector2D(150, 32), FACING_RIGHT, COIN_SPEED));
+	wave1.SetWave(wave);
+	mEnemyWaves.push_back(wave1);
+
+	wave.clear();
+	wave.push_back(WaveComponent(COIN, 5.0f, Vector2D(150, 32), FACING_RIGHT, COIN_SPEED));
+	wave.push_back(WaveComponent(COIN, 6.0f, Vector2D(150, 32), FACING_RIGHT, COIN_SPEED));
+	wave.push_back(WaveComponent(COIN, 5.0f, Vector2D(325, 32), FACING_LEFT, COIN_SPEED));
+	wave.push_back(WaveComponent(COIN, 6.0f, Vector2D(325, 32), FACING_LEFT, COIN_SPEED));
+	wave2.SetWave(wave);
+	mEnemyWaves.push_back(wave2);
+
+	wave.clear();
+	wave.push_back(WaveComponent(KOOPA, 1.0f, Vector2D(150, 32), FACING_RIGHT, KOOPA_SPEED));
+	wave.push_back(WaveComponent(KOOPA, 3.0f, Vector2D(325, 32), FACING_LEFT, KOOPA_SPEED));
+	wave.push_back(WaveComponent(KOOPA, 5.0f, Vector2D(150, 32), FACING_RIGHT, KOOPA_SPEED));
+	wave.push_back(WaveComponent(KOOPA, 7.0f, Vector2D(325, 32), FACING_LEFT, KOOPA_SPEED));
+	wave3.SetWave(wave);
+	mEnemyWaves.push_back(wave3);
+
+	mCurrentWave = 0;
 }
 
 void GameScreenLevel1::UpdatePOWBlock()
@@ -239,7 +285,12 @@ void GameScreenLevel1::UpdateEnemiesAndCoins(float deltaTime, SDL_Event e)
 			{
 				if (mEnemiesAndCoins[i]->GetPosition().x < (float)(-mEnemiesAndCoins[i]->GetCollisionBox().width * 0.5f) ||
 					mEnemiesAndCoins[i]->GetPosition().x > SCREEN_WIDTH - (float)(mEnemiesAndCoins[i]->GetCollisionBox().width * 0.55f))
-					mEnemiesAndCoins[i]->SetAlive(false);
+				{
+					if(mEnemiesAndCoins[i]->GetPosition().x > SCREEN_WIDTH - (float)(mEnemiesAndCoins[i]->GetCollisionBox().width * 0.55f))
+						mEnemiesAndCoins[i]->SetPosition(Vector2D(0, 32));
+					else
+						mEnemiesAndCoins[i]->SetPosition(Vector2D(SCREEN_WIDTH- mEnemiesAndCoins[i]->GetCollisionBox().width * 0.5f, 32));
+				}
 			}
 
 			//Now do the update
