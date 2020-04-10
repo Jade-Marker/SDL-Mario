@@ -15,7 +15,10 @@ class GameScreenGameOver : GameScreen
 private:
 	Texture2D* mBackgroundTexture;
 	GameScreenManager* mManager;
-	Font* highScoreText;
+	Font* mHighScoreText;
+
+	std::string mPlayerName;
+	bool mGotPlayerName;
 
 public:
 	GameScreenGameOver(SDL_Renderer* renderer, GameScreenManager* manager);

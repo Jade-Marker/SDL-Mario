@@ -57,3 +57,8 @@
 //Pow block constants
 #define POW_COLLISION_INCREASE 0.53125f
 #define POW_HITS 3
+
+//Score constants
+#define HIGHSCORE_COUNT 5
+#define HIGHSCORE_FILE_PATH "highscores.txt"
+#define NAME_MAX_LENGTH 10
