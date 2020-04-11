@@ -5,7 +5,6 @@
 #include "PowBlock.h"
 
 //Todo
-//Make actual title screen
 //Level 2 stuff
 
 //Get platform to animate when you hit it 

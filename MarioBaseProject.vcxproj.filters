@@ -84,6 +84,9 @@
     <ClCompile Include="Src\Other\EnemyWave.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="Src\GameScreen\GameScreenLevel2.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Library Include="SDL\SDL2.lib">
@@ -161,6 +164,9 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="Src\Other\EnemyWave.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Src\GameScreen\GameScreenLevel2.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

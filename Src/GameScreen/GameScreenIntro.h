@@ -11,6 +11,8 @@ class GameScreenIntro : GameScreen
 {
 private:
 	Texture2D* mBackgroundTexture;
+	Texture2D* mArrow;
+	int mArrowPosition;
 	GameScreenManager* mManager;
 
 public:
