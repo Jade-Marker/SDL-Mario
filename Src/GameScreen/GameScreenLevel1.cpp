@@ -5,7 +5,6 @@
 #include "PowBlock.h"
 
 //Todo
-//Fix collision detection
 //Make actual title screen
 //Level 2 stuff
 
@@ -296,13 +295,9 @@ void GameScreenLevel1::UpdateEnemiesAndCoins(float deltaTime, SDL_Event e)
 			//Now do the update
 			mEnemiesAndCoins[i]->Update(deltaTime, e);
 
-			//Check to see if the enemy collides with the player
-			if ((mEnemiesAndCoins[i]->GetPosition().y > 300.0f || mEnemiesAndCoins[i]->GetPosition().y <= 64.0f) &&
-				mEnemiesAndCoins[i]->GetPosition().x < 64.0f || mEnemiesAndCoins[i]->GetPosition().x > SCREEN_WIDTH - 96.0f)
-			{
-				//ignore the collisions if the enemy is behind a pipe?
-			}
-			else 
+			//Check to see if the enemy collides with the player if they are not behind the pipes
+			if (!((mEnemiesAndCoins[i]->GetPosition().y > 300.0f || mEnemiesAndCoins[i]->GetPosition().y <= 64.0f) &&
+				(mEnemiesAndCoins[i]->GetPosition().x < 64.0f || mEnemiesAndCoins[i]->GetPosition().x > SCREEN_WIDTH - 96.0f)))
 			{
 				if (Collisions::Instance()->Circle(mEnemiesAndCoins[i], mMarioCharacter) && mMarioCharacter->GetState() != PLAYER_DEATH)
 				{
