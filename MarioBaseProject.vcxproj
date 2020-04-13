@@ -177,6 +177,7 @@
     <ClInclude Include="Src\Sound Management\SoundEffect.h" />
     <ClInclude Include="Src\Sound Management\SoundList.h" />
     <ClInclude Include="Src\Text and Textures\Texture2D.h" />
+    <ClInclude Include="Src\Other\Tileset.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

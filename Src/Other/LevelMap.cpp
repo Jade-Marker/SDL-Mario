@@ -1,10 +1,9 @@
 #include "LevelMap.h"
 
-LevelMap::LevelMap(SDL_Renderer* renderer, std::string imagePath, TILE map[MAP_HEIGHT][MAP_WIDTH]):
+LevelMap::LevelMap(SDL_Renderer* renderer, std::string imagePath, int tileWidth, int tileHeight, TILE map[MAP_HEIGHT][MAP_WIDTH]):
 	mRenderer(renderer), mMapHeight(MAP_HEIGHT), mMapWidth(MAP_WIDTH)
 {
-	mTexture = new Texture2D(renderer);
-	mTexture->LoadFromFile(imagePath);
+	mTileset = Tileset(imagePath, tileWidth, tileHeight, mRenderer);
 
 	//Allocate memory for the level map
 	mMap = new TILE* [mMapHeight];
@@ -23,11 +22,10 @@ LevelMap::LevelMap(SDL_Renderer* renderer, std::string imagePath, TILE map[MAP_H
 	}
 }
 
-LevelMap::LevelMap(SDL_Renderer* renderer, std::string imagePath, std::string mapPath):
+LevelMap::LevelMap(SDL_Renderer* renderer, std::string imagePath, int tileWidth, int tileHeight, std::string mapPath):
 	mRenderer(renderer)
 {
-	mTexture = new Texture2D(renderer);
-	mTexture->LoadFromFile(imagePath);
+	mTileset = Tileset(imagePath, tileWidth, tileHeight, mRenderer);
 
 	std::ifstream inFile(mapPath);
 	inFile >> mMapHeight;
@@ -85,12 +83,12 @@ void LevelMap::Render(float yOffset)
 		{
 			if (mMap[y][x] != EMPTY)
 			{
-				int left = TILE_WIDTH * mMap[y][x];
+				int left = mTileset.tileWidth * mMap[y][x];
 
-				SDL_Rect portionOfTileSet = { left, 0, TILE_WIDTH, TILE_HEIGHT };
-				SDL_Rect destRect = { (int)(x * TILE_WIDTH), (int)(y * TILE_HEIGHT + yOffset), TILE_WIDTH, TILE_HEIGHT };
+				SDL_Rect portionOfTileSet = { left, 0, mTileset.tileWidth, mTileset.tileHeight };
+				SDL_Rect destRect = { (int)(x * mTileset.tileWidth), (int)(y * mTileset.tileHeight + yOffset), mTileset.tileWidth, mTileset.tileHeight };
 
-				mTexture->Render(portionOfTileSet, destRect, SDL_FLIP_NONE);
+				mTileset.texture->Render(portionOfTileSet, destRect, SDL_FLIP_NONE);
 			}
 		}
 	}

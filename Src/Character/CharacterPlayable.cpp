@@ -164,17 +164,17 @@ void CharacterPlayable::HitTile()
 {
 	Character::HitTile();
 
-	if (mCurrentLevelMap->GetTileAt(mPosition.y / TILE_HEIGHT, (mPosition.x + (mSingleSpriteWidth * 0.5f)) / TILE_WIDTH) == PLATFORM)
+	if (mCurrentLevelMap->GetTileAt(mPosition.y / mCurrentLevelMap->GetTileset().tileHeight, (mPosition.x + (mSingleSpriteWidth * 0.5f)) / mCurrentLevelMap->GetTileset().tileWidth) == PLATFORM)
 	{
 		for (int i = 0; i < mEnemiesList->size(); i++)
 		{
 			CharacterEnemy* currentEnemy = (*mEnemiesList)[i];
 			Vector2D enemyPosition = currentEnemy->GetPosition();
 
-			int playerTileX = (int)mPosition.x / TILE_WIDTH;
-			int playerTileY = (int)mPosition.y / TILE_HEIGHT;
-			int enemyTileX = (int)enemyPosition.x / TILE_WIDTH;
-			int enemyTileY = (int)enemyPosition.y / TILE_HEIGHT;
+			int playerTileX = (int)mPosition.x / mCurrentLevelMap->GetTileset().tileWidth;
+			int playerTileY = (int)mPosition.y / mCurrentLevelMap->GetTileset().tileHeight;
+			int enemyTileX = (int)enemyPosition.x / mCurrentLevelMap->GetTileset().tileWidth;
+			int enemyTileY = (int)enemyPosition.y / mCurrentLevelMap->GetTileset().tileHeight;
 
 			if (playerTileX == enemyTileX || playerTileX == enemyTileX + 1 || playerTileX == enemyTileX - 1)
 			{

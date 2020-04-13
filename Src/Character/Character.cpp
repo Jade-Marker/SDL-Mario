@@ -56,7 +56,7 @@ void Character::Update(float deltaTime, SDL_Event e)
 	//Deal with jumping first
 	if (mJumping)
 	{
-		if (mCurrentLevelMap->TileIsPassable(mCurrentLevelMap->GetTileAt(mPosition.y / TILE_HEIGHT, (mPosition.x + (mSingleSpriteWidth * 0.5f)) / TILE_WIDTH))) {
+		if (mCurrentLevelMap->TileIsPassable(mCurrentLevelMap->GetTileAt(mPosition.y / mCurrentLevelMap->GetTileset().tileHeight, (mPosition.x + (mSingleSpriteWidth * 0.5f)) / mCurrentLevelMap->GetTileset().tileWidth))) {
 
 			//Adjust the position
 			mPosition.y -= mJumpForce * deltaTime;
@@ -77,8 +77,8 @@ void Character::Update(float deltaTime, SDL_Event e)
 	else if (mMovingRight)
 		MoveRight(deltaTime);
 
-	int centralXPosition = (int)(roundf(mPosition.x + (mSingleSpriteWidth * 0.5f))) / TILE_WIDTH;
-	int footPosition = (int)(mPosition.y + mSingleSpriteHeight) / TILE_HEIGHT;
+	int centralXPosition = (int)(roundf(mPosition.x + (mSingleSpriteWidth * 0.5f))) / mCurrentLevelMap->GetTileset().tileWidth;
+	int footPosition = (int)(mPosition.y + mSingleSpriteHeight) / mCurrentLevelMap->GetTileset().tileHeight;
 	
 	if (mCurrentLevelMap->TileIsPassable(mCurrentLevelMap->GetTileAt(footPosition, centralXPosition)))
 		AddGravity(deltaTime);
@@ -148,10 +148,10 @@ void Character::CancelJump()
 
 void Character::MoveLeft(float deltaTime)
 {
-	int xPos = (int)(roundf(mPosition.x - mSingleSpriteWidth * 0.5f)) / TILE_WIDTH;
-	int yPosUpper = (int)(roundf(mPosition.y)) / TILE_HEIGHT;
-	int yPosMid = (int)(roundf(mPosition.y + mSingleSpriteHeight * 0.5f)) / TILE_HEIGHT;
-	int yPosLower = (int)(roundf(mPosition.y + mSingleSpriteHeight * 0.75f)) / TILE_HEIGHT;
+	int xPos = (int)(roundf(mPosition.x - mSingleSpriteWidth * 0.5f)) / mCurrentLevelMap->GetTileset().tileWidth;
+	int yPosUpper = (int)(roundf(mPosition.y)) / mCurrentLevelMap->GetTileset().tileHeight;
+	int yPosMid = (int)(roundf(mPosition.y + mSingleSpriteHeight * 0.5f)) / mCurrentLevelMap->GetTileset().tileHeight;
+	int yPosLower = (int)(roundf(mPosition.y + mSingleSpriteHeight * 0.75f)) / mCurrentLevelMap->GetTileset().tileHeight;
 
 	mFacingDirection = FACING_LEFT;
 	if (mCurrentLevelMap->TileIsPassable(mCurrentLevelMap->GetTileAt(yPosUpper, xPos)) &&
@@ -167,10 +167,10 @@ void Character::MoveLeft(float deltaTime)
 
 void Character::MoveRight(float deltaTime)
 {
-	int xPos = (int)(roundf(mPosition.x + mSingleSpriteWidth * 1.5f)) / TILE_WIDTH;
-	int yPosUpper = (int)(roundf(mPosition.y)) / TILE_HEIGHT;
-	int yPosMid = (int)(roundf(mPosition.y + mSingleSpriteHeight * 0.5f)) / TILE_HEIGHT;
-	int yPosLower = (int)(roundf(mPosition.y + mSingleSpriteHeight * 0.75f)) / TILE_HEIGHT;
+	int xPos = (int)(roundf(mPosition.x + mSingleSpriteWidth * 1.5f)) / mCurrentLevelMap->GetTileset().tileWidth;
+	int yPosUpper = (int)(roundf(mPosition.y)) / mCurrentLevelMap->GetTileset().tileHeight;
+	int yPosMid = (int)(roundf(mPosition.y + mSingleSpriteHeight * 0.5f)) / mCurrentLevelMap->GetTileset().tileHeight;
+	int yPosLower = (int)(roundf(mPosition.y + mSingleSpriteHeight * 0.75f)) / mCurrentLevelMap->GetTileset().tileHeight;
 
 	mFacingDirection = FACING_RIGHT;
 	if (mCurrentLevelMap->TileIsPassable(mCurrentLevelMap->GetTileAt(yPosUpper, xPos)) &&
