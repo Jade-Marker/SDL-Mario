@@ -1,9 +1,9 @@
 #include "LevelMap.h"
 
-LevelMap::LevelMap(SDL_Renderer* renderer, std::string imagePath, int tileWidth, int tileHeight, TILE map[MAP_HEIGHT][MAP_WIDTH]):
+LevelMap::LevelMap(SDL_Renderer* renderer, std::string imagePath, int tileWidth, int tileHeight, bool tilesGoAcross, std::vector<TILE> passableTiles, TILE map[MAP_HEIGHT][MAP_WIDTH]):
 	mRenderer(renderer), mMapHeight(MAP_HEIGHT), mMapWidth(MAP_WIDTH)
 {
-	mTileset = Tileset(imagePath, tileWidth, tileHeight, mRenderer);
+	mTileset = Tileset(imagePath, tileWidth, tileHeight, tilesGoAcross, passableTiles, mRenderer);
 
 	//Allocate memory for the level map
 	mMap = new TILE* [mMapHeight];
@@ -22,10 +22,10 @@ LevelMap::LevelMap(SDL_Renderer* renderer, std::string imagePath, int tileWidth,
 	}
 }
 
-LevelMap::LevelMap(SDL_Renderer* renderer, std::string imagePath, int tileWidth, int tileHeight, std::string mapPath):
+LevelMap::LevelMap(SDL_Renderer* renderer, std::string imagePath, int tileWidth, int tileHeight, bool tilesGoAcross, std::vector<TILE> passableTiles, std::string mapPath):
 	mRenderer(renderer)
 {
-	mTileset = Tileset(imagePath, tileWidth, tileHeight, mRenderer);
+	mTileset = Tileset(imagePath, tileWidth, tileHeight, tilesGoAcross, passableTiles, mRenderer);
 
 	std::ifstream inFile(mapPath);
 	inFile >> mMapHeight;
@@ -75,7 +75,7 @@ void LevelMap::ChangeTileAt(unsigned int row, unsigned int column, TILE newValue
 		mMap[row][column] = newValue;
 }
 
-void LevelMap::Render(float yOffset)
+void LevelMap::Render(float yOffset, float xOffset)
 {
 	for (int y = 0; y < mMapHeight; y++)
 	{
@@ -83,12 +83,22 @@ void LevelMap::Render(float yOffset)
 		{
 			if (mMap[y][x] != EMPTY)
 			{
-				int left = mTileset.tileWidth * mMap[y][x];
+				if (mTileset.tilesGoAcross)
+				{
+					int left = mTileset.tileWidth * mMap[y][x];
 
-				SDL_Rect portionOfTileSet = { left, 0, mTileset.tileWidth, mTileset.tileHeight };
-				SDL_Rect destRect = { (int)(x * mTileset.tileWidth), (int)(y * mTileset.tileHeight + yOffset), mTileset.tileWidth, mTileset.tileHeight };
+					SDL_Rect portionOfTileSet = { left, 0, mTileset.tileWidth, mTileset.tileHeight };
+					SDL_Rect destRect = { (int)(x * mTileset.tileWidth + xOffset), (int)(y * mTileset.tileHeight + yOffset), mTileset.tileWidth, mTileset.tileHeight };
+					mTileset.texture->Render(portionOfTileSet, destRect, SDL_FLIP_NONE);
+				}
+				else
+				{
+					int down = mTileset.tileHeight * mMap[y][x];
 
-				mTileset.texture->Render(portionOfTileSet, destRect, SDL_FLIP_NONE);
+					SDL_Rect portionOfTileSet = { 0, down, mTileset.tileWidth, mTileset.tileHeight };
+					SDL_Rect destRect = { (int)(x * mTileset.tileWidth + xOffset), (int)(y * mTileset.tileHeight + yOffset), mTileset.tileWidth, mTileset.tileHeight };
+					mTileset.texture->Render(portionOfTileSet, destRect, SDL_FLIP_NONE);
+				}
 			}
 		}
 	}
@@ -96,7 +106,7 @@ void LevelMap::Render(float yOffset)
 
 bool LevelMap::TileIsPassable(TILE tile)
 {
-	switch (tile)
+	/*switch (tile)
 	{
 	case EMPTY:
 	case PIPE_ENTRANCE_LOWER_RIGHT:
@@ -109,5 +119,12 @@ bool LevelMap::TileIsPassable(TILE tile)
 
 	default:
 		return false;
+	}*/
+
+	for (int i = 0; i < mTileset.passableTiles.size(); i++)
+	{
+		if (tile == mTileset.passableTiles[i])
+			return true;
 	}
+	return false;
 }

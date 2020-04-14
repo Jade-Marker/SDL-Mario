@@ -5,6 +5,7 @@
 #include "PowBlock.h"
 
 //Todo
+//Fix characterplayable animate constants bug
 //Level 2 stuff
 
 //Get platform to animate when you hit it 
@@ -183,8 +184,17 @@ void GameScreenLevel1::SetLevelMap()
 	if (mLevelMap != NULL)
 		delete mLevelMap;
 
+	std::vector<TILE> passableTiles;
+	passableTiles.push_back(EMPTY);
+	passableTiles.push_back(PIPE_ENTRANCE_LOWER_RIGHT);
+	passableTiles.push_back(PIPE_ENTRANCE_UPPER_RIGHT);
+	passableTiles.push_back(PIPE_ENTRANCE_LOWER_LEFT);
+	passableTiles.push_back(PIPE_ENTRANCE_UPPER_LEFT);
+	passableTiles.push_back(PIPE_BODY_LOWER);
+	passableTiles.push_back(PIPE_BODY_UPPER);
+
 	//Set the new one
-	mLevelMap = new LevelMap(mRenderer, "Images/tileset.png", TILE_WIDTH, TILE_HEIGHT, "Levels/Level1.txt");
+	mLevelMap = new LevelMap(mRenderer, "Images/tileset.png", TILE_WIDTH, TILE_HEIGHT, true, passableTiles, "Levels/Level1.txt");
 }
 
 void GameScreenLevel1::SetUpEnemyWaves()

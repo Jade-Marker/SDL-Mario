@@ -1,11 +1,16 @@
 #pragma once
 
 #include "GameScreen.h"
+#include "LevelMap.h"
+#include "CharacterPlayable.h"
 
 class GameScreenLevel2: GameScreen
 {
 protected:
 	SDL_Renderer* mRenderer;
+	LevelMap* mLevelMap;
+	float xOffset;
+	CharacterPlayable* mMario;
 
 public:
 	GameScreenLevel2(SDL_Renderer* renderer);

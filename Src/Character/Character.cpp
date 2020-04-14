@@ -4,12 +4,12 @@
 #include "CharacterPlayable.h"
 
 Character::Character(SDL_Renderer* renderer, std::string imagePath, Vector2D startPosition, LevelMap* map, float moveSpeed,
-	float frameDelay, int noOfFrames, bool animating, int currentStartFrame, int currentNumOfFrames) :
+	float frameDelay, int noOfFrames, bool animating, int currentStartFrame, int currentNumOfFrames, bool screenWrappingEnabled) :
 	mRenderer(renderer), mPosition(startPosition), mFacingDirection(FACING_RIGHT),
 	mMovingLeft(false), mMovingRight(false), mJumping(false), mCanJump(false), mCollisionRadius(15.0f),
 	mCurrentLevelMap(map), mJumpForce(0.0f), cMovementSpeed(moveSpeed), 
 	mFrameDelay(frameDelay), mFrameDelayTimer(frameDelay), mNumFrames(noOfFrames), mAnimating(animating), mCurrentFrame(0),
-	mSingleSpriteWidth(0), mSingleSpriteHeight(0), mCurrentStartFrame(currentStartFrame), mCurrentNumOfFrames(currentNumOfFrames)
+	mSingleSpriteWidth(0), mSingleSpriteHeight(0), mCurrentStartFrame(currentStartFrame), mCurrentNumOfFrames(currentNumOfFrames), mScreenWrappingEnabled(screenWrappingEnabled)
 {
 	mTexture = new Texture2D(mRenderer);
 	mTexture->LoadFromFile(imagePath);
@@ -216,10 +216,13 @@ void Character::HitTile()
 
 void Character::ScreenWrap(float deltaTime)
 {
-	if (mPosition.x < -mSingleSpriteWidth)
-		mPosition.x = SCREEN_WIDTH - mSingleSpriteWidth * 0.5f;
-	else if (mPosition.x + mSingleSpriteWidth * 0.5f > SCREEN_WIDTH)
-		mPosition.x = -mSingleSpriteWidth;
+	if (mScreenWrappingEnabled)
+	{
+		if (mPosition.x < -mSingleSpriteWidth)
+			mPosition.x = SCREEN_WIDTH - mSingleSpriteWidth * 0.5f;
+		else if (mPosition.x + mSingleSpriteWidth * 0.5f > SCREEN_WIDTH)
+			mPosition.x = -mSingleSpriteWidth;
 
-	mPosition.y -= GRAVITY * deltaTime;
+		mPosition.y -= GRAVITY * deltaTime;
+	}
 }

@@ -35,6 +35,7 @@ protected:
 
 	//Level variables
 	LevelMap* mCurrentLevelMap;
+	bool mScreenWrappingEnabled;
 	
 	//Display variables
 	SDL_Renderer* mRenderer;
@@ -53,7 +54,7 @@ protected:
 
 public:
 	Character(SDL_Renderer* renderer, std::string imagePath, Vector2D startPosition, LevelMap* map, float moveSpeed,
-		float frameDelay = 0.0f, int noOfFrames = 1, bool animating = true, int currentStartFrame = 0, int currentNumOfFrames = 1);
+		float frameDelay = 0.0f, int noOfFrames = 1, bool animating = true, int currentStartFrame = 0, int currentNumOfFrames = 1, bool screenWrappingEnabled = true);
 	virtual ~Character();
 
 	virtual void Render();

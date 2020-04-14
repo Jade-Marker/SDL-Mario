@@ -2,8 +2,8 @@
 
 CharacterPlayable::CharacterPlayable(SDL_Renderer* renderer, std::string imagePath, Vector2D startPosition, int jumpKey, int rightKey, int leftKey,
 	LevelMap* map, float moveSpeed, std::vector<CharacterEnemy*>* const enemiesList, std::string name, float scoreXPos, int initialLives, float frameDelay,
-	int initalNumOfFrames, int totalNumOfFrames, int startingFrame):
-	Character(renderer, imagePath, startPosition, map, moveSpeed, frameDelay, totalNumOfFrames, true, startingFrame, initalNumOfFrames),
+	int initalNumOfFrames, int totalNumOfFrames, int startingFrame, bool screenWrappingEnabled):
+	Character(renderer, imagePath, startPosition, map, moveSpeed, frameDelay, totalNumOfFrames, true, startingFrame, initalNumOfFrames, screenWrappingEnabled),
 	mState(IDLE), mScore(0), mEnemiesList(enemiesList), mName(name), mScoreXPos(scoreXPos), mLives(initialLives)
 {
 	mInputMap[JUMP] = jumpKey;
@@ -14,14 +14,14 @@ CharacterPlayable::CharacterPlayable(SDL_Renderer* renderer, std::string imagePa
 	mJumpSound->Load("SFX/jumpSound.ogg");
 }
 
-void CharacterPlayable::Render()
+void CharacterPlayable::Render(float xOffset)
 {
 	int left = mCurrentFrame * mSingleSpriteWidth;
 
 	//Get the portion of the spritesheet you want to draw
 	//								{XPos, YPos, WidthOfSingleSprite, HeightOfSingleSprite}
 	SDL_Rect portionOfSpriteSheet = { left, 0, mSingleSpriteWidth, mSingleSpriteHeight };
-	SDL_Rect destRect = { (int)(mPosition.x), (int)(mPosition.y), mSingleSpriteWidth, mSingleSpriteHeight };
+	SDL_Rect destRect = { (int)(mPosition.x + xOffset), (int)(mPosition.y), mSingleSpriteWidth, mSingleSpriteHeight };
 	
 	if (!mInvulnerable)
 	{
