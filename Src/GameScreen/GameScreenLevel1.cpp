@@ -5,12 +5,11 @@
 #include "PowBlock.h"
 
 //Todo
-//Fix characterplayable animate constants bug
+//Fix bug with gravity where player can fall through the sides of blocks
 //Level 2 stuff
 
 //Get platform to animate when you hit it 
 //Clean up music and sound effect code (especially stuff in source.cpp)
-//Fix bug with gravity where player can fall through the sides of blocks
 //Implement another enemy (get sprite from here: https://www.spriters-resource.com/arcade/mariobros/sheet/93677/)
 
 
@@ -166,9 +165,11 @@ bool GameScreenLevel1::SetUpLevel()
 	
 	//Set up the player character
 	mMarioCharacter = new CharacterPlayable(mRenderer, "Images/Mario.png", Vector2D(64, 330), SDLK_w, SDLK_d, SDLK_a, 
-		mLevelMap, MOVEMENTSPEED, &mEnemiesAndCoins, "Mario", MARIO_TEXT_POS, INITIAL_LIVES, PLAYER_FRAME_DELAY, MARIO_IDLE_FRAME_COUNT, MARIO_FRAME_COUNT, MARIO_IDLE_START_FRAME);
+		mLevelMap, MOVEMENTSPEED, &mEnemiesAndCoins, "Mario", MARIO_TEXT_POS, INITIAL_LIVES, PLAYER_FRAME_DELAY, MARIO_IDLE_FRAME_COUNT, MARIO_FRAME_COUNT, MARIO_IDLE_START_FRAME,
+		MARIO_JUMP_FRAME_COUNT, MARIO_JUMP_START_FRAME, MARIO_MOVE_FRAME_COUNT, MARIO_MOVE_START_FRAME, MARIO_IDLE_FRAME_COUNT, MARIO_IDLE_START_FRAME);
 	mLuigiCharacter = new CharacterPlayable(mRenderer, "Images/Luigi.png", Vector2D(128, 330), SDLK_UP, SDLK_RIGHT, SDLK_LEFT, 
-		mLevelMap, MOVEMENTSPEED, &mEnemiesAndCoins, "Luigi", LUIGI_TEXT_POS, INITIAL_LIVES, PLAYER_FRAME_DELAY, MARIO_IDLE_FRAME_COUNT, MARIO_FRAME_COUNT, MARIO_IDLE_START_FRAME);
+		mLevelMap, MOVEMENTSPEED, &mEnemiesAndCoins, "Luigi", LUIGI_TEXT_POS, INITIAL_LIVES, PLAYER_FRAME_DELAY, MARIO_IDLE_FRAME_COUNT, MARIO_FRAME_COUNT, MARIO_IDLE_START_FRAME,
+		MARIO_JUMP_FRAME_COUNT, MARIO_JUMP_START_FRAME, MARIO_MOVE_FRAME_COUNT, MARIO_MOVE_START_FRAME, MARIO_IDLE_FRAME_COUNT, MARIO_IDLE_START_FRAME);
 
 	//Set up our POW block
 	mPowBlock = new PowBlock(mRenderer, mLevelMap);

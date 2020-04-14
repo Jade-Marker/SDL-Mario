@@ -148,15 +148,13 @@ void Character::CancelJump()
 
 void Character::MoveLeft(float deltaTime)
 {
-	int xPos = (int)(roundf(mPosition.x - mSingleSpriteWidth * 0.5f)) / mCurrentLevelMap->GetTileset().tileWidth;
-	int yPosUpper = (int)(roundf(mPosition.y)) / mCurrentLevelMap->GetTileset().tileHeight;
-	int yPosMid = (int)(roundf(mPosition.y + mSingleSpriteHeight * 0.5f)) / mCurrentLevelMap->GetTileset().tileHeight;
-	int yPosLower = (int)(roundf(mPosition.y + mSingleSpriteHeight * 0.75f)) / mCurrentLevelMap->GetTileset().tileHeight;
+	int xPos = (int)(roundf(mPosition.x)) / mCurrentLevelMap->GetTileset().tileWidth;
+	int yPos = (int)(roundf((mPosition.y + mSingleSpriteHeight * 0.25f) / (float)mCurrentLevelMap->GetTileset().tileHeight));
+	int yPosMid = (int)(roundf((mPosition.y + mSingleSpriteHeight * 0.5f) / (float)mCurrentLevelMap->GetTileset().tileHeight));
+	int yPosLower = (int)(roundf((mPosition.y + mSingleSpriteHeight * 0.75f) / (float)mCurrentLevelMap->GetTileset().tileHeight));
 
 	mFacingDirection = FACING_LEFT;
-	if (mCurrentLevelMap->TileIsPassable(mCurrentLevelMap->GetTileAt(yPosUpper, xPos)) &&
-		mCurrentLevelMap->TileIsPassable(mCurrentLevelMap->GetTileAt(yPosMid, xPos)) &&
-			mCurrentLevelMap->TileIsPassable(mCurrentLevelMap->GetTileAt(yPosLower, xPos)))
+	if (mCurrentLevelMap->TileIsPassable(mCurrentLevelMap->GetTileAt(yPos, xPos)))
 	{
 		mPosition.x -= cMovementSpeed * deltaTime;
 	}
@@ -167,15 +165,11 @@ void Character::MoveLeft(float deltaTime)
 
 void Character::MoveRight(float deltaTime)
 {
-	int xPos = (int)(roundf(mPosition.x + mSingleSpriteWidth * 1.5f)) / mCurrentLevelMap->GetTileset().tileWidth;
-	int yPosUpper = (int)(roundf(mPosition.y)) / mCurrentLevelMap->GetTileset().tileHeight;
-	int yPosMid = (int)(roundf(mPosition.y + mSingleSpriteHeight * 0.5f)) / mCurrentLevelMap->GetTileset().tileHeight;
-	int yPosLower = (int)(roundf(mPosition.y + mSingleSpriteHeight * 0.75f)) / mCurrentLevelMap->GetTileset().tileHeight;
+	int xPos = (int)(roundf(mPosition.x + mSingleSpriteWidth)) / mCurrentLevelMap->GetTileset().tileWidth;
+	int yPos = (int)(roundf((mPosition.y + mSingleSpriteHeight * 0.25f) / (float)mCurrentLevelMap->GetTileset().tileHeight));
 
 	mFacingDirection = FACING_RIGHT;
-	if (mCurrentLevelMap->TileIsPassable(mCurrentLevelMap->GetTileAt(yPosUpper, xPos)) &&
-		mCurrentLevelMap->TileIsPassable(mCurrentLevelMap->GetTileAt(yPosMid, xPos)) &&
-		mCurrentLevelMap->TileIsPassable(mCurrentLevelMap->GetTileAt(yPosLower, xPos)))
+	if (mCurrentLevelMap->TileIsPassable(mCurrentLevelMap->GetTileAt(yPos, xPos)))
 	{
 		mPosition.x += cMovementSpeed * deltaTime;
 	}
