@@ -9,7 +9,7 @@
 class CharacterPlayable :
 	public Character
 {
-private:
+protected:
 	std::map<INPUT_TYPE, int> mInputMap;
 	CHARACTERSTATE mState;
 	int mScore;
@@ -43,9 +43,9 @@ public:
 	void IncrementScore(int value);
 	int GetScore();
 	void RenderScoreAndLives(Font* font);
-	void UpdateState();
+	virtual void UpdateState();
 
-private:
+protected:
 	void HitTile();
 
 };

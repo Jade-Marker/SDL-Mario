@@ -87,6 +87,9 @@
     <ClCompile Include="Src\GameScreen\GameScreenLevel2.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="Src\Character\CharacterMario.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Library Include="SDL\SDL2.lib">
@@ -170,6 +173,9 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="Src\Other\Tileset.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Src\Character\CharacterMario.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

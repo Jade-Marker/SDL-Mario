@@ -2,7 +2,7 @@
 
 #include "GameScreen.h"
 #include "LevelMap.h"
-#include "CharacterPlayable.h"
+#include "CharacterMario.h"
 
 class GameScreenLevel2: GameScreen
 {
