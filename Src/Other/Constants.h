@@ -32,6 +32,7 @@
 #define MARIOLAND_JUMP_FRAME_COUNT 1
 #define MARIOLAND_MOVE_START_FRAME 1
 #define MARIOLAND_MOVE_FRAME_COUNT 3
+#define MARIOLAND_COLLISION_RADIUS 8.0f
 
 //movement constants
 #define MOVEMENTSPEED 60.0f
@@ -42,6 +43,7 @@
 #define KOOPA_SPEED 50.0f
 #define COIN_SPEED 25.0f
 #define GRAVITY_CHECK_FALLOFF 0.1f
+#define COLLISION_RADIUS 15.0f
 
 //Map constants
 #define MAP_HEIGHT 13

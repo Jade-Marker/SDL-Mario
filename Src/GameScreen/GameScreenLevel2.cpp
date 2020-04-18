@@ -39,13 +39,18 @@ GameScreenLevel2::GameScreenLevel2(SDL_Renderer* renderer):
 			passableTiles.push_back((TILE)i);
 	}
 
-	mLevelMap = new LevelMap(mRenderer, "Images/Marioland images/tileset.png", 16, 16, false, passableTiles, "Levels/Level2.txt");
 	xOffset = 0.0f;
+	mLevelMap = new LevelMap(mRenderer, "Images/Marioland images/tileset.png", 16, 16, false, passableTiles, "Levels/Level2.txt");
 
 	mMario = new CharacterMario(mRenderer, "Images/Marioland images/Mario.png", Vector2D(0.0f, 0.0f), SDLK_w, SDLK_d, SDLK_a,
 		mLevelMap, MARIOLAND_MOVESPEED, nullptr, "Mario", 0.0f, INITIAL_LIVES, LEVEL2_PLAYER_FRAME_DELAY,
 		MARIO_IDLE_FRAME_COUNT, MARIOLAND_FRAME_COUNT, MARIO_IDLE_START_FRAME, MARIOLAND_JUMP_FRAME_COUNT, MARIOLAND_JUMP_START_FRAME, MARIOLAND_MOVE_FRAME_COUNT, MARIOLAND_MOVE_START_FRAME,
-		MARIO_IDLE_FRAME_COUNT, MARIO_IDLE_START_FRAME,	MARIOLAND_JUMP_FORCE, MARIOLAND_GRAVITY, MARIOLAND_JUMP_DECREMENT, false);
+		MARIO_IDLE_FRAME_COUNT, MARIO_IDLE_START_FRAME,	MARIOLAND_JUMP_FORCE, MARIOLAND_GRAVITY, MARIOLAND_JUMP_DECREMENT, MARIOLAND_COLLISION_RADIUS, false);
+
+	CharacterEnemy* coin = new CharacterCoin(mRenderer, "Images/Marioland images/Coin.png", Vector2D(600.0f, 198.145126f), mLevelMap, FACING_RIGHT, 0.0f, 0.0f, 0.0f, 0.0f, MARIOLAND_COLLISION_RADIUS, 0.0f, 1, false);
+	CharacterEnemy* coin2 = new CharacterCoin(mRenderer, "Images/Marioland images/Coin.png", Vector2D(180.0f, 198.145126f), mLevelMap, FACING_RIGHT, 0.0f, 0.0f, 0.0f, 0.0f, MARIOLAND_COLLISION_RADIUS, 0.0f, 1, false);
+	mEnemiesAndCoins.push_back(coin);
+	mEnemiesAndCoins.push_back(coin2);
 }
 
 GameScreenLevel2::~GameScreenLevel2()
@@ -55,11 +60,19 @@ GameScreenLevel2::~GameScreenLevel2()
 void GameScreenLevel2::Render()
 {
 	mLevelMap->Render(0.0f, -xOffset);
+
+	for (unsigned int i = 0; i < mEnemiesAndCoins.size(); i++)
+	{
+		mEnemiesAndCoins[i]->Render(-xOffset);
+	}
+
 	mMario->Render(-xOffset);
 }
 
 void GameScreenLevel2::Update(float deltaTime, SDL_Event e)
 {
+	UpdateEnemiesAndCoins(deltaTime, e);
+
 	float oldXPos = mMario->GetPosition().x;
 	mMario->Update(deltaTime, e);
 	float newXPos = mMario->GetPosition().x;
@@ -78,5 +91,37 @@ void GameScreenLevel2::Update(float deltaTime, SDL_Event e)
 	if (xOffset > mLevelMap->GetTileset().tileWidth * (mLevelMap->GetWidth()- (float)SCREEN_WIDTH/mLevelMap->GetTileset().tileWidth))
 	{
 		xOffset = mLevelMap->GetTileset().tileWidth * (mLevelMap->GetWidth() - (float)SCREEN_WIDTH / mLevelMap->GetTileset().tileWidth);
+	}
+}
+
+void GameScreenLevel2::UpdateEnemiesAndCoins(float deltaTime, SDL_Event e)
+{
+	if (!mEnemiesAndCoins.empty())
+	{
+		int enemyIndexToDelete = -1;
+		for (unsigned int i = 0; i < mEnemiesAndCoins.size(); i++)
+		{
+			if (!(mEnemiesAndCoins[i]->GetPosition().x + mEnemiesAndCoins[i]->GetWidth() < xOffset || mEnemiesAndCoins[i]->GetPosition().x > xOffset + SCREEN_WIDTH))
+			{
+
+				//Now do the update
+				mEnemiesAndCoins[i]->Update(deltaTime, e);
+
+				if (Collisions::Instance()->Circle(mMario->GetCollisionCircle(), mEnemiesAndCoins[i]->GetCollisionCircle()) && mMario->GetState() != PLAYER_DEATH)
+				{
+					mEnemiesAndCoins[i]->OnPlayerCollision(mMario);
+				}
+
+				//If the enemy is no longer alive, then schedule it for deletion
+				if (!mEnemiesAndCoins[i]->GetAlive())
+					enemyIndexToDelete = i;
+			}
+		}
+
+		if (enemyIndexToDelete != -1)
+		{
+			delete mEnemiesAndCoins[enemyIndexToDelete];
+			mEnemiesAndCoins.erase(mEnemiesAndCoins.begin() + enemyIndexToDelete);
+		}
 	}
 }

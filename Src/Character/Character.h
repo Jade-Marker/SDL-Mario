@@ -56,11 +56,11 @@ protected:
 	int mCurrentNumOfFrames;
 
 public:
-	Character(SDL_Renderer* renderer, std::string imagePath, Vector2D startPosition, LevelMap* map, float moveSpeed, float initialJumpForce, float gravity, float jumpForceDecrement,
+	Character(SDL_Renderer* renderer, std::string imagePath, Vector2D startPosition, LevelMap* map, float moveSpeed, float initialJumpForce, float gravity, float jumpForceDecrement, float collisionRadius,
 		float frameDelay = 0.0f, int noOfFrames = 1, bool animating = true, int currentStartFrame = 0, int currentNumOfFrames = 1, bool screenWrappingEnabled = true);
 	virtual ~Character();
 
-	virtual void Render();
+	virtual void Render(int xOffset = 0);
 	virtual void Update(float deltaTime, SDL_Event e);
 	virtual void OnPlayerCollision(CharacterPlayable* player);
 
@@ -73,6 +73,8 @@ public:
 
 	bool IsJumping();
 	void CancelJump();
+
+	float GetWidth() { return mSingleSpriteWidth; };
 
 protected:
 	virtual void MoveLeft(float deltaTime);

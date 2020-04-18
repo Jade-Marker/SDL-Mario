@@ -2,8 +2,9 @@
 
 CharacterEnemy::CharacterEnemy(SDL_Renderer* renderer, std::string imagePath, Vector2D startPosition, LevelMap* map, float moveSpeed,
 	float frameDelay, int noOfFrames, bool animating, int startFrame, int currentNumOfFrames,
-	float initialJumpForce, float gravity, float jumpForceDecrement):
-	Character(renderer, imagePath, startPosition, map, moveSpeed, initialJumpForce, gravity, jumpForceDecrement,frameDelay, noOfFrames, animating, startFrame, currentNumOfFrames), mAlive(true)
+	float initialJumpForce, float gravity, float jumpForceDecrement, float collisionRadius, bool screenWrapping):
+	Character(renderer, imagePath, startPosition, map, moveSpeed, initialJumpForce, gravity, jumpForceDecrement, collisionRadius,
+		frameDelay, noOfFrames, animating, startFrame, currentNumOfFrames, screenWrapping), mAlive(true)
 {
 }
 

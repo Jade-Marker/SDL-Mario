@@ -3,6 +3,8 @@
 #include "GameScreen.h"
 #include "LevelMap.h"
 #include "CharacterMario.h"
+#include "CharacterEnemy.h"
+#include "CharacterCoin.h"
 
 class GameScreenLevel2: GameScreen
 {
@@ -11,6 +13,7 @@ protected:
 	LevelMap* mLevelMap;
 	float xOffset;
 	CharacterPlayable* mMario;
+	std::vector<CharacterEnemy*> mEnemiesAndCoins;
 
 public:
 	GameScreenLevel2(SDL_Renderer* renderer);
@@ -18,5 +21,8 @@ public:
 
 	virtual void Render();
 	virtual void Update(float deltaTime, SDL_Event e);
+
+private:
+	void UpdateEnemiesAndCoins(float deltaTime, SDL_Event e);
 };
 

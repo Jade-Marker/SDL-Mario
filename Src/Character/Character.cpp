@@ -3,10 +3,10 @@
 #include "Constants.h"
 #include "CharacterPlayable.h"
 
-Character::Character(SDL_Renderer* renderer, std::string imagePath, Vector2D startPosition, LevelMap* map, float moveSpeed, float initialJumpForce, float gravity, float jumpForceDecrement,
+Character::Character(SDL_Renderer* renderer, std::string imagePath, Vector2D startPosition, LevelMap* map, float moveSpeed, float initialJumpForce, float gravity, float jumpForceDecrement, float collisionRadius,
 	float frameDelay, int noOfFrames, bool animating, int currentStartFrame, int currentNumOfFrames, bool screenWrappingEnabled) :
 	mRenderer(renderer), mPosition(startPosition), mFacingDirection(FACING_RIGHT),
-	mMovingLeft(false), mMovingRight(false), mJumping(false), mCanJump(false), mCollisionRadius(15.0f),
+	mMovingLeft(false), mMovingRight(false), mJumping(false), mCanJump(false), mCollisionRadius(collisionRadius),
 	mCurrentLevelMap(map), mJumpForce(0.0f), cMovementSpeed(moveSpeed), cInitialJumpForce(initialJumpForce), cGravity(gravity), cJumpForceDecrement(jumpForceDecrement),
 	mFrameDelay(frameDelay), mFrameDelayTimer(frameDelay), mNumFrames(noOfFrames), mAnimating(animating), mCurrentFrame(0),
 	mSingleSpriteWidth(0), mSingleSpriteHeight(0), mCurrentStartFrame(currentStartFrame), mCurrentNumOfFrames(currentNumOfFrames), mScreenWrappingEnabled(screenWrappingEnabled)
@@ -29,14 +29,14 @@ Character::~Character()
 		delete mJumpSound;
 }
 
-void Character::Render()
+void Character::Render(int xOffset)
 {
 	int left = mCurrentFrame * mSingleSpriteWidth;
 
 	//Get the portion of the spritesheet you want to draw
 	//								{XPos, YPos, WidthOfSingleSprite, HeightOfSingleSprite}
 	SDL_Rect portionOfSpriteSheet = { left, 0, mSingleSpriteWidth, mSingleSpriteHeight };
-	SDL_Rect destRect = { (int)(mPosition.x), (int)(mPosition.y), mSingleSpriteWidth, mSingleSpriteHeight };
+	SDL_Rect destRect = { (int)(mPosition.x + xOffset), (int)(mPosition.y), mSingleSpriteWidth, mSingleSpriteHeight };
 
 	if (mFacingDirection == FACING_RIGHT)
 		mTexture->Render(portionOfSpriteSheet, destRect, SDL_FLIP_NONE);
@@ -140,7 +140,7 @@ Rect2D Character::GetCollisionBox()
 
 Circle2D Character::GetCollisionCircle()
 {
-	return Circle2D(mPosition.x, mPosition.y, mCollisionRadius);
+	return Circle2D(mPosition.x + mSingleSpriteWidth / 2.0f, mPosition.y + mSingleSpriteHeight / 2.0f, mCollisionRadius);
 }
 
 bool Character::IsJumping()
