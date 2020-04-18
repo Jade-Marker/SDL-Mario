@@ -5,9 +5,14 @@
 #include "PowBlock.h"
 
 //Todo
-//Fix bug with gravity where player can fall through the sides of blocks
-//Level 2 stuff
+//For Level 2:
+//Fix speed/gravity strength
+//Add all 3 types of enemies
+//Add static coins
+//Add ? block functionality
+//Add death and lives system similar to original game (overload kill player method)
 
+//For Level 1:
 //Get platform to animate when you hit it 
 //Clean up music and sound effect code (especially stuff in source.cpp)
 //Implement another enemy (get sprite from here: https://www.spriters-resource.com/arcade/mariobros/sheet/93677/)

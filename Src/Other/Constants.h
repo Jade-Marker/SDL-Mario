@@ -30,6 +30,7 @@
 #define INITIAL_JUMP_FORCE_SMALL 200.0f
 #define KOOPA_SPEED 50.0f
 #define COIN_SPEED 25.0f
+#define GRAVITY_CHECK_FALLOFF 0.1f
 
 //Map constants
 #define MAP_HEIGHT 13

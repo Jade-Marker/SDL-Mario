@@ -14,7 +14,8 @@ PowBlock::PowBlock(SDL_Renderer* renderer, LevelMap* map):
 	mSingleSpriteWidth = mTexture->GetWidth() / POW_HITS;
 	mSingleSpriteHeight = mTexture->GetHeight();
 
-	mPosition = Vector2D((SCREEN_WIDTH * 0.5f) - mSingleSpriteWidth * 0.5f, 260);
+	mPosition = Vector2D((SCREEN_WIDTH * 0.5f), 260);
+
 }
 
 PowBlock::~PowBlock()
@@ -49,7 +50,6 @@ void PowBlock::TakeAHit()
 	if (mNumberOfHitsLeft <= 0)
 	{
 		mNumberOfHitsLeft = 0;
-		mLevelMap->ChangeTileAt(8, 7, EMPTY);
 		mLevelMap->ChangeTileAt(8, 8, EMPTY);
 	}
 }

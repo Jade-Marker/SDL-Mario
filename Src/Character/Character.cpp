@@ -53,10 +53,19 @@ void Character::Update(float deltaTime, SDL_Event e)
 	{
 	}
 
+	int footPosition = (int)(mPosition.y + mSingleSpriteHeight) / mCurrentLevelMap->GetTileset().tileHeight;
+	int headPosition = (int)(mPosition.y) / mCurrentLevelMap->GetTileset().tileHeight;
+	int centralXPosition = (mPosition.x + (mSingleSpriteWidth * 0.5f)) / mCurrentLevelMap->GetTileset().tileWidth;
+	int leftXPosition = (mPosition.x + mSingleSpriteWidth * GRAVITY_CHECK_FALLOFF) / mCurrentLevelMap->GetTileset().tileWidth;
+	int rightXPosition = (mPosition.x + mSingleSpriteWidth * (1.0f - GRAVITY_CHECK_FALLOFF)) / mCurrentLevelMap->GetTileset().tileWidth;
+
 	//Deal with jumping first
 	if (mJumping)
 	{
-		if (mCurrentLevelMap->TileIsPassable(mCurrentLevelMap->GetTileAt(mPosition.y / mCurrentLevelMap->GetTileset().tileHeight, (mPosition.x + (mSingleSpriteWidth * 0.5f)) / mCurrentLevelMap->GetTileset().tileWidth))) {
+		if(mCurrentLevelMap->TileIsPassable(mCurrentLevelMap->GetTileAt(headPosition, centralXPosition)) &&
+			mCurrentLevelMap->TileIsPassable(mCurrentLevelMap->GetTileAt(headPosition, leftXPosition)) &&
+			mCurrentLevelMap->TileIsPassable(mCurrentLevelMap->GetTileAt(headPosition, rightXPosition)))
+		{
 
 			//Adjust the position
 			mPosition.y -= mJumpForce * deltaTime;
@@ -77,10 +86,9 @@ void Character::Update(float deltaTime, SDL_Event e)
 	else if (mMovingRight)
 		MoveRight(deltaTime);
 
-	int centralXPosition = (int)(roundf(mPosition.x + (mSingleSpriteWidth * 0.5f))) / mCurrentLevelMap->GetTileset().tileWidth;
-	int footPosition = (int)(mPosition.y + mSingleSpriteHeight) / mCurrentLevelMap->GetTileset().tileHeight;
-	
-	if (mCurrentLevelMap->TileIsPassable(mCurrentLevelMap->GetTileAt(footPosition, centralXPosition)))
+	if (mCurrentLevelMap->TileIsPassable(mCurrentLevelMap->GetTileAt(footPosition, leftXPosition)) &&
+		mCurrentLevelMap->TileIsPassable(mCurrentLevelMap->GetTileAt(footPosition, centralXPosition)) && 
+		mCurrentLevelMap->TileIsPassable(mCurrentLevelMap->GetTileAt(footPosition, rightXPosition)))
 		AddGravity(deltaTime);
 	else
 		mCanJump = true;
