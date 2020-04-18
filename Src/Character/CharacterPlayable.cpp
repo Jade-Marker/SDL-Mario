@@ -3,8 +3,8 @@
 CharacterPlayable::CharacterPlayable(SDL_Renderer* renderer, std::string imagePath, Vector2D startPosition, int jumpKey, int rightKey, int leftKey,
 	LevelMap* map, float moveSpeed, std::vector<CharacterEnemy*>* const enemiesList, std::string name, float scoreXPos, int initialLives, float frameDelay,
 	int initalNumOfFrames, int totalNumOfFrames, int startingFrame, int jumpFrameCount, int jumpStartFrame, int moveFrameCount, int moveStartFrame, int idleFrameCount, int idleStartFrame, 
-	bool screenWrappingEnabled):
-	Character(renderer, imagePath, startPosition, map, moveSpeed, frameDelay, totalNumOfFrames, true, startingFrame, initalNumOfFrames, screenWrappingEnabled),
+	float initialJumpForce, float gravity, float jumpForceDecrement, bool screenWrappingEnabled):
+	Character(renderer, imagePath, startPosition, map, moveSpeed, initialJumpForce, gravity, jumpForceDecrement, frameDelay, totalNumOfFrames, true, startingFrame, initalNumOfFrames, screenWrappingEnabled),
 	mState(IDLE), mScore(0), mEnemiesList(enemiesList), mName(name), mScoreXPos(scoreXPos), mLives(initialLives), 
 	JUMP_FRAME_COUNT(jumpFrameCount), JUMP_START_FRAME(jumpStartFrame), MOVE_FRAME_COUNT(moveFrameCount), MOVE_START_FRAME(moveStartFrame), IDLE_FRAME_COUNT(idleFrameCount), IDLE_START_FRAME(idleStartFrame)
 {

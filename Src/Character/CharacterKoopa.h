@@ -13,11 +13,10 @@ private:
 	float mInjuredTime;
 
 public:
-	CharacterKoopa(SDL_Renderer* renderer, std::string imagePath, Vector2D startPosition, LevelMap* map, FACING startFacing, float movementSpeed,
-		float frameDelay, int noOfFrames, int startingFrame, int currentNumOfFrames);
+	CharacterKoopa(SDL_Renderer* renderer, std::string imagePath, Vector2D startPosition, LevelMap* map, FACING startFacing,
+		float movementSpeed, float initialJumpForce, float gravity, float jumpForceDecrement, float frameDelay, int noOfFrames, int startingFrame, int currentNumOfFrames);
 	~CharacterKoopa();
 	void TakeDamage();
-	void Jump();
 	void Update(float deltaTime, SDL_Event e);
 	virtual void OnPlayerCollision(CharacterPlayable* player);
 	bool GetInjured();

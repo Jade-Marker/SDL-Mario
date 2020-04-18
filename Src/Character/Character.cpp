@@ -3,11 +3,11 @@
 #include "Constants.h"
 #include "CharacterPlayable.h"
 
-Character::Character(SDL_Renderer* renderer, std::string imagePath, Vector2D startPosition, LevelMap* map, float moveSpeed,
+Character::Character(SDL_Renderer* renderer, std::string imagePath, Vector2D startPosition, LevelMap* map, float moveSpeed, float initialJumpForce, float gravity, float jumpForceDecrement,
 	float frameDelay, int noOfFrames, bool animating, int currentStartFrame, int currentNumOfFrames, bool screenWrappingEnabled) :
 	mRenderer(renderer), mPosition(startPosition), mFacingDirection(FACING_RIGHT),
 	mMovingLeft(false), mMovingRight(false), mJumping(false), mCanJump(false), mCollisionRadius(15.0f),
-	mCurrentLevelMap(map), mJumpForce(0.0f), cMovementSpeed(moveSpeed), 
+	mCurrentLevelMap(map), mJumpForce(0.0f), cMovementSpeed(moveSpeed), cInitialJumpForce(initialJumpForce), cGravity(gravity), cJumpForceDecrement(jumpForceDecrement),
 	mFrameDelay(frameDelay), mFrameDelayTimer(frameDelay), mNumFrames(noOfFrames), mAnimating(animating), mCurrentFrame(0),
 	mSingleSpriteWidth(0), mSingleSpriteHeight(0), mCurrentStartFrame(currentStartFrame), mCurrentNumOfFrames(currentNumOfFrames), mScreenWrappingEnabled(screenWrappingEnabled)
 {
@@ -71,7 +71,7 @@ void Character::Update(float deltaTime, SDL_Event e)
 			mPosition.y -= mJumpForce * deltaTime;
 
 			//Reduce the jump force
-			mJumpForce -= JUMP_FORCE_DECREMENT * deltaTime;
+			mJumpForce -= cJumpForceDecrement * deltaTime;
 
 			//Has the jump force reduced to zero?
 			if (mJumpForce <= 0.0f)
@@ -190,7 +190,7 @@ void Character::Jump()
 {
 	if (!mJumping && mCanJump)
 	{
-		mJumpForce = INITIAL_JUMP_FORCE;
+		mJumpForce = cInitialJumpForce;
 		mJumping = true;
 		mCanJump = false;
 
@@ -201,7 +201,7 @@ void Character::Jump()
 
 void Character::AddGravity(float deltaTime)
 {
-	mPosition.y += GRAVITY * deltaTime;
+	mPosition.y += cGravity * deltaTime;
 	mCanJump = false;
 
 	if (mPosition.y > SCREEN_HEIGHT - mSingleSpriteHeight)
@@ -225,6 +225,6 @@ void Character::ScreenWrap(float deltaTime)
 		else if (mPosition.x + mSingleSpriteWidth * 0.5f > SCREEN_WIDTH)
 			mPosition.x = -mSingleSpriteWidth;
 
-		mPosition.y -= GRAVITY * deltaTime;
+		mPosition.y -= cGravity * deltaTime;
 	}
 }

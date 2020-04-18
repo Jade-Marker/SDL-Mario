@@ -7,6 +7,7 @@
 //Todo
 //For Level 2:
 //Fix speed/gravity strength
+//Sort constants for Mario
 //Add all 3 types of enemies
 //Add static coins
 //Add ? block functionality
@@ -171,10 +172,10 @@ bool GameScreenLevel1::SetUpLevel()
 	//Set up the player character
 	mMarioCharacter = new CharacterPlayable(mRenderer, "Images/Mario.png", Vector2D(64, 330), SDLK_w, SDLK_d, SDLK_a, 
 		mLevelMap, MOVEMENTSPEED, &mEnemiesAndCoins, "Mario", MARIO_TEXT_POS, INITIAL_LIVES, LEVEL1_PLAYER_FRAME_DELAY, MARIO_IDLE_FRAME_COUNT, MARIO_FRAME_COUNT, MARIO_IDLE_START_FRAME,
-		MARIO_JUMP_FRAME_COUNT, MARIO_JUMP_START_FRAME, MARIO_MOVE_FRAME_COUNT, MARIO_MOVE_START_FRAME, MARIO_IDLE_FRAME_COUNT, MARIO_IDLE_START_FRAME);
+		MARIO_JUMP_FRAME_COUNT, MARIO_JUMP_START_FRAME, MARIO_MOVE_FRAME_COUNT, MARIO_MOVE_START_FRAME, MARIO_IDLE_FRAME_COUNT, MARIO_IDLE_START_FRAME, INITIAL_JUMP_FORCE, GRAVITY, JUMP_FORCE_DECREMENT);
 	mLuigiCharacter = new CharacterPlayable(mRenderer, "Images/Luigi.png", Vector2D(128, 330), SDLK_UP, SDLK_RIGHT, SDLK_LEFT, 
 		mLevelMap, MOVEMENTSPEED, &mEnemiesAndCoins, "Luigi", LUIGI_TEXT_POS, INITIAL_LIVES, LEVEL1_PLAYER_FRAME_DELAY, MARIO_IDLE_FRAME_COUNT, MARIO_FRAME_COUNT, MARIO_IDLE_START_FRAME,
-		MARIO_JUMP_FRAME_COUNT, MARIO_JUMP_START_FRAME, MARIO_MOVE_FRAME_COUNT, MARIO_MOVE_START_FRAME, MARIO_IDLE_FRAME_COUNT, MARIO_IDLE_START_FRAME);
+		MARIO_JUMP_FRAME_COUNT, MARIO_JUMP_START_FRAME, MARIO_MOVE_FRAME_COUNT, MARIO_MOVE_START_FRAME, MARIO_IDLE_FRAME_COUNT, MARIO_IDLE_START_FRAME, INITIAL_JUMP_FORCE, GRAVITY, JUMP_FORCE_DECREMENT);
 
 	//Set up our POW block
 	mPowBlock = new PowBlock(mRenderer, mLevelMap);
@@ -323,13 +324,14 @@ void GameScreenLevel1::UpdateEnemiesAndCoins(float deltaTime, SDL_Event e)
 
 void GameScreenLevel1::CreateKoopa(Vector2D position, FACING direction, float speed)
 {
-	CharacterKoopa* koopaCharacter = new CharacterKoopa(mRenderer, "Images/Koopa.png", position, mLevelMap, direction, speed,
+	CharacterKoopa* koopaCharacter = new CharacterKoopa(mRenderer, "Images/Koopa.png", position, mLevelMap, direction, speed, INITIAL_JUMP_FORCE_SMALL, GRAVITY, JUMP_FORCE_DECREMENT,
 		ANIMATION_DELAY, KOOPA_FRAME_COUNT, KOOPA_MOVING_FRAME, KOOPA_MOVING_FRAME_COUNT);
 	mEnemiesAndCoins.push_back(koopaCharacter);
 }
 
 void GameScreenLevel1::CreateCoin(Vector2D position, FACING direction, float speed)
 {
-	CharacterCoin* coinCharacter = new CharacterCoin(mRenderer, "Images/Coin.png", position, mLevelMap, direction, speed, ANIMATION_DELAY, COIN_FRAME_COUNT);
+	CharacterCoin* coinCharacter = new CharacterCoin(mRenderer, "Images/Coin.png", position, mLevelMap, direction, speed, INITIAL_JUMP_FORCE, GRAVITY, JUMP_FORCE_DECREMENT,
+		ANIMATION_DELAY, COIN_FRAME_COUNT);
 	mEnemiesAndCoins.push_back(coinCharacter);
 }

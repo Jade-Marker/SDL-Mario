@@ -1,9 +1,11 @@
 #include "CharacterKoopa.h"
 #include "CharacterPlayable.h"
 
-CharacterKoopa::CharacterKoopa(SDL_Renderer* renderer, std::string imagePath, Vector2D startPosition, LevelMap* map, FACING startFacing, float movementSpeed,
+CharacterKoopa::CharacterKoopa(SDL_Renderer* renderer, std::string imagePath, Vector2D startPosition, LevelMap* map, FACING startFacing,
+	float movementSpeed, float initialJumpForce, float gravity, float jumpForceDecrement,
 	float frameDelay, int noOfFrames, int startingFrame, int currentNumOfFrames) :
-	CharacterEnemy(renderer, imagePath, startPosition, map, movementSpeed, frameDelay, noOfFrames, true, startingFrame, currentNumOfFrames), mInjured(false), mInjuredTime(0)
+	CharacterEnemy(renderer, imagePath, startPosition, map, movementSpeed, frameDelay, noOfFrames, true, startingFrame, currentNumOfFrames, initialJumpForce, gravity, jumpForceDecrement),
+	mInjured(false), mInjuredTime(0)
 {
 	mFacingDirection = startFacing;
 
@@ -32,17 +34,6 @@ void CharacterKoopa::TakeDamage()
 	}
 
 	Jump();
-}
-
-void CharacterKoopa::Jump()
-{
-	if (!mJumping)
-	{
-		mJumpForce = INITIAL_JUMP_FORCE_SMALL;
-
-		mJumping = true;
-		mCanJump = false;
-	}
 }
 
 void CharacterKoopa::Update(float deltaTime, SDL_Event e)

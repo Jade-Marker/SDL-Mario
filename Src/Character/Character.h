@@ -23,6 +23,9 @@ protected:
 
 	//constant movement variables
 	const float cMovementSpeed;
+	const float cInitialJumpForce;
+	const float cGravity;
+	const float cJumpForceDecrement;
 
 	//jumping variables
 	bool mJumping;
@@ -53,7 +56,7 @@ protected:
 	int mCurrentNumOfFrames;
 
 public:
-	Character(SDL_Renderer* renderer, std::string imagePath, Vector2D startPosition, LevelMap* map, float moveSpeed,
+	Character(SDL_Renderer* renderer, std::string imagePath, Vector2D startPosition, LevelMap* map, float moveSpeed, float initialJumpForce, float gravity, float jumpForceDecrement,
 		float frameDelay = 0.0f, int noOfFrames = 1, bool animating = true, int currentStartFrame = 0, int currentNumOfFrames = 1, bool screenWrappingEnabled = true);
 	virtual ~Character();
 
