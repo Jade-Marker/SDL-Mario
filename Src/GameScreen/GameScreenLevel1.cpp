@@ -6,8 +6,6 @@
 
 //Todo
 //For Level 2:
-//Fix speed/gravity strength
-//Sort constants for Mario
 //Add all 3 types of enemies
 //Add static coins
 //Add ? block functionality

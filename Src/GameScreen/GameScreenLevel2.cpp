@@ -41,9 +41,11 @@ GameScreenLevel2::GameScreenLevel2(SDL_Renderer* renderer):
 
 	mLevelMap = new LevelMap(mRenderer, "Images/Marioland images/tileset.png", 16, 16, false, passableTiles, "Levels/Level2.txt");
 	xOffset = 0.0f;
+
 	mMario = new CharacterMario(mRenderer, "Images/Marioland images/Mario.png", Vector2D(0.0f, 0.0f), SDLK_w, SDLK_d, SDLK_a,
-		mLevelMap, 100.0f, nullptr, "Mario", 0.0f, INITIAL_LIVES, LEVEL2_PLAYER_FRAME_DELAY, 1, 5, 0, 1, 4, 3, 1, 1, 0,
-		INITIAL_JUMP_FORCE, GRAVITY, JUMP_FORCE_DECREMENT, false);
+		mLevelMap, MARIOLAND_MOVESPEED, nullptr, "Mario", 0.0f, INITIAL_LIVES, LEVEL2_PLAYER_FRAME_DELAY,
+		MARIO_IDLE_FRAME_COUNT, MARIOLAND_FRAME_COUNT, MARIO_IDLE_START_FRAME, MARIOLAND_JUMP_FRAME_COUNT, MARIOLAND_JUMP_START_FRAME, MARIOLAND_MOVE_FRAME_COUNT, MARIOLAND_MOVE_START_FRAME,
+		MARIO_IDLE_FRAME_COUNT, MARIO_IDLE_START_FRAME,	MARIOLAND_JUMP_FORCE, MARIOLAND_GRAVITY, MARIOLAND_JUMP_DECREMENT, false);
 }
 
 GameScreenLevel2::~GameScreenLevel2()
