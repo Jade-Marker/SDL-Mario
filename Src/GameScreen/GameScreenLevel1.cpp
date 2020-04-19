@@ -6,8 +6,6 @@
 
 //Todo
 //For Level 2:
-//Only render tiles if they are on screen
-//At the start of level 2, replace all coins in the map with coin objects
 //Add all 3 types of enemies
 //Add ? block functionality
 //Add death and lives system similar to original game (overload kill player method)

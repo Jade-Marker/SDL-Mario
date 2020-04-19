@@ -65,7 +65,7 @@ TILE LevelMap::GetTileAt(unsigned int h, unsigned int w)
 	{
 		return mMap[h][w];
 	}
-	
+
 	return EMPTY;
 }
 
@@ -81,23 +81,25 @@ void LevelMap::Render(float yOffset, float xOffset)
 	{
 		for (int x = 0; x < mMapWidth; x++)
 		{
-			if (mMap[y][x] != EMPTY)
-			{
-				if (mTileset.tilesGoAcross)
+			if (x * mTileset.tileWidth + mTileset.tileWidth > abs(xOffset) && x * mTileset.tileWidth < abs(xOffset) + SCREEN_WIDTH) {
+				if (mMap[y][x] != EMPTY)
 				{
-					int left = mTileset.tileWidth * mMap[y][x];
+					if (mTileset.tilesGoAcross)
+					{
+						int left = mTileset.tileWidth * mMap[y][x];
 
-					SDL_Rect portionOfTileSet = { left, 0, mTileset.tileWidth, mTileset.tileHeight };
-					SDL_Rect destRect = { (int)(x * mTileset.tileWidth + xOffset), (int)(y * mTileset.tileHeight + yOffset), mTileset.tileWidth, mTileset.tileHeight };
-					mTileset.texture->Render(portionOfTileSet, destRect, SDL_FLIP_NONE);
-				}
-				else
-				{
-					int down = mTileset.tileHeight * mMap[y][x];
+						SDL_Rect portionOfTileSet = { left, 0, mTileset.tileWidth, mTileset.tileHeight };
+						SDL_Rect destRect = { (int)(x * mTileset.tileWidth + xOffset), (int)(y * mTileset.tileHeight + yOffset), mTileset.tileWidth, mTileset.tileHeight };
+						mTileset.texture->Render(portionOfTileSet, destRect, SDL_FLIP_NONE);
+					}
+					else
+					{
+						int down = mTileset.tileHeight * mMap[y][x];
 
-					SDL_Rect portionOfTileSet = { 0, down, mTileset.tileWidth, mTileset.tileHeight };
-					SDL_Rect destRect = { (int)(x * mTileset.tileWidth + xOffset), (int)(y * mTileset.tileHeight + yOffset), mTileset.tileWidth, mTileset.tileHeight };
-					mTileset.texture->Render(portionOfTileSet, destRect, SDL_FLIP_NONE);
+						SDL_Rect portionOfTileSet = { 0, down, mTileset.tileWidth, mTileset.tileHeight };
+						SDL_Rect destRect = { (int)(x * mTileset.tileWidth + xOffset), (int)(y * mTileset.tileHeight + yOffset), mTileset.tileWidth, mTileset.tileHeight };
+						mTileset.texture->Render(portionOfTileSet, destRect, SDL_FLIP_NONE);
+					}
 				}
 			}
 		}

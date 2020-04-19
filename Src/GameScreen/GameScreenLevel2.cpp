@@ -42,15 +42,26 @@ GameScreenLevel2::GameScreenLevel2(SDL_Renderer* renderer):
 	xOffset = 0.0f;
 	mLevelMap = new LevelMap(mRenderer, "Images/Marioland images/tileset.png", 16, 16, false, passableTiles, "Levels/Level2.txt");
 
+	for (int y = 0; y < mLevelMap->GetHeight(); y++)
+	{
+		for (int x = 0; x < mLevelMap->GetWidth(); x++)
+		{
+			if (mLevelMap->GetTileAt(y, x) == 0xf4)
+			{
+				mLevelMap->ChangeTileAt(y, x, (TILE)0x2c);
+
+				CharacterEnemy* coin = new CharacterCoin(mRenderer, "Images/Marioland images/Coin.png", Vector2D(x * mLevelMap->GetTileset().tileWidth, y * mLevelMap->GetTileset().tileHeight),
+					mLevelMap, FACING_RIGHT, 0.0f, 0.0f, 0.0f, 0.0f, MARIOLAND_COLLISION_RADIUS, 0.0f, 1, false);
+				mEnemiesAndCoins.push_back(coin);
+
+			}
+		}
+	}
+
 	mMario = new CharacterMario(mRenderer, "Images/Marioland images/Mario.png", Vector2D(0.0f, 0.0f), SDLK_w, SDLK_d, SDLK_a,
 		mLevelMap, MARIOLAND_MOVESPEED, nullptr, "Mario", 0.0f, INITIAL_LIVES, LEVEL2_PLAYER_FRAME_DELAY,
 		MARIO_IDLE_FRAME_COUNT, MARIOLAND_FRAME_COUNT, MARIO_IDLE_START_FRAME, MARIOLAND_JUMP_FRAME_COUNT, MARIOLAND_JUMP_START_FRAME, MARIOLAND_MOVE_FRAME_COUNT, MARIOLAND_MOVE_START_FRAME,
 		MARIO_IDLE_FRAME_COUNT, MARIO_IDLE_START_FRAME,	MARIOLAND_JUMP_FORCE, MARIOLAND_GRAVITY, MARIOLAND_JUMP_DECREMENT, MARIOLAND_COLLISION_RADIUS, false);
-
-	CharacterEnemy* coin = new CharacterCoin(mRenderer, "Images/Marioland images/Coin.png", Vector2D(600.0f, 198.145126f), mLevelMap, FACING_RIGHT, 0.0f, 0.0f, 0.0f, 0.0f, MARIOLAND_COLLISION_RADIUS, 0.0f, 1, false);
-	CharacterEnemy* coin2 = new CharacterCoin(mRenderer, "Images/Marioland images/Coin.png", Vector2D(180.0f, 198.145126f), mLevelMap, FACING_RIGHT, 0.0f, 0.0f, 0.0f, 0.0f, MARIOLAND_COLLISION_RADIUS, 0.0f, 1, false);
-	mEnemiesAndCoins.push_back(coin);
-	mEnemiesAndCoins.push_back(coin2);
 }
 
 GameScreenLevel2::~GameScreenLevel2()
