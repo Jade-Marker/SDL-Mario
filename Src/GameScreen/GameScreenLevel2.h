@@ -5,6 +5,7 @@
 #include "CharacterMario.h"
 #include "CharacterEnemy.h"
 #include "CharacterCoin.h"
+#include "CharacterGoomba.h"
 
 class GameScreenLevel2: GameScreen
 {

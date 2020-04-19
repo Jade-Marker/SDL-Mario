@@ -2,7 +2,7 @@
 #include "CharacterPlayable.h"
 
 CharacterCoin::CharacterCoin(SDL_Renderer* renderer, std::string imagePath, Vector2D startPosition, LevelMap* map, FACING moveDirection,
-	float movementSpeed, float initialJumpForce, float gravity, float jumpForceDecrement, float collisionRadius, float frameDelay, int noOfFrames, bool screenWrapping):
+	float movementSpeed, float initialJumpForce, float gravity, float jumpForceDecrement, float collisionRadius, float frameDelay, int noOfFrames, std::string deathSFXPath, bool screenWrapping):
 	CharacterEnemy(renderer, imagePath, startPosition, map, movementSpeed, frameDelay, noOfFrames, true, 0, noOfFrames, initialJumpForce, gravity, jumpForceDecrement, collisionRadius, screenWrapping)
 {
 	if (moveDirection == FACING_LEFT)
@@ -11,7 +11,7 @@ CharacterCoin::CharacterCoin(SDL_Renderer* renderer, std::string imagePath, Vect
 		mMovingRight = true;
 
 	mDeathSound = new SoundEffect();
-	mDeathSound->Load("SFX/coin.ogg");
+	mDeathSound->Load(deathSFXPath);
 }
 
 CharacterCoin::~CharacterCoin()

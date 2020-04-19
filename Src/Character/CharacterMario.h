@@ -8,7 +8,7 @@ public:
 		LevelMap* map, float moveSpeed, std::vector<CharacterEnemy*>* const enemiesList, std::string name, float scoreXPos, int initialLives,
 		float frameDelay, int initalNumOfFrames, int totalNumOfFrames, int startingFrame,
 		int jumpFrameCount, int jumpStartFrame, int moveFrameCount, int moveStartFrame, int idleFrameCount, int idleStartFrame,
-		float initialJumpForce, float gravity, float jumpForceDecrement, float collisionRadius, bool screenWrappingEnabled = true);
+		float initialJumpForce, float gravity, float jumpForceDecrement, float collisionRadius, std::string jumpSFXPath, bool screenWrappingEnabled = true);
 
 	void UpdateState();
 };

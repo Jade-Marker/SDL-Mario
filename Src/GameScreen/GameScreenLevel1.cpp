@@ -6,7 +6,9 @@
 
 //Todo
 //For Level 2:
-//Add all 3 types of enemies
+//Add Goombas to level
+//Add Koopas
+//Add Flies
 //Add ? block functionality
 //Add death and lives system similar to original game (overload kill player method)
 
@@ -170,11 +172,11 @@ bool GameScreenLevel1::SetUpLevel()
 	mMarioCharacter = new CharacterPlayable(mRenderer, "Images/Mario.png", Vector2D(64, 330), SDLK_w, SDLK_d, SDLK_a, 
 		mLevelMap, MOVEMENTSPEED, &mEnemiesAndCoins, "Mario", MARIO_TEXT_POS, INITIAL_LIVES, LEVEL1_PLAYER_FRAME_DELAY, MARIO_IDLE_FRAME_COUNT, MARIO_FRAME_COUNT, MARIO_IDLE_START_FRAME,
 		MARIO_JUMP_FRAME_COUNT, MARIO_JUMP_START_FRAME, MARIO_MOVE_FRAME_COUNT, MARIO_MOVE_START_FRAME, MARIO_IDLE_FRAME_COUNT, MARIO_IDLE_START_FRAME,
-		INITIAL_JUMP_FORCE, GRAVITY, JUMP_FORCE_DECREMENT, COLLISION_RADIUS);
+		INITIAL_JUMP_FORCE, GRAVITY, JUMP_FORCE_DECREMENT, COLLISION_RADIUS, "SFX/jumpSound.ogg");
 	mLuigiCharacter = new CharacterPlayable(mRenderer, "Images/Luigi.png", Vector2D(128, 330), SDLK_UP, SDLK_RIGHT, SDLK_LEFT, 
 		mLevelMap, MOVEMENTSPEED, &mEnemiesAndCoins, "Luigi", LUIGI_TEXT_POS, INITIAL_LIVES, LEVEL1_PLAYER_FRAME_DELAY, MARIO_IDLE_FRAME_COUNT, MARIO_FRAME_COUNT, MARIO_IDLE_START_FRAME,
 		MARIO_JUMP_FRAME_COUNT, MARIO_JUMP_START_FRAME, MARIO_MOVE_FRAME_COUNT, MARIO_MOVE_START_FRAME, MARIO_IDLE_FRAME_COUNT, MARIO_IDLE_START_FRAME, INITIAL_JUMP_FORCE,
-		GRAVITY, JUMP_FORCE_DECREMENT, COLLISION_RADIUS);
+		GRAVITY, JUMP_FORCE_DECREMENT, COLLISION_RADIUS, "SFX/jumpSound.ogg");
 
 	//Set up our POW block
 	mPowBlock = new PowBlock(mRenderer, mLevelMap);
@@ -331,6 +333,6 @@ void GameScreenLevel1::CreateKoopa(Vector2D position, FACING direction, float sp
 void GameScreenLevel1::CreateCoin(Vector2D position, FACING direction, float speed)
 {
 	CharacterCoin* coinCharacter = new CharacterCoin(mRenderer, "Images/Coin.png", position, mLevelMap, direction, speed, INITIAL_JUMP_FORCE, GRAVITY, JUMP_FORCE_DECREMENT, COLLISION_RADIUS,
-		ANIMATION_DELAY, COIN_FRAME_COUNT);
+		ANIMATION_DELAY, COIN_FRAME_COUNT, "SFX/coin.ogg");
 	mEnemiesAndCoins.push_back(coinCharacter);
 }

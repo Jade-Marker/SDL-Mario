@@ -3,7 +3,7 @@
 CharacterPlayable::CharacterPlayable(SDL_Renderer* renderer, std::string imagePath, Vector2D startPosition, int jumpKey, int rightKey, int leftKey,
 	LevelMap* map, float moveSpeed, std::vector<CharacterEnemy*>* const enemiesList, std::string name, float scoreXPos, int initialLives, float frameDelay,
 	int initalNumOfFrames, int totalNumOfFrames, int startingFrame, int jumpFrameCount, int jumpStartFrame, int moveFrameCount, int moveStartFrame, int idleFrameCount, int idleStartFrame, 
-	float initialJumpForce, float gravity, float jumpForceDecrement, float collisionRadius, bool screenWrappingEnabled):
+	float initialJumpForce, float gravity, float jumpForceDecrement, float collisionRadius, std::string jumpSFXPath, bool screenWrappingEnabled):
 	Character(renderer, imagePath, startPosition, map, moveSpeed, initialJumpForce, gravity, jumpForceDecrement, collisionRadius,
 		frameDelay, totalNumOfFrames, true, startingFrame, initalNumOfFrames, screenWrappingEnabled),
 	mState(IDLE), mScore(0), mEnemiesList(enemiesList), mName(name), mScoreXPos(scoreXPos), mLives(initialLives), 
@@ -14,7 +14,7 @@ CharacterPlayable::CharacterPlayable(SDL_Renderer* renderer, std::string imagePa
 	mInputMap[LEFT] = leftKey;
 
 	mJumpSound = new SoundEffect();
-	mJumpSound->Load("SFX/jumpSound.ogg");
+	mJumpSound->Load(jumpSFXPath);
 }
 
 void CharacterPlayable::Render(float xOffset)
@@ -161,6 +161,17 @@ void CharacterPlayable::UpdateState()
 	{
 		mState = IDLE;
 	}
+}
+
+void CharacterPlayable::JumpedOnEnemy()
+{
+	mJumping = false;
+	mCanJump = true;
+
+	SoundEffect* temp = mJumpSound;
+	mJumpSound = nullptr;
+	Jump();
+	mJumpSound = temp;
 }
 
 void CharacterPlayable::HitTile()

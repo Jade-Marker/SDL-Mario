@@ -75,6 +75,7 @@ public:
 	void CancelJump();
 
 	float GetWidth() { return mSingleSpriteWidth; };
+	float GetHeight() { return mSingleSpriteHeight; };
 
 protected:
 	virtual void MoveLeft(float deltaTime);
