@@ -17,24 +17,18 @@ SDL_Window* gWindow = NULL;
 SDL_Renderer* gRenderer = NULL;
 GameScreenManager* gameScreenManager = NULL;
 Uint32 gOldTime;
-Mix_Music* gMusic = NULL;
 
 //Function Prototypes
 bool InitSDL();
 void CloseSDL();
 bool Update();
 void Render();
-void LoadMusic(string path);
 
 int main(int argc, char* args[])
 {
 	//Check if SDL was set up correctly
 	if (InitSDL())
 	{
-		SoundEffect music;
-		music.Load("Music/Mario.ogg");
-		music.Play(-1);
-
 		//Set up the game screen manager - start with level1
 		gameScreenManager = new GameScreenManager(gRenderer, SCREEN_INTRO);
 		gOldTime = SDL_GetTicks();
@@ -111,10 +105,6 @@ bool InitSDL()
 
 void CloseSDL()
 {
-	//Release music
-	Mix_FreeMusic(gMusic);
-	gMusic = NULL;
-
 	//Destroy the game screen manager
 	delete gameScreenManager;
 	gameScreenManager = NULL;
@@ -170,12 +160,4 @@ void Render()
 	gameScreenManager->Render();
 
 	SDL_RenderPresent(gRenderer);
-}
-
-void LoadMusic(std::string path)
-{
-	gMusic = Mix_LoadMUS(path.c_str());
-
-	if (gMusic == NULL)
-		cout << "Failed to load background music! Error: " << Mix_GetError() << endl;
 }

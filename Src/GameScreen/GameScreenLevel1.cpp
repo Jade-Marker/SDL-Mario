@@ -13,7 +13,6 @@
 
 //For Level 1:
 //Get platform to animate when you hit it 
-//Clean up music and sound effect code (especially stuff in source.cpp)
 //Implement another enemy (get sprite from here: https://www.spriters-resource.com/arcade/mariobros/sheet/93677/)
 
 

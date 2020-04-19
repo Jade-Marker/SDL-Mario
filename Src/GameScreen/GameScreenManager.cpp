@@ -6,7 +6,7 @@
 #include "GameScreenGameover.h"
 
 GameScreenManager::GameScreenManager(SDL_Renderer* renderer, SCREENS startScreen) :
-	mRenderer(renderer), mCurrentScreen(NULL)
+	mRenderer(renderer), mCurrentScreen(NULL), bkgMusic()
 {
 	//Ensure the first screen is set up
 	ChangeScreen(startScreen);
@@ -26,12 +26,12 @@ void GameScreenManager::Render()
 
 void GameScreenManager::Update(float deltaTime, SDL_Event e)
 {
-	mCurrentScreen->Update(deltaTime, e);
-
-	//Handle any events
-	switch (e.type)
+	if (firstUpdate)
 	{
+		mCurrentScreen->Update(deltaTime, e);
 	}
+	else
+		firstUpdate = true;
 }
 
 void GameScreenManager::ChangeScreen(SCREENS newScreen)
@@ -56,12 +56,18 @@ void GameScreenManager::ChangeScreen(SCREENS newScreen)
 		tempScreen = (GameScreen*)new GameScreenLevel1(mRenderer, this);
 		mCurrentScreen = (GameScreen*)tempScreen;
 		tempScreen = NULL;
+		bkgMusic.Load("Music/Mario.ogg");
+		bkgMusic.Play(-1);
+		firstUpdate = false;
 		break;
 
 	case SCREEN_LEVEL2:
 		tempScreen = (GameScreen*)new GameScreenLevel2(mRenderer);
 		mCurrentScreen = (GameScreen*)tempScreen;
 		tempScreen = NULL;
+		bkgMusic.Load("Music/Marioland.ogg");
+		bkgMusic.Play(-1);
+		firstUpdate = false;
 		break;
 
 	case SCREEN_GAMEOVER:
