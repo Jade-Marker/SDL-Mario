@@ -63,9 +63,14 @@ GameScreenLevel2::GameScreenLevel2(SDL_Renderer* renderer):
 		MARIO_IDLE_FRAME_COUNT, MARIOLAND_FRAME_COUNT, MARIO_IDLE_START_FRAME, MARIOLAND_JUMP_FRAME_COUNT, MARIOLAND_JUMP_START_FRAME, MARIOLAND_MOVE_FRAME_COUNT, MARIOLAND_MOVE_START_FRAME,
 		MARIO_IDLE_FRAME_COUNT, MARIO_IDLE_START_FRAME,	MARIOLAND_JUMP_FORCE, MARIOLAND_GRAVITY, MARIOLAND_JUMP_DECREMENT, MARIOLAND_COLLISION_RADIUS, "SFX/Marioland SFX/jump.wav", false);
 
-	CharacterEnemy* enemy = new CharacterGoomba(mRenderer, "Images/Marioland images/Goomba.png", Vector2D(600.0f, 180.0f), mLevelMap, KOOPA_SPEED, ANIMATION_DELAY, 3, true, 0, 2,
-		INITIAL_JUMP_FORCE_SMALL, MARIOLAND_GRAVITY, MARIOLAND_JUMP_DECREMENT, MARIOLAND_COLLISION_RADIUS, false);
-	mEnemiesAndCoins.push_back(enemy);
+	CreateGoomba(Vector2D(284.0f, 208.0f));
+	CreateGoomba(Vector2D(1018.0f, 160.0f));
+	CreateGoomba(Vector2D(1264.0f, 96.0f));
+	CreateGoomba(Vector2D(1306.0f, 64.0f));
+	CreateGoomba(Vector2D(2796.0f, 160.0f));
+	CreateGoomba(Vector2D(2940.0f, 160.0f));
+	CreateGoomba(Vector2D(3304.0f, 208.0f));
+	CreateGoomba(Vector2D(3354.0f, 208.0f));
 }
 
 GameScreenLevel2::~GameScreenLevel2()
@@ -107,6 +112,13 @@ void GameScreenLevel2::Update(float deltaTime, SDL_Event e)
 	{
 		xOffset = mLevelMap->GetTileset().tileWidth * (mLevelMap->GetWidth() - (float)SCREEN_WIDTH / mLevelMap->GetTileset().tileWidth);
 	}
+}
+
+void GameScreenLevel2::CreateGoomba(Vector2D position)
+{
+	CharacterEnemy* enemy = new CharacterGoomba(mRenderer, "Images/Marioland images/Goomba.png", position, mLevelMap, MARIOLAND_GOOMBA_SPEED, ANIMATION_DELAY, 3, true, 0, 2,
+		INITIAL_JUMP_FORCE_SMALL, MARIOLAND_GRAVITY, MARIOLAND_JUMP_DECREMENT, MARIOLAND_COLLISION_RADIUS, false);
+	mEnemiesAndCoins.push_back(enemy);
 }
 
 void GameScreenLevel2::UpdateEnemiesAndCoins(float deltaTime, SDL_Event e)

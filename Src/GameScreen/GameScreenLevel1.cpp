@@ -6,7 +6,6 @@
 
 //Todo
 //For Level 2:
-//Add Goombas to level
 //Add Koopas
 //Add Flies
 //Add ? block functionality

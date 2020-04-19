@@ -24,6 +24,7 @@ public:
 	virtual void Update(float deltaTime, SDL_Event e);
 
 private:
+	void CreateGoomba(Vector2D position);
 	void UpdateEnemiesAndCoins(float deltaTime, SDL_Event e);
 };
 
