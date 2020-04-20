@@ -116,7 +116,8 @@ void GameScreenLevel2::Update(float deltaTime, SDL_Event e)
 
 void GameScreenLevel2::CreateGoomba(Vector2D position)
 {
-	CharacterEnemy* enemy = new CharacterGoomba(mRenderer, "Images/Marioland images/Goomba.png", position, mLevelMap, MARIOLAND_GOOMBA_SPEED, ANIMATION_DELAY, 3, true, 0, 2,
+	CharacterEnemy* enemy = new CharacterGoomba(mRenderer, "Images/Marioland images/Goomba.png", position, mLevelMap, MARIOLAND_GOOMBA_SPEED, ANIMATION_DELAY,
+		MARIOLAND_GOOMBA_FRAME_COUNT, true, MARIOLAND_GOOMBA_START_FRAME, MARIOLAND_GOOMBA_WALK_FRAME_COUNT,
 		INITIAL_JUMP_FORCE_SMALL, MARIOLAND_GRAVITY, MARIOLAND_JUMP_DECREMENT, MARIOLAND_COLLISION_RADIUS, false);
 	mEnemiesAndCoins.push_back(enemy);
 }

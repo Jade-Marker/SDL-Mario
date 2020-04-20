@@ -45,12 +45,12 @@ void CharacterGoomba::Update(float deltaTime, SDL_Event e)
 	}
 	else if (mState == GOOMBA_DEAD)
 	{
-		mCurrentNumOfFrames = 1;
-		mCurrentStartFrame = 2;
+		mCurrentNumOfFrames = MARIOLAND_GOOMBA_DEAD_FRAME_COUNT;
+		mCurrentStartFrame = MARIOLAND_GOOMBA_DEAD_START_FRAME;
 		
 		mDeadTimer += deltaTime;
 
-		if (mDeadTimer >= 0.5f)
+		if (mDeadTimer >= MARIOLAND_GOOMBA_DEATH_TIMER)
 		{
 			mAlive = false;
 		}
@@ -60,9 +60,8 @@ void CharacterGoomba::Update(float deltaTime, SDL_Event e)
 
 void CharacterGoomba::OnPlayerCollision(CharacterPlayable* player)
 {
-	if (player->GetPosition().y + player->GetHeight() * 0.6f < mPosition.y && mState != GOOMBA_DEAD)
+	if (player->GetPosition().y + player->GetHeight() * MARIOLAND_GOOMBA_PLAYER_HEIGHT_PROPORTION < mPosition.y && mState != GOOMBA_DEAD)
 	{
-		//mAlive = false;
 		mState = GOOMBA_DEAD;
 		mMovingLeft = false;
 		mMovingRight = false;
