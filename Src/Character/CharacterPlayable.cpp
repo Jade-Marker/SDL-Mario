@@ -124,7 +124,7 @@ void CharacterPlayable::KillPlayer()
 		mInvulnTimer = INVULNERABILITY_TIME;
 
 		if (mLives <= 0)
-			SetState(PLAYER_DEATH);
+			SetState(DEAD);
 	}
 }
 

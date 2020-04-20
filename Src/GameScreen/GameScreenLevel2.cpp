@@ -128,9 +128,9 @@ void GameScreenLevel2::CreateGoomba(Vector2D position)
 
 void GameScreenLevel2::CreateFly(Vector2D position)
 {
-	CharacterEnemy* enemy = new CharacterFly(mRenderer, "Images/Marioland images/Fly.png", position, mLevelMap, 60.0f, ANIMATION_DELAY,
-		3, true, 0, 2,
-		400.0f, MARIOLAND_GRAVITY, MARIOLAND_JUMP_DECREMENT, MARIOLAND_COLLISION_RADIUS * 2.0f, mMario);
+	CharacterEnemy* enemy = new CharacterFly(mRenderer, "Images/Marioland images/Fly.png", position, mLevelMap, MARIOLAND_FLY_SPEED, ANIMATION_DELAY,
+		MARIOLAND_FLY_FRAME_COUNT, true, MARIOLAND_FLY_START_FRAME, MARIOLAND_FLY_WALK_FRAME_COUNT,
+		MARIOLAND_FLY_JUMP_FORCE, MARIOLAND_GRAVITY, MARIOLAND_JUMP_DECREMENT, MARIOLAND_FLY_COLLISION_RADIUS, mMario);
 	mEnemiesAndCoins.push_back(enemy);
 }
 
@@ -147,7 +147,7 @@ void GameScreenLevel2::UpdateEnemiesAndCoins(float deltaTime, SDL_Event e)
 				//Now do the update
 				mEnemiesAndCoins[i]->Update(deltaTime, e);
 
-				if (Collisions::Instance()->Circle(mMario->GetCollisionCircle(), mEnemiesAndCoins[i]->GetCollisionCircle()) && mMario->GetState() != PLAYER_DEATH)
+				if (Collisions::Instance()->Circle(mMario->GetCollisionCircle(), mEnemiesAndCoins[i]->GetCollisionCircle()) && mMario->GetState() != DEAD)
 				{
 					mEnemiesAndCoins[i]->OnPlayerCollision(mMario);
 				}

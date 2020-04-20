@@ -72,6 +72,7 @@ public:
 	Circle2D GetCollisionCircle();
 
 	bool IsJumping();
+	bool CanJump() { return mCanJump; };
 	void CancelJump();
 
 	float GetWidth() { return mSingleSpriteWidth; };
