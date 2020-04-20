@@ -71,6 +71,10 @@ GameScreenLevel2::GameScreenLevel2(SDL_Renderer* renderer):
 	CreateGoomba(Vector2D(2940.0f, 160.0f));
 	CreateGoomba(Vector2D(3304.0f, 208.0f));
 	CreateGoomba(Vector2D(3354.0f, 208.0f));
+
+	CreateFly(Vector2D(2594.0f, 190.0f));
+	CreateFly(Vector2D(3720.0f, 190.0f));
+	CreateFly(Vector2D(3912.0f, 190.0f));
 }
 
 GameScreenLevel2::~GameScreenLevel2()
@@ -119,6 +123,14 @@ void GameScreenLevel2::CreateGoomba(Vector2D position)
 	CharacterEnemy* enemy = new CharacterGoomba(mRenderer, "Images/Marioland images/Goomba.png", position, mLevelMap, MARIOLAND_GOOMBA_SPEED, ANIMATION_DELAY,
 		MARIOLAND_GOOMBA_FRAME_COUNT, true, MARIOLAND_GOOMBA_START_FRAME, MARIOLAND_GOOMBA_WALK_FRAME_COUNT,
 		INITIAL_JUMP_FORCE_SMALL, MARIOLAND_GRAVITY, MARIOLAND_JUMP_DECREMENT, MARIOLAND_COLLISION_RADIUS, false);
+	mEnemiesAndCoins.push_back(enemy);
+}
+
+void GameScreenLevel2::CreateFly(Vector2D position)
+{
+	CharacterEnemy* enemy = new CharacterFly(mRenderer, "Images/Marioland images/Fly.png", position, mLevelMap, 60.0f, ANIMATION_DELAY,
+		3, true, 0, 2,
+		400.0f, MARIOLAND_GRAVITY, MARIOLAND_JUMP_DECREMENT, MARIOLAND_COLLISION_RADIUS * 2.0f, mMario);
 	mEnemiesAndCoins.push_back(enemy);
 }
 

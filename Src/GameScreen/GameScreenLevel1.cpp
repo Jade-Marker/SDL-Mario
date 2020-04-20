@@ -6,8 +6,8 @@
 
 //Todo
 //For Level 2:
+//Refactor reused code between fly and goomba into a generic marioland enemy class and cleanup fly code
 //Add Koopas
-//Add Flies
 //Add ? block functionality
 //Add death and lives system similar to original game (overload kill player method)
 

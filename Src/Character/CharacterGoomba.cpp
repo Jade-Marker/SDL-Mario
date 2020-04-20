@@ -60,7 +60,7 @@ void CharacterGoomba::Update(float deltaTime, SDL_Event e)
 
 void CharacterGoomba::OnPlayerCollision(CharacterPlayable* player)
 {
-	if (player->GetPosition().y + player->GetHeight() * MARIOLAND_GOOMBA_PLAYER_HEIGHT_PROPORTION < mPosition.y && mState != GOOMBA_DEAD)
+	if (player->GetPosition().y + player->GetHeight() * MARIOLAND_GOOMBA_PLAYER_HEIGHT_PROPORTION < mPosition.y && !player->IsJumping() && mState != GOOMBA_DEAD)
 	{
 		mState = GOOMBA_DEAD;
 		mMovingLeft = false;

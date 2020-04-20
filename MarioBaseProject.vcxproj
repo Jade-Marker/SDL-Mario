@@ -126,6 +126,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="Src\Character\CharacterFly.cpp" />
     <ClCompile Include="Src\Character\CharacterGoomba.cpp" />
     <ClCompile Include="Src\Character\CharacterMario.cpp" />
     <ClCompile Include="Src\GameScreen\GameScreenLevel2.cpp" />
@@ -157,6 +158,7 @@
     <Library Include="SDL\SDL2_mixer.lib" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Src\Character\CharacterFly.h" />
     <ClInclude Include="Src\Character\CharacterGoomba.h" />
     <ClInclude Include="Src\Character\CharacterMario.h" />
     <ClInclude Include="Src\GameScreen\GameScreenLevel2.h" />

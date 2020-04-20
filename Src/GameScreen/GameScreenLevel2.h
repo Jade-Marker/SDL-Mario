@@ -6,6 +6,7 @@
 #include "CharacterEnemy.h"
 #include "CharacterCoin.h"
 #include "CharacterGoomba.h"
+#include "CharacterFly.h"
 
 class GameScreenLevel2: GameScreen
 {
@@ -25,6 +26,7 @@ public:
 
 private:
 	void CreateGoomba(Vector2D position);
+	void CreateFly(Vector2D position);
 	void UpdateEnemiesAndCoins(float deltaTime, SDL_Event e);
 };
 
