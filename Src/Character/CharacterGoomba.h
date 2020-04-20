@@ -5,7 +5,6 @@ class CharacterGoomba :
 	public CharacterMariolandEnemy
 {
 private:
-	virtual void AliveUpdate(float deltaTime, SDL_Event e);
 	virtual void DeadUpdate(float deltaTime, SDL_Event e);
 
 public:

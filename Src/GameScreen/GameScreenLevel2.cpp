@@ -75,6 +75,8 @@ GameScreenLevel2::GameScreenLevel2(SDL_Renderer* renderer):
 	CreateFly(Vector2D(2594.0f, 190.0f));
 	CreateFly(Vector2D(3720.0f, 190.0f));
 	CreateFly(Vector2D(3912.0f, 190.0f));
+
+	CreateKoopa(Vector2D(1804.0f, 190.0f));
 }
 
 GameScreenLevel2::~GameScreenLevel2()
@@ -131,6 +133,14 @@ void GameScreenLevel2::CreateFly(Vector2D position)
 	CharacterEnemy* enemy = new CharacterFly(mRenderer, "Images/Marioland images/Fly.png", position, mLevelMap, MARIOLAND_FLY_SPEED, ANIMATION_DELAY,
 		MARIOLAND_FLY_FRAME_COUNT, true, MARIOLAND_FLY_START_FRAME, MARIOLAND_FLY_WALK_FRAME_COUNT,
 		MARIOLAND_FLY_JUMP_FORCE, MARIOLAND_GRAVITY, MARIOLAND_JUMP_DECREMENT, MARIOLAND_FLY_COLLISION_RADIUS, mMario);
+	mEnemiesAndCoins.push_back(enemy);
+}
+
+void GameScreenLevel2::CreateKoopa(Vector2D position)
+{
+	CharacterEnemy* enemy = new CharacterMariolandKoopa(mRenderer, "Images/Marioland images/Koopa.png", position, mLevelMap, MARIOLAND_GOOMBA_SPEED, ANIMATION_DELAY,
+		MARIOLAND_KOOPA_FRAME_COUNT, true, MARIOLAND_KOOPA_START_FRAME, MARIOLAND_KOOPA_WALK_FRAME_COUNT,
+		MARIOLAND_FLY_JUMP_FORCE, MARIOLAND_GRAVITY, MARIOLAND_JUMP_DECREMENT, MARIOLAND_KOOPA_COLLISION_RADIUS, false, MARIOLAND_KOOPA_DEATH_TIME);
 	mEnemiesAndCoins.push_back(enemy);
 }
 

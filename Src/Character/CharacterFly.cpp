@@ -51,5 +51,4 @@ CharacterFly::CharacterFly(SDL_Renderer* renderer, std::string imagePath, Vector
 
 	mJumpTimer = MARIOLAND_FLY_JUMP_TIME;
 	mJumpDirection = FACING_LEFT;
-	mState = MOVING;
 }

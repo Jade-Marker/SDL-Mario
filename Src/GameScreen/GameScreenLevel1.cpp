@@ -6,7 +6,6 @@
 
 //Todo
 //For Level 2:
-//Add Koopas
 //Add ? block functionality
 //Add death and lives system similar to original game (overload kill player method)
 

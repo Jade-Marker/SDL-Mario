@@ -2,12 +2,32 @@
 
 void CharacterMariolandEnemy::AliveUpdate(float deltaTime, SDL_Event e)
 {
+    int leftX = (int)(roundf(mPosition.x) / mCurrentLevelMap->GetTileset().tileWidth);
+    int rightX = (int)(roundf(mPosition.x + mSingleSpriteWidth) / mCurrentLevelMap->GetTileset().tileWidth);
+    int y = (int)(mPosition.y / mCurrentLevelMap->GetTileset().tileHeight);
+
+    if (mMovingLeft)
+    {
+        if (!mCurrentLevelMap->TileIsPassable(mCurrentLevelMap->GetTileAt(y, leftX)))
+        {
+            mMovingLeft = false;
+            mMovingRight = true;
+        }
+    }
+    else if (mMovingRight)
+    {
+        if (!mCurrentLevelMap->TileIsPassable(mCurrentLevelMap->GetTileAt(y, rightX)))
+        {
+            mMovingLeft = true;
+            mMovingRight = false;
+        }
+    }
 }
 
 void CharacterMariolandEnemy::DeadUpdate(float deltaTime, SDL_Event e)
 {
     mDeathTimer += deltaTime;
-    if (mDeathTimer > DEATH_TIME)
+    if (mDeathTimer >= DEATH_TIME)
         mAlive = false;
 }
 
@@ -15,7 +35,7 @@ CharacterMariolandEnemy::CharacterMariolandEnemy(SDL_Renderer* renderer, std::st
     float moveSpeed, float frameDelay, int noOfFrames, bool animating, int startFrame, int currentNumOfFrames, float initialJumpForce,
     float gravity, float jumpForceDecrement, float collisionRadius, bool screenWrapping, float deathTime):
     CharacterEnemy(renderer, imagePath, startPosition, map, moveSpeed, frameDelay, noOfFrames, animating, startFrame,
-        currentNumOfFrames, initialJumpForce, gravity, jumpForceDecrement, collisionRadius, false), DEATH_TIME(deathTime)
+        currentNumOfFrames, initialJumpForce, gravity, jumpForceDecrement, collisionRadius, false), DEATH_TIME(deathTime), mState(MOVING)
 {
 }
 

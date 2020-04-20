@@ -7,6 +7,7 @@
 #include "CharacterCoin.h"
 #include "CharacterGoomba.h"
 #include "CharacterFly.h"
+#include "CharacterMariolandKoopa.h"
 
 class GameScreenLevel2: GameScreen
 {
@@ -27,6 +28,7 @@ public:
 private:
 	void CreateGoomba(Vector2D position);
 	void CreateFly(Vector2D position);
+	void CreateKoopa(Vector2D position);
 	void UpdateEnemiesAndCoins(float deltaTime, SDL_Event e);
 };
 
