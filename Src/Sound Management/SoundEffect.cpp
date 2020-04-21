@@ -21,6 +21,7 @@ void SoundEffect::Play(int loops)
 
 void SoundEffect::Stop()
 {
+	Mix_HaltChannel(channel);
 }
 
 bool SoundEffect::Playing()

@@ -6,8 +6,9 @@
 
 //Todo
 //For Level 2:
-//Add ? block functionality
 //Add death and lives system similar to original game (overload kill player method)
+//End of level
+//Tile constants
 
 //For Level 1:
 //Get platform to animate when you hit it 

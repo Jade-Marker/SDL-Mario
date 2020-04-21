@@ -126,6 +126,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="Src\Character\CharacterQMarkCoin.cpp" />
     <ClCompile Include="Src\Character\CharacterMariolandKoopa.cpp" />
     <ClCompile Include="Src\Character\CharacterMariolandEnemy.cpp" />
     <ClCompile Include="Src\Character\CharacterFly.cpp" />
@@ -160,6 +161,7 @@
     <Library Include="SDL\SDL2_mixer.lib" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Src\Character\CharacterQMarkCoin.h" />
     <ClInclude Include="Src\Character\CharacterMariolandKoopa.h" />
     <ClInclude Include="Src\Character\CharacterMariolandEnemy.h" />
     <ClInclude Include="Src\Character\CharacterFly.h" />

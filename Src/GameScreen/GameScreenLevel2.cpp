@@ -51,7 +51,7 @@ GameScreenLevel2::GameScreenLevel2(SDL_Renderer* renderer):
 				mLevelMap->ChangeTileAt(y, x, (TILE)0x2c);
 
 				CharacterEnemy* coin = new CharacterCoin(mRenderer, "Images/Marioland images/Coin.png", Vector2D(x * mLevelMap->GetTileset().tileWidth, y * mLevelMap->GetTileset().tileHeight),
-					mLevelMap, FACING_RIGHT, 0.0f, 0.0f, 0.0f, 0.0f, MARIOLAND_COLLISION_RADIUS, 0.0f, 1, "SFX/Marioland SFX/coin.wav", false);
+					mLevelMap, FACING_RIGHT, 0.0f, 0.0f, 0.0f, 0.0f, MARIOLAND_COLLISION_RADIUS, 0.0f, MARIOLAND_COIN_FRAME_COUNT, "SFX/Marioland SFX/coin.wav", false);
 				mEnemiesAndCoins.push_back(coin);
 
 			}
@@ -61,7 +61,7 @@ GameScreenLevel2::GameScreenLevel2(SDL_Renderer* renderer):
 	mMario = new CharacterMario(mRenderer, "Images/Marioland images/Mario.png", Vector2D(0.0f, 0.0f), SDLK_w, SDLK_d, SDLK_a,
 		mLevelMap, MARIOLAND_MOVESPEED, nullptr, "Mario", 0.0f, INITIAL_LIVES, LEVEL2_PLAYER_FRAME_DELAY,
 		MARIO_IDLE_FRAME_COUNT, MARIOLAND_FRAME_COUNT, MARIO_IDLE_START_FRAME, MARIOLAND_JUMP_FRAME_COUNT, MARIOLAND_JUMP_START_FRAME, MARIOLAND_MOVE_FRAME_COUNT, MARIOLAND_MOVE_START_FRAME,
-		MARIO_IDLE_FRAME_COUNT, MARIO_IDLE_START_FRAME,	MARIOLAND_JUMP_FORCE, MARIOLAND_GRAVITY, MARIOLAND_JUMP_DECREMENT, MARIOLAND_COLLISION_RADIUS, "SFX/Marioland SFX/jump.wav", false);
+		MARIO_IDLE_FRAME_COUNT, MARIO_IDLE_START_FRAME,	MARIOLAND_JUMP_FORCE, MARIOLAND_GRAVITY, MARIOLAND_JUMP_DECREMENT, MARIOLAND_COLLISION_RADIUS, "SFX/Marioland SFX/jump.wav", this, false);
 
 	CreateGoomba(Vector2D(284.0f, 208.0f));
 	CreateGoomba(Vector2D(1018.0f, 160.0f));
@@ -141,6 +141,13 @@ void GameScreenLevel2::CreateKoopa(Vector2D position)
 	CharacterEnemy* enemy = new CharacterMariolandKoopa(mRenderer, "Images/Marioland images/Koopa.png", position, mLevelMap, MARIOLAND_GOOMBA_SPEED, ANIMATION_DELAY,
 		MARIOLAND_KOOPA_FRAME_COUNT, true, MARIOLAND_KOOPA_START_FRAME, MARIOLAND_KOOPA_WALK_FRAME_COUNT,
 		MARIOLAND_FLY_JUMP_FORCE, MARIOLAND_GRAVITY, MARIOLAND_JUMP_DECREMENT, MARIOLAND_KOOPA_COLLISION_RADIUS, false, MARIOLAND_KOOPA_DEATH_TIME);
+	mEnemiesAndCoins.push_back(enemy);
+}
+
+void GameScreenLevel2::CreateQMarkCoin(Vector2D position)
+{
+	CharacterEnemy* enemy = new CharacterQMarkCoin(mRenderer, "Images/Marioland images/Coin.png", position, mLevelMap, MARIOLAND_COIN_SPEED, ANIMATION_DELAY,
+		MARIOLAND_COIN_FRAME_COUNT, false, MARIOLAND_COIN_START_FRAME, MARIOLAND_COIN_FRAME_COUNT, 0.0f, 0.0f, MARIOLAND_COLLISION_RADIUS, MARIOLAND_COIN_ALIVE_TIME);
 	mEnemiesAndCoins.push_back(enemy);
 }
 
