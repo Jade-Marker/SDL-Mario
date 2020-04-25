@@ -17,6 +17,15 @@ GameScreenLevel2::GameScreenLevel2(SDL_Renderer* renderer, GameScreenManager* ma
 
 GameScreenLevel2::~GameScreenLevel2()
 {
+	delete mLevelMap;
+	delete mMario;
+	delete scoreFont;
+
+	for (int i = 0; i < mEnemiesAndCoins.size(); i++)
+	{
+		delete mEnemiesAndCoins[i];
+	}
+	mEnemiesAndCoins.clear();
 }
 
 void GameScreenLevel2::SetUpLevel()
@@ -137,6 +146,8 @@ void GameScreenLevel2::Update(float deltaTime, SDL_Event e)
 		xOffset = marioXpos - SCREEN_WIDTH / 2.0f;
 	}
 
+	if (marioXpos >= MARIOLAND_END_POS)
+		mBackToMenu = true;
 
 	if (xOffset < 0)
 		xOffset = 0;

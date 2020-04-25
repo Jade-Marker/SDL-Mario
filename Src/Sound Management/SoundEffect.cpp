@@ -31,6 +31,9 @@ bool SoundEffect::Playing()
 
 bool SoundEffect::Load(std::string path)
 {
+	if (mSound != nullptr)
+		Mix_FreeChunk(mSound);
+
 	mSound = Mix_LoadWAV(path.c_str());
 	if (mSound == nullptr)
 	{
