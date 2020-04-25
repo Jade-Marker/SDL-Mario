@@ -1,68 +1,100 @@
 #include "GameScreenLevel2.h"
 
-GameScreenLevel2::GameScreenLevel2(SDL_Renderer* renderer):
-	GameScreen(renderer), mRenderer(renderer)
+GameScreenLevel2::GameScreenLevel2(SDL_Renderer* renderer, GameScreenManager* manager):
+	GameScreen(renderer), mRenderer(renderer), mManager(manager), mBackToMenu(false)
 {
-	std::vector<TILE> passableTiles;
+	SetUpLevel();
 
-	std::vector<TILE> impassableTiles;
-	impassableTiles.push_back((TILE)0x13);
-	impassableTiles.push_back((TILE)0x21);
-	impassableTiles.push_back((TILE)0x24);
-	impassableTiles.push_back((TILE)0x39);
-	impassableTiles.push_back((TILE)0x60);
-	impassableTiles.push_back((TILE)0x61);
-	impassableTiles.push_back((TILE)0x63);
-	impassableTiles.push_back((TILE)0x70);
-	impassableTiles.push_back((TILE)0x71);
-	impassableTiles.push_back((TILE)0x72);
-	impassableTiles.push_back((TILE)0x73);
-	impassableTiles.push_back((TILE)0x7f);
-	impassableTiles.push_back((TILE)0x80);
-	impassableTiles.push_back((TILE)0x81);
-	impassableTiles.push_back((TILE)0x82);
-	impassableTiles.push_back((TILE)0x8e);
-	impassableTiles.push_back((TILE)0x8f);
-	impassableTiles.push_back((TILE)0xe8);
-
-	for (int i = 0; i < 255; i++)
-	{
-		bool passable = true;
-
-		for (int j = 0; j < impassableTiles.size(); j++)
-		{
-			if (impassableTiles[j] == i)
-				passable = false;
-		}
-
-		if (passable)
-			passableTiles.push_back((TILE)i);
-	}
-
-	xOffset = 0.0f;
-	mLevelMap = new LevelMap(mRenderer, "Images/Marioland images/tileset.png", 16, 16, false, passableTiles, "Levels/Level2.txt");
-
-	for (int y = 0; y < mLevelMap->GetHeight(); y++)
-	{
-		for (int x = 0; x < mLevelMap->GetWidth(); x++)
-		{
-			if (mLevelMap->GetTileAt(y, x) == 0xf4)
-			{
-				mLevelMap->ChangeTileAt(y, x, (TILE)0x2c);
-
-				CharacterEnemy* coin = new CharacterCoin(mRenderer, "Images/Marioland images/Coin.png", Vector2D(x * mLevelMap->GetTileset().tileWidth, y * mLevelMap->GetTileset().tileHeight),
-					mLevelMap, FACING_RIGHT, 0.0f, 0.0f, 0.0f, 0.0f, MARIOLAND_COLLISION_RADIUS, 0.0f, MARIOLAND_COIN_FRAME_COUNT, "SFX/Marioland SFX/coin.wav", false);
-				mEnemiesAndCoins.push_back(coin);
-
-			}
-		}
-	}
-
-	mMario = new CharacterMario(mRenderer, "Images/Marioland images/Mario.png", Vector2D(0.0f, 0.0f), SDLK_w, SDLK_d, SDLK_a,
-		mLevelMap, MARIOLAND_MOVESPEED, nullptr, "Mario", 0.0f, INITIAL_LIVES, LEVEL2_PLAYER_FRAME_DELAY,
+	mMario = new CharacterMario(mRenderer, "Images/Marioland images/Mario.png", MARIOLAND_INIT_POS, SDLK_w, SDLK_d, SDLK_a,
+		mLevelMap, MARIOLAND_MOVESPEED, nullptr, "Mario", MARIO_TEXT_POS, MARIOLAND_INITIAL_LIVES, LEVEL2_PLAYER_FRAME_DELAY,
 		MARIO_IDLE_FRAME_COUNT, MARIOLAND_FRAME_COUNT, MARIO_IDLE_START_FRAME, MARIOLAND_JUMP_FRAME_COUNT, MARIOLAND_JUMP_START_FRAME, MARIOLAND_MOVE_FRAME_COUNT, MARIOLAND_MOVE_START_FRAME,
 		MARIO_IDLE_FRAME_COUNT, MARIO_IDLE_START_FRAME,	MARIOLAND_JUMP_FORCE, MARIOLAND_GRAVITY, MARIOLAND_JUMP_DECREMENT, MARIOLAND_COLLISION_RADIUS, "SFX/Marioland SFX/jump.wav", this, false);
 
+	SpawnEnemies();
+
+	scoreFont = new Font(renderer, "Fonts/Press Start 2P black.png", 32, 32, ' ');
+}
+
+GameScreenLevel2::~GameScreenLevel2()
+{
+}
+
+void GameScreenLevel2::SetUpLevel()
+{
+	if (!mLevelMap)
+	{
+		std::vector<TILE> passableTiles;
+		std::vector<TILE> impassableTiles;
+
+		impassableTiles.push_back((TILE)0x13);
+		impassableTiles.push_back((TILE)0x21);
+		impassableTiles.push_back((TILE)0x24);
+		impassableTiles.push_back((TILE)0x39);
+		impassableTiles.push_back((TILE)0x60);
+		impassableTiles.push_back((TILE)0x61);
+		impassableTiles.push_back((TILE)0x63);
+		impassableTiles.push_back((TILE)0x70);
+		impassableTiles.push_back((TILE)0x71);
+		impassableTiles.push_back((TILE)0x72);
+		impassableTiles.push_back((TILE)0x73);
+		impassableTiles.push_back((TILE)0x7f);
+		impassableTiles.push_back((TILE)0x80);
+		impassableTiles.push_back((TILE)0x81);
+		impassableTiles.push_back((TILE)0x82);
+		impassableTiles.push_back((TILE)0x8e);
+		impassableTiles.push_back((TILE)0x8f);
+		impassableTiles.push_back((TILE)0xe8);
+
+		for (int i = 0; i < 255; i++)
+		{
+			bool passable = true;
+
+			for (int j = 0; j < impassableTiles.size(); j++)
+			{
+				if (impassableTiles[j] == i)
+					passable = false;
+			}
+
+			if (passable)
+				passableTiles.push_back((TILE)i);
+		}
+
+		xOffset = 0.0f;
+		mLevelMap = new LevelMap(mRenderer, "Images/Marioland images/tileset.png", 16, 16, false, passableTiles, "Levels/Level2.txt");
+
+		for (int y = 0; y < mLevelMap->GetHeight(); y++)
+		{
+			for (int x = 0; x < mLevelMap->GetWidth(); x++)
+			{
+				if (mLevelMap->GetTileAt(y, x) == 0xf4)
+				{
+					mLevelMap->ChangeTileAt(y, x, (TILE)0x2c);
+
+					CharacterEnemy* coin = new CharacterCoin(mRenderer, "Images/Marioland images/Coin.png", Vector2D(x * mLevelMap->GetTileset().tileWidth, y * mLevelMap->GetTileset().tileHeight),
+						mLevelMap, FACING_RIGHT, 0.0f, 0.0f, 0.0f, 0.0f, MARIOLAND_COLLISION_RADIUS, 0.0f, MARIOLAND_COIN_FRAME_COUNT, "SFX/Marioland SFX/coin.wav", false);
+					mEnemiesAndCoins.push_back(coin);
+
+				}
+			}
+		}
+	}else if (mEnemiesAndCoins.size() > 0)
+	{
+		for (int i = 0; i < mEnemiesAndCoins.size(); i++)
+		{
+			//deletes all objects in mEnemiesAndCoins that aren't coins
+			CharacterCoin* enemy = dynamic_cast<CharacterCoin*>(mEnemiesAndCoins[i]);
+			if (!enemy)
+			{
+				delete mEnemiesAndCoins[i];
+				mEnemiesAndCoins.erase(mEnemiesAndCoins.begin() + i);
+				i--;
+			}
+		}
+	}
+}
+
+void GameScreenLevel2::SpawnEnemies()
+{
 	CreateGoomba(Vector2D(284.0f, 208.0f));
 	CreateGoomba(Vector2D(1018.0f, 160.0f));
 	CreateGoomba(Vector2D(1264.0f, 96.0f));
@@ -79,10 +111,6 @@ GameScreenLevel2::GameScreenLevel2(SDL_Renderer* renderer):
 	CreateKoopa(Vector2D(1804.0f, 190.0f));
 }
 
-GameScreenLevel2::~GameScreenLevel2()
-{
-}
-
 void GameScreenLevel2::Render()
 {
 	mLevelMap->Render(0.0f, -xOffset);
@@ -93,31 +121,31 @@ void GameScreenLevel2::Render()
 	}
 
 	mMario->Render(-xOffset);
+
+	mMario->RenderScoreAndLives(scoreFont);
 }
 
 void GameScreenLevel2::Update(float deltaTime, SDL_Event e)
 {
 	UpdateEnemiesAndCoins(deltaTime, e);
 
-	float oldXPos = mMario->GetPosition().x;
 	mMario->Update(deltaTime, e);
-	float newXPos = mMario->GetPosition().x;
+	float marioXpos = mMario->GetPosition().x;
 
-	if (newXPos > SCREEN_WIDTH / 2.0f)
+	if (marioXpos > SCREEN_WIDTH / 2.0f)
 	{
-		xOffset += newXPos - oldXPos;
+		xOffset = marioXpos - SCREEN_WIDTH / 2.0f;
 	}
 
 
 	if (xOffset < 0)
-	{
 		xOffset = 0;
-	}
 
 	if (xOffset > mLevelMap->GetTileset().tileWidth * (mLevelMap->GetWidth()- (float)SCREEN_WIDTH/mLevelMap->GetTileset().tileWidth))
-	{
 		xOffset = mLevelMap->GetTileset().tileWidth * (mLevelMap->GetWidth() - (float)SCREEN_WIDTH / mLevelMap->GetTileset().tileWidth);
-	}
+
+	if (mBackToMenu)
+		mManager->ChangeScreen(SCREEN_INTRO);
 }
 
 void GameScreenLevel2::CreateGoomba(Vector2D position)
@@ -149,6 +177,20 @@ void GameScreenLevel2::CreateQMarkCoin(Vector2D position)
 	CharacterEnemy* enemy = new CharacterQMarkCoin(mRenderer, "Images/Marioland images/Coin.png", position, mLevelMap, MARIOLAND_COIN_SPEED, ANIMATION_DELAY,
 		MARIOLAND_COIN_FRAME_COUNT, false, MARIOLAND_COIN_START_FRAME, MARIOLAND_COIN_FRAME_COUNT, 0.0f, 0.0f, MARIOLAND_COLLISION_RADIUS, MARIOLAND_COIN_ALIVE_TIME);
 	mEnemiesAndCoins.push_back(enemy);
+}
+
+void GameScreenLevel2::RestartLevel()
+{
+	if (mMario->GetLives() >= 0)
+	{
+		SetUpLevel();
+		SpawnEnemies();
+
+		mMario->SetPosition(MARIOLAND_INIT_POS);
+		xOffset = 0.0f;
+	}
+	else
+		mBackToMenu = true;
 }
 
 void GameScreenLevel2::UpdateEnemiesAndCoins(float deltaTime, SDL_Event e)

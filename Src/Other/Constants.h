@@ -23,6 +23,8 @@
 #define MARIO_FRAME_COUNT 6
 
 //Marioland player constants
+#define MARIOLAND_INITIAL_LIVES 2
+#define MARIOLAND_INIT_POS Vector2D(0.0f, 0.0f)
 #define MARIOLAND_JUMP_FORCE 500.0f
 #define MARIOLAND_JUMP_DECREMENT 500.0f
 #define MARIOLAND_GRAVITY 192.0f

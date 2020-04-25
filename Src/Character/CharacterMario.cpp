@@ -64,3 +64,17 @@ void CharacterMario::UpdateState()
 		mState = IDLE;
 	}
 }
+
+void CharacterMario::Update(float deltaTime, SDL_Event e)
+{
+	CharacterPlayable::Update(deltaTime, e);
+
+	if (mPosition.y > mCurrentLevelMap->GetHeight()* mCurrentLevelMap->GetTileset().tileHeight)
+		KillPlayer();
+}
+
+void CharacterMario::KillPlayer()
+{
+	mLives--;
+	currentLevel->RestartLevel();
+}

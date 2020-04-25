@@ -36,17 +36,18 @@ public:
 		int idleStartFrame, float initialJumpForce, float gravity, float jumpForceDecrement, float collisionRadius,
 		std::string jumpSFXPath, bool screenWrappingEnabled = true);
 	virtual void Render(float xOffset = 0.0f);
-	void Update(float deltaTime, SDL_Event e);
+	virtual void Update(float deltaTime, SDL_Event e);
 	void Animate();
 	virtual void OnPlayerCollision(CharacterPlayable* player);
 	void SetState(CHARACTERSTATE newState);
 	CHARACTERSTATE GetState();
-	void KillPlayer();
+	virtual void KillPlayer();
 	void IncrementScore(int value);
 	int GetScore();
 	void RenderScoreAndLives(Font* font);
 	virtual void UpdateState();
 	void JumpedOnEnemy();
+	int GetLives() { return mLives; };
 
 protected:
 	void HitTile();

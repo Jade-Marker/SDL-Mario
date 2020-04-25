@@ -9,6 +9,7 @@
 #include "CharacterFly.h"
 #include "CharacterMariolandKoopa.h"
 #include "CharacterQMarkCoin.h"
+#include "GameScreenManager.h"
 
 class GameScreenLevel2: GameScreen
 {
@@ -18,10 +19,16 @@ protected:
 	float xOffset;
 	CharacterPlayable* mMario;
 	std::vector<CharacterEnemy*> mEnemiesAndCoins;
+	Font* scoreFont;
+
+	GameScreenManager* mManager;
+	bool mBackToMenu;
 
 public:
-	GameScreenLevel2(SDL_Renderer* renderer);
+	GameScreenLevel2(SDL_Renderer* renderer, GameScreenManager* manager);
 	virtual ~GameScreenLevel2();
+	void SetUpLevel();
+	void SpawnEnemies();
 
 	virtual void Render();
 	virtual void Update(float deltaTime, SDL_Event e);
@@ -30,6 +37,8 @@ public:
 	void CreateFly(Vector2D position);
 	void CreateKoopa(Vector2D position);
 	void CreateQMarkCoin(Vector2D position);
+
+	void RestartLevel();
 
 private:
 	void UpdateEnemiesAndCoins(float deltaTime, SDL_Event e);

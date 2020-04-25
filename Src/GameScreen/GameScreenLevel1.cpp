@@ -6,8 +6,9 @@
 
 //Todo
 //For Level 2:
-//Add death and lives system similar to original game (overload kill player method)
+//Score stuff
 //End of level
+//Delete objects in destructor of level 2
 //Tile constants
 
 //For Level 1:

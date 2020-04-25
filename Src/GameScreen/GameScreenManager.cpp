@@ -41,6 +41,7 @@ void GameScreenManager::ChangeScreen(SCREENS newScreen)
 	{
 		delete mCurrentScreen;
 	}
+	bkgMusic.Stop();
 
 	GameScreen* tempScreen;
 
@@ -62,7 +63,7 @@ void GameScreenManager::ChangeScreen(SCREENS newScreen)
 		break;
 
 	case SCREEN_LEVEL2:
-		tempScreen = (GameScreen*)new GameScreenLevel2(mRenderer);
+		tempScreen = (GameScreen*)new GameScreenLevel2(mRenderer, this);
 		mCurrentScreen = (GameScreen*)tempScreen;
 		tempScreen = NULL;
 		bkgMusic.Load("Music/Marioland.ogg");

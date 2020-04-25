@@ -10,7 +10,7 @@ CharacterEnemy::CharacterEnemy(SDL_Renderer* renderer, std::string imagePath, Ve
 
 CharacterEnemy::~CharacterEnemy()
 {
-	if (mDeathSound)
+	if (mDeathSound && !mAlive)
 	{
 		mDeathSound->Play(0);
 		SoundList::Instance()->AddSoundToList(mDeathSound);

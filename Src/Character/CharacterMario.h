@@ -18,5 +18,7 @@ public:
 		float initialJumpForce, float gravity, float jumpForceDecrement, float collisionRadius, std::string jumpSFXPath, GameScreenLevel2* gameScreen, bool screenWrappingEnabled = true);
 
 	void UpdateState();
+	void Update(float deltaTime, SDL_Event e);
+	virtual void KillPlayer();
 };
 
