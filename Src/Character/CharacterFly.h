@@ -15,6 +15,6 @@ private:
 public:
 	CharacterFly(SDL_Renderer* renderer, std::string imagePath, Vector2D startPosition, LevelMap* map, float moveSpeed,
 		float frameDelay, int noOfFrames, bool animating, int startFrame, int currentNumOfFrames,
-		float initialJumpForce, float gravity, float jumpForceDecrement, float collisionRadius, CharacterPlayable* mario);
+		float initialJumpForce, float gravity, float jumpForceDecrement, float collisionRadius, CharacterPlayable* mario, int scoreWorth);
 };
 

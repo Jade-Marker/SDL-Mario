@@ -10,7 +10,7 @@ private:
 public:
 	CharacterGoomba(SDL_Renderer* renderer, std::string imagePath, Vector2D startPosition, LevelMap* map, float moveSpeed,
 		float frameDelay, int noOfFrames, bool animating, int startFrame, int currentNumOfFrames,
-		float initialJumpForce, float gravity, float jumpForceDecrement, float collisionRadius, bool screenWrapping);
+		float initialJumpForce, float gravity, float jumpForceDecrement, float collisionRadius, bool screenWrapping, int scoreWorth);
 	~CharacterGoomba();
 };
 

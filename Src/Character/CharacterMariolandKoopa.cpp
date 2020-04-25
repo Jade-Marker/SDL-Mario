@@ -26,9 +26,9 @@ void CharacterMariolandKoopa::DeadUpdate(float deltaTime, SDL_Event e)
 
 CharacterMariolandKoopa::CharacterMariolandKoopa(SDL_Renderer* renderer, std::string imagePath, Vector2D startPosition, LevelMap* map, float moveSpeed,
 	float frameDelay, int noOfFrames, bool animating, int startFrame, int currentNumOfFrames,
-	float initialJumpForce, float gravity, float jumpForceDecrement, float collisionRadius, bool screenWrapping, float deathTime):
+	float initialJumpForce, float gravity, float jumpForceDecrement, float collisionRadius, int scoreWorth, bool screenWrapping, float deathTime):
 	CharacterMariolandEnemy(renderer, imagePath, startPosition, map, moveSpeed, frameDelay, noOfFrames, animating, startFrame,
-		currentNumOfFrames, initialJumpForce, gravity, jumpForceDecrement, collisionRadius, false, deathTime)
+		currentNumOfFrames, initialJumpForce, gravity, jumpForceDecrement, collisionRadius, false, deathTime, scoreWorth)
 {
 	mHitSound = new SoundEffect();
 	mHitSound->Load("SFX/Marioland SFX/stomp.wav");

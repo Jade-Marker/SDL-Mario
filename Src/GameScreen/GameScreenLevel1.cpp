@@ -6,7 +6,6 @@
 
 //Todo
 //For Level 2:
-//Score stuff
 //End of level
 //Delete objects in destructor of level 2
 //Tile constants

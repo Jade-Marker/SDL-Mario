@@ -10,9 +10,9 @@ void CharacterGoomba::DeadUpdate(float deltaTime, SDL_Event e)
 
 CharacterGoomba::CharacterGoomba(SDL_Renderer* renderer, std::string imagePath, Vector2D startPosition, LevelMap* map, float moveSpeed,
 	float frameDelay, int noOfFrames, bool animating, int startFrame, int currentNumOfFrames,
-	float initialJumpForce, float gravity, float jumpForceDecrement, float collisionRadius, bool screenWrapping):
+	float initialJumpForce, float gravity, float jumpForceDecrement, float collisionRadius, bool screenWrapping, int scoreWorth):
 	CharacterMariolandEnemy(renderer, imagePath, startPosition, map, moveSpeed, frameDelay, noOfFrames, animating, startFrame,
-		currentNumOfFrames, initialJumpForce, gravity, jumpForceDecrement, collisionRadius, screenWrapping, MARIOLAND_GOOMBA_DEATH_TIMER)
+		currentNumOfFrames, initialJumpForce, gravity, jumpForceDecrement, collisionRadius, screenWrapping, MARIOLAND_GOOMBA_DEATH_TIMER, scoreWorth)
 {
 	mMovingLeft = true;
 

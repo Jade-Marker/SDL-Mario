@@ -39,9 +39,9 @@ void CharacterFly::DeadUpdate(float deltaTime, SDL_Event e)
 
 CharacterFly::CharacterFly(SDL_Renderer* renderer, std::string imagePath, Vector2D startPosition, LevelMap* map, float moveSpeed,
 	float frameDelay, int noOfFrames, bool animating, int startFrame, int currentNumOfFrames,
-	float initialJumpForce, float gravity, float jumpForceDecrement, float collisionRadius, CharacterPlayable* mario) :
+	float initialJumpForce, float gravity, float jumpForceDecrement, float collisionRadius, CharacterPlayable* mario, int scoreWorth) :
 	CharacterMariolandEnemy(renderer, imagePath, startPosition, map, moveSpeed, frameDelay, noOfFrames, animating, startFrame,
-		currentNumOfFrames, initialJumpForce, gravity, jumpForceDecrement, collisionRadius, false, MARIOLAND_FLY_DEATH_TIMER), mMario(mario)
+		currentNumOfFrames, initialJumpForce, gravity, jumpForceDecrement, collisionRadius, false, MARIOLAND_FLY_DEATH_TIMER, scoreWorth), mMario(mario)
 {
 	mHitSound = new SoundEffect();
 	mHitSound->Load("SFX/Marioland SFX/stomp.wav");

@@ -9,6 +9,7 @@ protected:
 	SoundEffect* mHitSound;
 	CHARACTERSTATE mState;
 	float mDeathTimer;
+	int mScoreWorth;
 
 	const float DEATH_TIME;
 
@@ -18,7 +19,7 @@ protected:
 public:
 	CharacterMariolandEnemy(SDL_Renderer* renderer, std::string imagePath, Vector2D startPosition, LevelMap* map, float moveSpeed,
 		float frameDelay, int noOfFrames, bool animating, int startFrame, int currentNumOfFrames,
-		float initialJumpForce, float gravity, float jumpForceDecrement, float collisionRadius, bool screenWrapping = true, float deathTime = 0.0f);
+		float initialJumpForce, float gravity, float jumpForceDecrement, float collisionRadius, bool screenWrapping = true, float deathTime = 0.0f, int scoreWorth = 0);
 	virtual ~CharacterMariolandEnemy();
 
 	virtual void Update(float deltaTime, SDL_Event e);
