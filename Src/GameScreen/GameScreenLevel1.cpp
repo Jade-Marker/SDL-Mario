@@ -5,8 +5,7 @@
 #include "PowBlock.h"
 
 //Todo
-//Do a final pass of all code
-
+//Add credits for sfx, music and graphics
 
 GameScreenLevel1::GameScreenLevel1(SDL_Renderer* renderer, GameScreenManager* manager) :
 	GameScreen(renderer), mLevelMap(NULL), mManager(manager)
@@ -39,20 +38,19 @@ GameScreenLevel1::~GameScreenLevel1()
 	for (int i = 0; i < mEnemiesAndCoins.size(); i++)
 		delete mEnemiesAndCoins[i];
 	mEnemiesAndCoins.clear();
+
+	delete scoreFont;
 }
 
 void GameScreenLevel1::Render()
 {
-	//Draw the background
-	//mBackgroundTexture->Render(Vector2D(0, mBackgroundYPos), SDL_FLIP_NONE);
-
 	//Draw the enemies
 	for (unsigned int i = 0; i < mEnemiesAndCoins.size(); i++)
 	{
 		mEnemiesAndCoins[i]->Render();
 	}
 
-	//Draw the character
+	//Draw the characters if they aren't dead
 	if(mMarioCharacter->GetState() != DEAD)
 		mMarioCharacter->Render();
 	if(mLuigiCharacter->GetState() != DEAD)
@@ -63,6 +61,7 @@ void GameScreenLevel1::Render()
 	mMarioCharacter->RenderScoreAndLives(scoreFont);
 	mLuigiCharacter->RenderScoreAndLives(scoreFont);
 
+	//Render the level last so that everything renders behind the pipes
 	mLevelMap->Render(mBackgroundYPos);
 }
 
@@ -85,30 +84,24 @@ void GameScreenLevel1::Update(float deltaTime, SDL_Event e)
 	//Spawn in any new enemies if necessary and increment mCurrentWave if the wave is over
 	HandleEnemyWave(deltaTime);
 
-	//Update enemies and coins
 	UpdateEnemiesAndCoins(deltaTime, e);
 
-	//Update the player
+	//Update the players if they aren't dead
 	if(mMarioCharacter->GetState() != DEAD)
 		mMarioCharacter->Update(deltaTime, e);
 	if(mLuigiCharacter->GetState() != DEAD)
 		mLuigiCharacter->Update(deltaTime, e);
 
-	if (Collisions::Instance()->Circle(mMarioCharacter->GetCollisionCircle(), mLuigiCharacter->GetCollisionCircle()) &&
-		(mMarioCharacter->GetState() != DEAD && mLuigiCharacter->GetState() != DEAD))
-	{
-		mMarioCharacter->OnPlayerCollision(mLuigiCharacter);
-		mLuigiCharacter->OnPlayerCollision(mMarioCharacter);
-	}
-
 	UpdatePOWBlock();
 
+	//if both players are dead, or the final wave is over, then the game is over
 	if ((mMarioCharacter->GetState() == DEAD && mLuigiCharacter->GetState() == DEAD) || mCurrentWave > mEnemyWaves.size() - 1)
 	{
 		ScoreManager::Instance()->SetPlayerScore(mMarioCharacter->GetScore() + mLuigiCharacter->GetScore());
 		mManager->ChangeScreen(SCREEN_GAMEOVER);
 	}
 
+	//Update the soundList so that any death sounds can play
 	SoundList::Instance()->Update();
 }
 
@@ -116,6 +109,7 @@ void GameScreenLevel1::HandleEnemyWave(float deltaTime)
 {
 	std::vector<WaveComponent> current = mEnemyWaves[mCurrentWave].GetWave();
 	bool allSpawned = true;
+
 	for (int i = 0; i < current.size(); i++)
 	{
 		if (!current[i].spawned)
@@ -146,6 +140,7 @@ void GameScreenLevel1::HandleEnemyWave(float deltaTime)
 	}
 	mEnemyWaves[mCurrentWave].SetWave(current);
 
+	//if all enemies in the wave have been spawned, and there are no enemies left, then the wave is over
 	if (allSpawned && mEnemiesAndCoins.size() == 0)
 		mCurrentWave++;
 }
@@ -160,7 +155,7 @@ bool GameScreenLevel1::SetUpLevel()
 		return false;
 	}
 	
-	//Set up the player character
+	//Set up the player characters
 	mMarioCharacter = new CharacterPlayable(mRenderer, "Images/Mario.png", Vector2D(64, 330), SDLK_w, SDLK_d, SDLK_a, 
 		mLevelMap, MOVEMENTSPEED, &mEnemiesAndCoins, "Mario", MARIO_TEXT_POS, INITIAL_LIVES, LEVEL1_PLAYER_FRAME_DELAY, MARIO_IDLE_FRAME_COUNT, MARIO_FRAME_COUNT, MARIO_IDLE_START_FRAME,
 		MARIO_JUMP_FRAME_COUNT, MARIO_JUMP_START_FRAME, MARIO_MOVE_FRAME_COUNT, MARIO_MOVE_START_FRAME, MARIO_IDLE_FRAME_COUNT, MARIO_IDLE_START_FRAME,
@@ -184,6 +179,7 @@ void GameScreenLevel1::SetLevelMap()
 	if (mLevelMap != NULL)
 		delete mLevelMap;
 
+	//Set up the vector of tiles that can be passed through
 	std::vector<TILE> passableTiles;
 	passableTiles.push_back(EMPTY);
 	passableTiles.push_back(PIPE_ENTRANCE_LOWER_RIGHT);
@@ -308,7 +304,7 @@ void GameScreenLevel1::UpdateEnemiesAndCoins(float deltaTime, SDL_Event e)
 		int enemyIndexToDelete = -1;
 		for (unsigned int i = 0; i < mEnemiesAndCoins.size(); i++)
 		{
-			//Check if enemy is on the bottom row of tiles
+			//Check if enemy is on the bottom row of tiles and move them back to the top if they are at the edge of the screen
 			if (mEnemiesAndCoins[i]->GetPosition().y > 300.0f)
 			{
 				if (mEnemiesAndCoins[i]->GetPosition().x < (float)(-mEnemiesAndCoins[i]->GetCollisionBox().width * 0.5f) ||

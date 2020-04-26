@@ -2,6 +2,7 @@
 
 #include <SDL.h>
 #include "Commons.h"
+#include "Constants.h"
 #include "GameScreen.h"
 #include "GameScreenManager.h"
 

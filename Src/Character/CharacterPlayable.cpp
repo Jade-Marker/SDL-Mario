@@ -35,6 +35,8 @@ void CharacterPlayable::Render(float xOffset)
 	}
 	else 
 	{
+		//if invulnerable, then cycle the alpha so that the character fades in and out
+
 		if (mFacingDirection == FACING_RIGHT)
 			mTexture->Render(portionOfSpriteSheet, destRect, SDL_FLIP_NONE, (Uint8)255 * abs(sin(INVULN_MULTIPLIER * mInvulnTimer)), 0.0f);
 		else
@@ -76,9 +78,7 @@ void CharacterPlayable::Update(float deltaTime, SDL_Event e)
 			mInvulnerable = false;
 	}
 
-
 	Animate();
-
 }
 
 void CharacterPlayable::Animate()
@@ -102,7 +102,6 @@ void CharacterPlayable::Animate()
 
 void CharacterPlayable::OnPlayerCollision(CharacterPlayable* player)
 {
-	std::cout << "Colliding with other player" << std::endl;
 }
 
 void CharacterPlayable::SetState(CHARACTERSTATE newState)
@@ -141,10 +140,10 @@ int CharacterPlayable::GetScore()
 void CharacterPlayable::RenderScoreAndLives(Font* font)
 {
 	std::string scoreString = mName + ":" + std::to_string(mScore);
-	font->DrawString(scoreString, Vector2D(mScoreXPos, SCORE_HEIGHT), Vector2D(0.5f, 0.5f));
+	font->DrawString(scoreString, Vector2D(mScoreXPos, SCORE_HEIGHT), Vector2D(SCORE_SCALE, SCORE_SCALE));
 	
 	std::string livesString = "Lives:" + std::to_string(mLives);
-	font->DrawString(livesString, Vector2D(mScoreXPos, LIVES_HEIGHT), Vector2D(0.5f, 0.5f));
+	font->DrawString(livesString, Vector2D(mScoreXPos, LIVES_HEIGHT), Vector2D(LIVES_SCALE, LIVES_SCALE));
 }
 
 void CharacterPlayable::UpdateState()
@@ -168,6 +167,7 @@ void CharacterPlayable::JumpedOnEnemy()
 	mJumping = false;
 	mCanJump = true;
 
+	//set mJumpSound to nullptr temporarily so that it doesn't play here
 	SoundEffect* temp = mJumpSound;
 	mJumpSound = nullptr;
 	Jump();
@@ -178,6 +178,7 @@ void CharacterPlayable::HitTile()
 {
 	Character::HitTile();
 
+	//if the tile above the player is a platform
 	if (mCurrentLevelMap->GetTileAt(mPosition.y / mCurrentLevelMap->GetTileset().tileHeight, (mPosition.x + (mSingleSpriteWidth * 0.5f)) / mCurrentLevelMap->GetTileset().tileWidth) == PLATFORM)
 	{
 		for (int i = 0; i < mEnemiesList->size(); i++)
@@ -190,6 +191,7 @@ void CharacterPlayable::HitTile()
 			int enemyTileX = (int)enemyPosition.x / mCurrentLevelMap->GetTileset().tileWidth;
 			int enemyTileY = (int)enemyPosition.y / mCurrentLevelMap->GetTileset().tileHeight;
 
+			//if the enemy is either directly above, or one tile to the left or right of the player
 			if (playerTileX == enemyTileX || playerTileX == enemyTileX + 1 || playerTileX == enemyTileX - 1)
 			{
 				if(enemyTileY == playerTileY - 1)

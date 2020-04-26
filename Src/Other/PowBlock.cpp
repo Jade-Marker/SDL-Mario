@@ -50,6 +50,6 @@ void PowBlock::TakeAHit()
 	if (mNumberOfHitsLeft <= 0)
 	{
 		mNumberOfHitsLeft = 0;
-		mLevelMap->ChangeTileAt(8, 8, EMPTY);
+		mLevelMap->ChangeTileAt(POW_X, POW_Y, EMPTY);
 	}
 }

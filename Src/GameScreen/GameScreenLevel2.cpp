@@ -54,7 +54,7 @@ void GameScreenLevel2::SetUpLevel()
 		impassableTiles.push_back((TILE)END_GROUND_LEFT);
 		impassableTiles.push_back((TILE)END_GROUND_RIGHT);
 
-		for (int i = 0; i < 255; i++)
+		for (int i = 0; i < TILE_MAX; i++)
 		{
 			bool passable = true;
 
@@ -69,8 +69,9 @@ void GameScreenLevel2::SetUpLevel()
 		}
 
 		xOffset = 0.0f;
-		mLevelMap = new LevelMap(mRenderer, "Images/Marioland images/tileset.png", 16, 16, false, passableTiles, "Levels/Level2.txt");
+		mLevelMap = new LevelMap(mRenderer, "Images/Marioland images/tileset.png", MARIOLAND_TILE_WIDTH, MARIOLAND_TILE_HEIGHT, false, passableTiles, "Levels/Level2.txt");
 
+		//replaces all coin tiles with empty tiles and spawns a coin in its place
 		for (int y = 0; y < mLevelMap->GetHeight(); y++)
 		{
 			for (int x = 0; x < mLevelMap->GetWidth(); x++)
@@ -78,7 +79,6 @@ void GameScreenLevel2::SetUpLevel()
 				if (mLevelMap->GetTileAt(y, x) == COIN_TILE)
 				{
 					mLevelMap->ChangeTileAt(y, x, (TILE)EMPTY_TILE);
-
 					CharacterEnemy* coin = new CharacterCoin(mRenderer, "Images/Marioland images/Coin.png", Vector2D(x * mLevelMap->GetTileset().tileWidth, y * mLevelMap->GetTileset().tileHeight),
 						mLevelMap, FACING_RIGHT, 0.0f, 0.0f, 0.0f, 0.0f, MARIOLAND_COLLISION_RADIUS, 0.0f, MARIOLAND_COIN_FRAME_COUNT, "SFX/Marioland SFX/coin.wav", false);
 					mEnemiesAndCoins.push_back(coin);
@@ -141,6 +141,7 @@ void GameScreenLevel2::Update(float deltaTime, SDL_Event e)
 	mMario->Update(deltaTime, e);
 	float marioXpos = mMario->GetPosition().x;
 
+	//Makes it so that the screen only starts scrolling once mario is halfway across the screen
 	if (marioXpos > SCREEN_WIDTH / 2.0f)
 	{
 		xOffset = marioXpos - SCREEN_WIDTH / 2.0f;
@@ -152,6 +153,7 @@ void GameScreenLevel2::Update(float deltaTime, SDL_Event e)
 	if (xOffset < 0)
 		xOffset = 0;
 
+	//stop scrolling if at the end of the level
 	if (xOffset > mLevelMap->GetTileset().tileWidth * (mLevelMap->GetWidth()- (float)SCREEN_WIDTH/mLevelMap->GetTileset().tileWidth))
 		xOffset = mLevelMap->GetTileset().tileWidth * (mLevelMap->GetWidth() - (float)SCREEN_WIDTH / mLevelMap->GetTileset().tileWidth);
 
@@ -213,8 +215,6 @@ void GameScreenLevel2::UpdateEnemiesAndCoins(float deltaTime, SDL_Event e)
 		{
 			if (!(mEnemiesAndCoins[i]->GetPosition().x + mEnemiesAndCoins[i]->GetWidth() < xOffset || mEnemiesAndCoins[i]->GetPosition().x > xOffset + SCREEN_WIDTH))
 			{
-
-				//Now do the update
 				mEnemiesAndCoins[i]->Update(deltaTime, e);
 
 				if (Collisions::Instance()->Circle(mMario->GetCollisionCircle(), mEnemiesAndCoins[i]->GetCollisionCircle()) && mMario->GetState() != DEAD)

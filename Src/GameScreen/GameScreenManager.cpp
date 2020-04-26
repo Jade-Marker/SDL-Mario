@@ -26,6 +26,7 @@ void GameScreenManager::Render()
 
 void GameScreenManager::Update(float deltaTime, SDL_Event e)
 {
+	//skips the first update as deltatime is much larger after loading music, but only for a frame at most
 	if (firstUpdate)
 	{
 		mCurrentScreen->Update(deltaTime, e);

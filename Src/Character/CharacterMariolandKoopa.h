@@ -4,7 +4,7 @@ class CharacterMariolandKoopa :
 	public CharacterMariolandEnemy
 {
 private:
-	bool explosionSoundPlayed;
+	bool mExplosionSoundPlayed;
 	SoundEffect* mExplodeSound;
 	float mPercentageDead;
 

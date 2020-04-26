@@ -27,8 +27,6 @@ protected:
 public:
 	GameScreenLevel2(SDL_Renderer* renderer, GameScreenManager* manager);
 	virtual ~GameScreenLevel2();
-	void SetUpLevel();
-	void SpawnEnemies();
 
 	virtual void Render();
 	virtual void Update(float deltaTime, SDL_Event e);
@@ -41,6 +39,8 @@ public:
 	void RestartLevel();
 
 private:
+	void SetUpLevel();
+	void SpawnEnemies();
 	void UpdateEnemiesAndCoins(float deltaTime, SDL_Event e);
 };
 

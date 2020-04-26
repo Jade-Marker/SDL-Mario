@@ -9,15 +9,17 @@ void CharacterMariolandKoopa::DeadUpdate(float deltaTime, SDL_Event e)
 	if (mPercentageDead <= 0.25f)
 		mCurrentStartFrame = MARIOLAND_KOOPA_DEATH_ANIM1_FRAME;
 	else if (mPercentageDead <= 0.75f)
+		//This means that it will rapidly change between frames 2 & 3
 		mCurrentStartFrame = MARIOLAND_KOOPA_DEATH_ANIM1_FRAME + (int)(100 * mPercentageDead) % 2;
 	else
 	{
-		if (!explosionSoundPlayed)
+		if (!mExplosionSoundPlayed)
 		{
 			mExplodeSound->Play(0);
-			explosionSoundPlayed = true;
+			mExplosionSoundPlayed = true;
 		}
 
+		//This means that it will rapidly change between frames 4 & 5
 		mCurrentFrame = MARIOLAND_KOOPA_DEATH_ANIM2_FRAME + (int)(100 * mPercentageDead) % 2;
 	}
 
@@ -35,7 +37,7 @@ CharacterMariolandKoopa::CharacterMariolandKoopa(SDL_Renderer* renderer, std::st
 
 	mExplodeSound = new SoundEffect();
 	mExplodeSound->Load("SFX/Marioland SFX/koopaExplode.wav");
-	explosionSoundPlayed = false;
+	mExplosionSoundPlayed = false;
 
 	mMovingLeft = true;
 
@@ -51,6 +53,7 @@ void CharacterMariolandKoopa::OnPlayerCollision(CharacterPlayable* player)
 {
 	CharacterMariolandEnemy::OnPlayerCollision(player);
 
+	//If the shell is exploding, then kill the player
 	if (mPercentageDead >= 0.75f)
 		player->KillPlayer();
 }

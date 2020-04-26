@@ -37,7 +37,6 @@ public:
 		std::string jumpSFXPath, bool screenWrappingEnabled = true);
 	virtual void Render(float xOffset = 0.0f);
 	virtual void Update(float deltaTime, SDL_Event e);
-	void Animate();
 	virtual void OnPlayerCollision(CharacterPlayable* player);
 	void SetState(CHARACTERSTATE newState);
 	CHARACTERSTATE GetState();
@@ -45,11 +44,12 @@ public:
 	void IncrementScore(int value);
 	int GetScore();
 	void RenderScoreAndLives(Font* font);
-	virtual void UpdateState();
 	void JumpedOnEnemy();
 	int GetLives() { return mLives; };
 
 protected:
+	virtual void UpdateState();
+	void Animate();
 	void HitTile();
 
 };

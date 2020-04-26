@@ -13,6 +13,8 @@ GameScreenIntro::~GameScreenIntro()
 {
 	delete mBackgroundTexture;
 	mBackgroundTexture = NULL;
+
+	delete mArrow;
 }
 
 void GameScreenIntro::Render()
@@ -21,9 +23,9 @@ void GameScreenIntro::Render()
 	mBackgroundTexture->Render(Vector2D(), SDL_FLIP_NONE);
 
 	if (mArrowPosition == 0)
-		mArrow->Render(Vector2D(29, 61), SDL_FLIP_NONE);
+		mArrow->Render(Vector2D(ARROW_X_POS, ARROW_Y_POS_TOP), SDL_FLIP_NONE);
 	else
-		mArrow->Render(Vector2D(29, 270), SDL_FLIP_NONE);
+		mArrow->Render(Vector2D(ARROW_X_POS, ARROW_Y_POS_BOTTOM), SDL_FLIP_NONE);
 }
 
 void GameScreenIntro::Update(float deltaTime, SDL_Event e)

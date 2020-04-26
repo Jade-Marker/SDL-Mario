@@ -4,12 +4,34 @@
 #define SCREEN_WIDTH 512
 #define SCREEN_HEIGHT 416
 
+#define DELTATIME_DIVISOR 1000.0f
+
+//Highscore screen constants
+#define HIGHSCORE_ENTER_NAME_POS Vector2D(0.0f, 1.0f)
+#define HIGHSCORE_ENTER_NAME_SCALE Vector2D(0.6f, 0.6f)
+#define HIGHSCORE_ENTER_NAME_NAME_POS Vector2D(44.0f, 20.0f)
+#define HIGHSCORE_ENTER_NAME_NAME_SCALE Vector2D(0.8125f, 0.8125f)
+#define HIGHSCORE_YOU_GOT_POS Vector2D(44.0f, 1.0f)
+#define HIGHSCORE_YOU_GOT_SCALE Vector2D(0.8125f, 0.8125f)
+#define HIGHSCORE_HIGHSCORE_POS_X 60.0f
+#define HIGHSCORE_HIGHSCORE_POS_Y 40.0f
+#define HIGHSCORE_HIGHSCORE_VALUE_POS_Y 80.0f
+#define HIGHSCORE_HIGHSCORE_VALUE_INCREMENT_POS_Y 60.0f
+#define HIGHSCORE_HIGHSCORE_SCALE Vector2D(1.0f, 1.0f)
+
+//Intro screen constants
+#define ARROW_X_POS 29
+#define ARROW_Y_POS_TOP 61
+#define ARROW_Y_POS_BOTTOM 270
+
 //Player constants
 #define MARIO_TEXT_POS 4.0f
 #define LUIGI_TEXT_POS 0.75f * SCREEN_WIDTH
 #define SCORE_HEIGHT 4.0f
+#define SCORE_SCALE 0.5f
 #define INITIAL_LIVES 3
 #define LIVES_HEIGHT 40.0f
+#define LIVES_SCALE 0.5f
 #define INVULNERABILITY_TIME 5.0f
 #define INVULN_MULTIPLIER 4.0f
 #define LEVEL1_PLAYER_FRAME_DELAY 0.1f
@@ -24,7 +46,7 @@
 
 //Marioland player constants
 #define MARIOLAND_INITIAL_LIVES 2
-#define MARIOLAND_INIT_POS Vector2D(0.0f, 0.0f)
+#define MARIOLAND_INIT_POS Vector2D(0.0f, 166.0f)
 #define MARIOLAND_JUMP_FORCE 500.0f
 #define MARIOLAND_JUMP_DECREMENT 500.0f
 #define MARIOLAND_GRAVITY 192.0f
@@ -98,6 +120,9 @@
 #define END_GROUND_LEFT 0x8e
 #define END_GROUND_RIGHT 0x8f
 #define COIN_TILE 0xf4
+#define TILE_MAX 255
+#define MARIOLAND_TILE_WIDTH 16
+#define MARIOLAND_TILE_HEIGHT 16
 
 //movement constants
 #define MOVEMENTSPEED 60.0f
@@ -147,6 +172,8 @@
 //Pow block constants
 #define POW_COLLISION_INCREASE 0.53125f
 #define POW_HITS 3
+#define POW_X 8
+#define POW_Y 8
 
 //Score constants
 #define HIGHSCORE_COUNT 5

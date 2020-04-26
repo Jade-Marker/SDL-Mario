@@ -113,5 +113,4 @@ enum ENEMIES
 	KOOPA,
 	COIN,
 	CRAB
-
 };

@@ -20,7 +20,7 @@ struct Tileset
 		texture->LoadFromFile(imagePath);
 	}
 
-	Tileset():
+	Tileset() :
 		tileWidth(0), tileHeight(0), texture(nullptr), tilesGoAcross(true)
 	{
 	}

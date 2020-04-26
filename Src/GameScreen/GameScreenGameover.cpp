@@ -16,6 +16,8 @@ GameScreenGameOver::~GameScreenGameOver()
 {
 	delete mBackgroundTexture;
 	mBackgroundTexture = NULL;
+
+	delete mHighScoreText;
 }
 
 void GameScreenGameOver::Render()
@@ -27,18 +29,19 @@ void GameScreenGameOver::Render()
 		int numOfHighscores;
 		Score* highscoreTable = ScoreManager::Instance()->GetHighscoreTable(numOfHighscores);
 
-		mHighScoreText->DrawString("You got " + scoreString + " points", Vector2D(44.0f, 1.0f), Vector2D(0.8125f, 0.8125f));
+		mHighScoreText->DrawString("You got " + scoreString + " points", HIGHSCORE_YOU_GOT_POS, HIGHSCORE_YOU_GOT_SCALE);
 
-		mHighScoreText->DrawString("Highscores:", Vector2D(60.0f, 40.0f), Vector2D(1.0f, 1.0f));
+		mHighScoreText->DrawString("Highscores:", Vector2D(HIGHSCORE_HIGHSCORE_POS_X, HIGHSCORE_HIGHSCORE_POS_Y), HIGHSCORE_HIGHSCORE_SCALE);
 		for (int i = 0; i < numOfHighscores; i++)
 		{
-			mHighScoreText->DrawString(highscoreTable[i].name + ":" + std::to_string(highscoreTable[i].score), Vector2D(60.0f, 80.0f + 60.0f * i), Vector2D(1.0f, 1.0f));
+			mHighScoreText->DrawString(highscoreTable[i].name + ":" + std::to_string(highscoreTable[i].score),
+				Vector2D(HIGHSCORE_HIGHSCORE_POS_X, HIGHSCORE_HIGHSCORE_VALUE_POS_Y + HIGHSCORE_HIGHSCORE_VALUE_INCREMENT_POS_Y * i), HIGHSCORE_HIGHSCORE_SCALE);
 		}
 	}
 	else
 	{
-		mHighScoreText->DrawString("Please enter your name ", Vector2D(0.0f, 1.0f), Vector2D(0.6f, 0.6f));
-		mHighScoreText->DrawString(mPlayerName, Vector2D(44.0f, 20.0f), Vector2D(0.8125f, 0.8125f));
+		mHighScoreText->DrawString("Please enter your name ", HIGHSCORE_ENTER_NAME_POS, HIGHSCORE_ENTER_NAME_SCALE);
+		mHighScoreText->DrawString(mPlayerName, HIGHSCORE_ENTER_NAME_NAME_POS, HIGHSCORE_ENTER_NAME_NAME_SCALE);
 	}
 }
 
@@ -62,9 +65,12 @@ void GameScreenGameOver::Update(float deltaTime, SDL_Event e)
 			{
 				int currentKey = e.key.keysym.sym;
 				if (currentKey >= SDLK_a && currentKey <= SDLK_z)
+					//SDLK_a lines up with ascii 'a', so subtract ('a'- 'A') to force all characters to be uppercase
 					mPlayerName += (char)e.key.keysym.sym - ('a' - 'A');
+
 				else if (currentKey == SDLK_SPACE)
 					mPlayerName += ' ';
+
 				else if (currentKey >= SDLK_0 && currentKey <= SDLK_9)
 					mPlayerName += (char)e.key.keysym.sym;
 			}

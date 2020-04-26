@@ -46,13 +46,6 @@ void Character::Render(int xOffset)
 
 void Character::Update(float deltaTime, SDL_Event e)
 {
-	int key = e.key.keysym.sym;
-
-	//Handle any events
-	switch (e.type)
-	{
-	}
-
 	int footPosition = (int)(mPosition.y + mSingleSpriteHeight) / mCurrentLevelMap->GetTileset().tileHeight;
 	int headPosition = (int)(mPosition.y) / mCurrentLevelMap->GetTileset().tileHeight;
 	int centralXPosition = (mPosition.x + (mSingleSpriteWidth * 0.5f)) / mCurrentLevelMap->GetTileset().tileWidth;
@@ -141,6 +134,7 @@ Rect2D Character::GetCollisionBox()
 Circle2D Character::GetCollisionCircle()
 {
 	return Circle2D(mPosition.x + mSingleSpriteWidth / 2.0f, mPosition.y + mSingleSpriteHeight / 2.0f, mCollisionRadius);
+	//Adds half the sprite width so that the centre of the circle returned is the centre of the object
 }
 
 bool Character::IsJumping()
@@ -158,8 +152,7 @@ void Character::MoveLeft(float deltaTime)
 {
 	int xPos = (int)(roundf(mPosition.x)) / mCurrentLevelMap->GetTileset().tileWidth;
 	int yPos = (int)(roundf((mPosition.y + mSingleSpriteHeight * 0.25f) / (float)mCurrentLevelMap->GetTileset().tileHeight));
-	int yPosMid = (int)(roundf((mPosition.y + mSingleSpriteHeight * 0.5f) / (float)mCurrentLevelMap->GetTileset().tileHeight));
-	int yPosLower = (int)(roundf((mPosition.y + mSingleSpriteHeight * 0.75f) / (float)mCurrentLevelMap->GetTileset().tileHeight));
+	//+1/4 of sprite height so that the player can still fit through small gaps (as seen at the end of level 2)
 
 	mFacingDirection = FACING_LEFT;
 	if (mCurrentLevelMap->TileIsPassable(mCurrentLevelMap->GetTileAt(yPos, xPos)))
@@ -167,6 +160,7 @@ void Character::MoveLeft(float deltaTime)
 		mPosition.x -= mMovementSpeed * deltaTime;
 	}
 
+	//if character is offscreen, then wrap around
 	if (mPosition.x < 0)
 		ScreenWrap(deltaTime);
 }
@@ -175,6 +169,7 @@ void Character::MoveRight(float deltaTime)
 {
 	int xPos = (int)(roundf(mPosition.x + mSingleSpriteWidth)) / mCurrentLevelMap->GetTileset().tileWidth;
 	int yPos = (int)(roundf((mPosition.y + mSingleSpriteHeight * 0.25f) / (float)mCurrentLevelMap->GetTileset().tileHeight));
+	//+1/4 of sprite height so that the player can still fit through small gaps (as seen at the end of level 2)
 
 	mFacingDirection = FACING_RIGHT;
 	if (mCurrentLevelMap->TileIsPassable(mCurrentLevelMap->GetTileAt(yPos, xPos)))
@@ -182,6 +177,7 @@ void Character::MoveRight(float deltaTime)
 		mPosition.x += mMovementSpeed * deltaTime;
 	}
 
+	//if half of character is off screen, then wrap around
 	if (mPosition.x + mSingleSpriteWidth * 0.5f > SCREEN_WIDTH)
 		ScreenWrap(deltaTime);
 }
@@ -206,6 +202,7 @@ void Character::AddGravity(float deltaTime)
 
 	if (mPosition.y > SCREEN_HEIGHT - mSingleSpriteHeight)
 	{
+		//at the bottom of the screen, so stop moving the character
 		mPosition.y = SCREEN_HEIGHT - mSingleSpriteHeight;
 		mCanJump = true;
 	}
@@ -225,6 +222,7 @@ void Character::ScreenWrap(float deltaTime)
 		else if (mPosition.x + mSingleSpriteWidth * 0.5f > SCREEN_WIDTH)
 			mPosition.x = -mSingleSpriteWidth;
 
+		//subtract gravity as characters fall slightly when reaching the edge of the screen
 		mPosition.y -= cGravity * deltaTime;
 	}
 }

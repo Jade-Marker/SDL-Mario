@@ -29,7 +29,7 @@ int main(int argc, char* args[])
 	//Check if SDL was set up correctly
 	if (InitSDL())
 	{
-		//Set up the game screen manager - start with level1
+		//Set up the game screen manager - start with intro screen
 		gameScreenManager = new GameScreenManager(gRenderer, SCREEN_INTRO);
 		gOldTime = SDL_GetTicks();
 
@@ -68,7 +68,7 @@ bool InitSDL()
 	else
 	{
 		//All good, so attempt to create the window.
-		gWindow = SDL_CreateWindow("Games Engine Creation",
+		gWindow = SDL_CreateWindow("Mario",
 									SDL_WINDOWPOS_UNDEFINED,
 									SDL_WINDOWPOS_UNDEFINED,
 									SCREEN_WIDTH,
@@ -143,7 +143,7 @@ bool Update()
 		break;
 	}
 
-	gameScreenManager->Update((float)(newTime - gOldTime) / 1000.0f, e);
+	gameScreenManager->Update((float)(newTime - gOldTime) / DELTATIME_DIVISOR, e);
 
 	//Set the current time to be the old time
 	gOldTime = newTime;

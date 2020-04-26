@@ -57,6 +57,8 @@ LevelMap::~LevelMap()
 	}
 
 	delete[]mMap;
+
+	delete mTileset.texture;
 }
 
 TILE LevelMap::GetTileAt(unsigned int h, unsigned int w)
@@ -81,6 +83,7 @@ void LevelMap::Render(float yOffset, float xOffset)
 	{
 		for (int x = 0; x < mMapWidth; x++)
 		{
+			//Done so that if a tile is offscreen, it doesn't render
 			if (x * mTileset.tileWidth + mTileset.tileWidth > abs(xOffset) && x * mTileset.tileWidth < abs(xOffset) + SCREEN_WIDTH) {
 				if (mMap[y][x] != EMPTY)
 				{
@@ -108,21 +111,6 @@ void LevelMap::Render(float yOffset, float xOffset)
 
 bool LevelMap::TileIsPassable(TILE tile)
 {
-	/*switch (tile)
-	{
-	case EMPTY:
-	case PIPE_ENTRANCE_LOWER_RIGHT:
-	case PIPE_ENTRANCE_UPPER_RIGHT:
-	case PIPE_ENTRANCE_LOWER_LEFT:
-	case PIPE_ENTRANCE_UPPER_LEFT:
-	case PIPE_BODY_LOWER:
-	case PIPE_BODY_UPPER:
-		return true;
-
-	default:
-		return false;
-	}*/
-
 	for (int i = 0; i < mTileset.passableTiles.size(); i++)
 	{
 		if (tile == mTileset.passableTiles[i])

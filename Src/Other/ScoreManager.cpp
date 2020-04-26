@@ -7,6 +7,7 @@ ScoreManager::ScoreManager():
 {
 	std::ifstream inFile(HIGHSCORE_FILE_PATH);
 
+	//initialise the array
 	for (int i = 0; i < HIGHSCORE_COUNT; i++)
 	{
 		mHighScores[i].name = "";
@@ -47,8 +48,8 @@ ScoreManager* ScoreManager::Instance()
 void ScoreManager::SetPlayerScore(int score)
 {
 	mPlayerScore = score;
-	mNewHighScore = false;
 
+	mNewHighScore = false;
 	for (int i = 0; i < HIGHSCORE_COUNT; i++)
 	{
 		if (mPlayerScore > mHighScores[i].score)
@@ -71,9 +72,11 @@ void ScoreManager::UpdateHighscoreTable(std::string playerName)
 
 	if (mNewHighScore)
 	{
+		//adding a new score, so increment the count
 		if (mNumOfScores < HIGHSCORE_COUNT)
 			mNumOfScores++;
 
+		//moves all scores beneath new score down one
 		for (int i = mNumOfScores - 1; i > mNewScoreIndex; i--)
 		{
 			mHighScores[i] = mHighScores[i - 1];
@@ -82,6 +85,7 @@ void ScoreManager::UpdateHighscoreTable(std::string playerName)
 		mHighScores[mNewScoreIndex].name = mPlayerName;
 		mHighScores[mNewScoreIndex].score = mPlayerScore;
 
+		//rewrite highscore table
 		std::ofstream outFile(HIGHSCORE_FILE_PATH);
 		outFile << mNumOfScores << std::endl;
 		for (int i = 0; i < mNumOfScores; i++)

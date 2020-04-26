@@ -11,9 +11,7 @@ Texture2D::Texture2D(SDL_Renderer* renderer):
 
 Texture2D::~Texture2D()
 {
-	//Free up the memory
 	Free();
-
 	mRenderer = NULL;
 }
 
@@ -22,14 +20,13 @@ bool Texture2D::LoadFromFile(std::string path)
 	//Remove the memory used for a previous texture
 	Free();
 
-	//Load the image
 	SDL_Surface* pSurface = IMG_Load(path.c_str());
 	if (pSurface != NULL)
 	{
 		//Color key the image - The color to be transparent
 		SDL_SetColorKey(pSurface, SDL_TRUE, SDL_MapRGB(pSurface->format, 0, 0xFF, 0xFF));
 		
-		//Create the texture from the pixels on the surface
+		//Create the texture from the surface
 		mTexture = SDL_CreateTextureFromSurface(mRenderer, pSurface);
 		if (mTexture == NULL)
 		{
@@ -76,6 +73,7 @@ void Texture2D::Render(Vector2D newPosition, SDL_RendererFlip flip, double angle
 
 void Texture2D::Render(Vector2D newPosition, SDL_RendererFlip flip, Uint8 alphaMod, double angle)
 {
+	//Set the alpha of the entire texture
 	SDL_SetTextureAlphaMod(mTexture, alphaMod);
 
 	//Set where to render the texture
@@ -84,8 +82,8 @@ void Texture2D::Render(Vector2D newPosition, SDL_RendererFlip flip, Uint8 alphaM
 	//Render to screen
 	SDL_RenderCopyEx(mRenderer, mTexture, NULL, &renderLocation, angle, NULL, flip);
 
+	//Set it back to max so that any renders not using this overload still have the correct alpha
 	SDL_SetTextureAlphaMod(mTexture, 255);
-
 }
 
 void Texture2D::Render(SDL_Rect srcRect, SDL_Rect destRect, SDL_RendererFlip flip, double angle)
@@ -96,7 +94,11 @@ void Texture2D::Render(SDL_Rect srcRect, SDL_Rect destRect, SDL_RendererFlip fli
 
 void Texture2D::Render(SDL_Rect srcRect, SDL_Rect destRect, SDL_RendererFlip flip, Uint8 alphaMod, double angle)
 {
+	//Set the alpha of the entire texture
 	SDL_SetTextureAlphaMod(mTexture, alphaMod);
+
 	SDL_RenderCopyEx(mRenderer, mTexture, &srcRect, &destRect, angle, NULL, flip);
+
+	//Set it back to max so that any renders not using this overload still have the correct alpha
 	SDL_SetTextureAlphaMod(mTexture, 255);
 }

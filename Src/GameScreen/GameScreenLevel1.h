@@ -50,9 +50,8 @@ public:
 	void Render();
 	void Update(float deltaTime, SDL_Event e);
 
-	void HandleEnemyWave(float deltaTime);
-
 private:
+	void HandleEnemyWave(float deltaTime);
 	bool SetUpLevel();
 	void SetLevelMap();
 	void SetUpEnemyWaves();

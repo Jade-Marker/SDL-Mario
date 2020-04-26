@@ -31,9 +31,11 @@ void CharacterCrab::Update(float deltaTime, SDL_Event e)
 	CharacterKoopa::Update(deltaTime, e);
 
 	int numEnemiesLeft = 0;
+	//counts the number of enemies by using dynamic casting
 	for (int i = 0; i < mEnemiesVector->size(); i++)
 	{
 		CharacterCoin* coin = dynamic_cast<CharacterCoin*>(mEnemiesVector->at(i));
+		//returns nullptr if it fails to cast, i.e. the CharacterEnemy pointed to isn't of type CharacterCoin
 
 		if (coin == nullptr)
 			numEnemiesLeft++;

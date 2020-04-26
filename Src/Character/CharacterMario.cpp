@@ -13,6 +13,7 @@ void CharacterMario::HitTile()
 	bool middleTileState = mCurrentLevelMap->TileIsPassable(mCurrentLevelMap->GetTileAt(headPosition, centralXPosition));
 
 	int blockingX;
+	//if there are blocks either in the center and the left/right then assume the player is hitting the center
 	if ((!leftTileState && !middleTileState) || (!rightTileState && !middleTileState))
 	{
 		blockingX = centralXPosition;
@@ -69,6 +70,7 @@ void CharacterMario::Update(float deltaTime, SDL_Event e)
 {
 	CharacterPlayable::Update(deltaTime, e);
 
+	//if the player is off the screen
 	if (mPosition.y > mCurrentLevelMap->GetHeight()* mCurrentLevelMap->GetTileset().tileHeight)
 		KillPlayer();
 }
