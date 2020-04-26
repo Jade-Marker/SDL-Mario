@@ -44,8 +44,10 @@ void GameScreenGameOver::Render()
 
 void GameScreenGameOver::Update(float deltaTime, SDL_Event e)
 {
-	switch (e.type)
+	if (!mGotPlayerName)
 	{
+		switch (e.type)
+		{
 		case SDL_KEYDOWN:
 			if (e.key.keysym.sym == SDLK_RETURN)
 			{
@@ -56,7 +58,7 @@ void GameScreenGameOver::Update(float deltaTime, SDL_Event e)
 			{
 				mPlayerName.erase(mPlayerName.length() - 1);
 			}
-			else if(mPlayerName.length() < NAME_MAX_LENGTH)
+			else if (mPlayerName.length() < NAME_MAX_LENGTH)
 			{
 				int currentKey = e.key.keysym.sym;
 				if (currentKey >= SDLK_a && currentKey <= SDLK_z)
@@ -66,6 +68,7 @@ void GameScreenGameOver::Update(float deltaTime, SDL_Event e)
 				else if (currentKey >= SDLK_0 && currentKey <= SDLK_9)
 					mPlayerName += (char)e.key.keysym.sym;
 			}
+		}
 	}
 }
 
