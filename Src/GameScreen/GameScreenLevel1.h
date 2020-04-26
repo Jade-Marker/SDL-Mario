@@ -13,6 +13,7 @@
 #include "ScoreManager.h"
 #include "SoundList.h"
 #include "EnemyWave.h"
+#include "CharacterCrab.h"
 
 #include <vector>
 
@@ -60,5 +61,6 @@ private:
 	void UpdateEnemiesAndCoins(float deltaTime, SDL_Event e);
 	void CreateKoopa(Vector2D position, FACING direction, float speed);
 	void CreateCoin(Vector2D position, FACING direction, float speed);
+	void CreateCrab(Vector2D position, FACING direction, float speed);
 };
 

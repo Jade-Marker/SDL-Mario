@@ -4,10 +4,10 @@
 #include "CharacterPlayable.h"
 
 Character::Character(SDL_Renderer* renderer, std::string imagePath, Vector2D startPosition, LevelMap* map, float moveSpeed, float initialJumpForce, float gravity, float jumpForceDecrement, float collisionRadius,
-	float frameDelay, int noOfFrames, bool animating, int currentStartFrame, int currentNumOfFrames, bool screenWrappingEnabled) :
-	mRenderer(renderer), mPosition(startPosition), mFacingDirection(FACING_RIGHT),
+	float frameDelay, int noOfFrames, bool animating, int currentStartFrame, int currentNumOfFrames, bool screenWrappingEnabled, FACING facingDirection) :
+	mRenderer(renderer), mPosition(startPosition), mFacingDirection(facingDirection),
 	mMovingLeft(false), mMovingRight(false), mJumping(false), mCanJump(false), mCollisionRadius(collisionRadius),
-	mCurrentLevelMap(map), mJumpForce(0.0f), cMovementSpeed(moveSpeed), cInitialJumpForce(initialJumpForce), cGravity(gravity), cJumpForceDecrement(jumpForceDecrement),
+	mCurrentLevelMap(map), mJumpForce(0.0f), mMovementSpeed(moveSpeed), cInitialJumpForce(initialJumpForce), cGravity(gravity), cJumpForceDecrement(jumpForceDecrement),
 	mFrameDelay(frameDelay), mFrameDelayTimer(frameDelay), mNumFrames(noOfFrames), mAnimating(animating), mCurrentFrame(0),
 	mSingleSpriteWidth(0), mSingleSpriteHeight(0), mCurrentStartFrame(currentStartFrame), mCurrentNumOfFrames(currentNumOfFrames), mScreenWrappingEnabled(screenWrappingEnabled)
 {
@@ -164,7 +164,7 @@ void Character::MoveLeft(float deltaTime)
 	mFacingDirection = FACING_LEFT;
 	if (mCurrentLevelMap->TileIsPassable(mCurrentLevelMap->GetTileAt(yPos, xPos)))
 	{
-		mPosition.x -= cMovementSpeed * deltaTime;
+		mPosition.x -= mMovementSpeed * deltaTime;
 	}
 
 	if (mPosition.x < 0)
@@ -179,7 +179,7 @@ void Character::MoveRight(float deltaTime)
 	mFacingDirection = FACING_RIGHT;
 	if (mCurrentLevelMap->TileIsPassable(mCurrentLevelMap->GetTileAt(yPos, xPos)))
 	{
-		mPosition.x += cMovementSpeed * deltaTime;
+		mPosition.x += mMovementSpeed * deltaTime;
 	}
 
 	if (mPosition.x + mSingleSpriteWidth * 0.5f > SCREEN_WIDTH)

@@ -20,9 +20,9 @@ protected:
 	bool mMovingLeft;
 	bool mMovingRight;
 	Vector2D mPosition;
+	float mMovementSpeed;
 
 	//constant movement variables
-	const float cMovementSpeed;
 	const float cInitialJumpForce;
 	const float cGravity;
 	const float cJumpForceDecrement;
@@ -57,7 +57,7 @@ protected:
 
 public:
 	Character(SDL_Renderer* renderer, std::string imagePath, Vector2D startPosition, LevelMap* map, float moveSpeed, float initialJumpForce, float gravity, float jumpForceDecrement, float collisionRadius,
-		float frameDelay = 0.0f, int noOfFrames = 1, bool animating = true, int currentStartFrame = 0, int currentNumOfFrames = 1, bool screenWrappingEnabled = true);
+		float frameDelay = 0.0f, int noOfFrames = 1, bool animating = true, int currentStartFrame = 0, int currentNumOfFrames = 1, bool screenWrappingEnabled = true, FACING facingDirection = FACING_RIGHT);
 	virtual ~Character();
 
 	virtual void Render(int xOffset = 0);

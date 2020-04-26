@@ -6,9 +6,7 @@
 
 //Todo
 //For Level 1:
-//Get platform to animate when you hit it 
-//Implement another enemy (get sprite from here: https://www.spriters-resource.com/arcade/mariobros/sheet/93677/)
-
+//Set up waves
 
 
 GameScreenLevel1::GameScreenLevel1(SDL_Renderer* renderer, GameScreenManager* manager) :
@@ -140,6 +138,9 @@ void GameScreenLevel1::HandleEnemyWave(float deltaTime)
 				case COIN:
 					CreateCoin(current[i].position, current[i].direction, current[i].speed);
 					break;
+
+				case CRAB:
+					CreateCrab(current[i].position, current[i].direction, current[i].speed);
 				};
 			}
 		}
@@ -204,8 +205,10 @@ void GameScreenLevel1::SetUpEnemyWaves()
 	EnemyWave wave3 = EnemyWave();
 
 	std::vector<WaveComponent> wave;
-	wave.push_back(WaveComponent(KOOPA, 0.0f, Vector2D(150, 32), FACING_RIGHT, KOOPA_SPEED));
-	wave.push_back(WaveComponent(KOOPA, 0.0f, Vector2D(325, 32), FACING_LEFT, KOOPA_SPEED));
+	//wave.push_back(WaveComponent(KOOPA, 0.0f, Vector2D(150, 32), FACING_RIGHT, KOOPA_SPEED));
+	//wave.push_back(WaveComponent(KOOPA, 0.0f, Vector2D(325, 32), FACING_LEFT, KOOPA_SPEED));
+	wave.push_back(WaveComponent(CRAB, 0.0f, Vector2D(150, 32), FACING_RIGHT, KOOPA_SPEED));
+	wave.push_back(WaveComponent(CRAB, 0.0f, Vector2D(325, 32), FACING_LEFT, KOOPA_SPEED));
 	wave.push_back(WaveComponent(COIN, 10.0f, Vector2D(150, 32), FACING_RIGHT, COIN_SPEED));
 	wave1.SetWave(wave);
 	mEnemyWaves.push_back(wave1);
@@ -327,4 +330,11 @@ void GameScreenLevel1::CreateCoin(Vector2D position, FACING direction, float spe
 	CharacterCoin* coinCharacter = new CharacterCoin(mRenderer, "Images/Coin.png", position, mLevelMap, direction, speed, INITIAL_JUMP_FORCE, GRAVITY, JUMP_FORCE_DECREMENT, COLLISION_RADIUS,
 		ANIMATION_DELAY, COIN_FRAME_COUNT, "SFX/coin.ogg");
 	mEnemiesAndCoins.push_back(coinCharacter);
+}
+
+void GameScreenLevel1::CreateCrab(Vector2D position, FACING direction, float speed)
+{
+	CharacterCrab* crabCharacter = new CharacterCrab(mRenderer, "Images/Crab.png", position, mLevelMap, direction, speed, INITIAL_JUMP_FORCE_SMALL, GRAVITY, JUMP_FORCE_DECREMENT, COLLISION_RADIUS,
+		ANIMATION_DELAY, CRAB_FRAME_COUNT, CRAB_MOVING_FRAME, CRAB_MOVING_FRAME_COUNT, &mEnemiesAndCoins);
+	mEnemiesAndCoins.push_back(crabCharacter);
 }

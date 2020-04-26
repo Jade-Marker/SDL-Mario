@@ -23,7 +23,7 @@ void CharacterQMarkCoin::Update(float deltaTime, SDL_Event e)
 {
     if (mAliveTimer > 0.0f)
     {
-        mPosition.y -= cMovementSpeed * deltaTime;
+        mPosition.y -= mMovementSpeed * deltaTime;
 
         mAliveTimer -= deltaTime;
 

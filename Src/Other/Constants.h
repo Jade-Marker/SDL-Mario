@@ -118,7 +118,7 @@
 
 #define SCREENSHAKE_DURATION 0.25f
 
-//Enemy constants
+//Koopa constants
 #define INJURED_TIME 2.5f
 #define ENEMY_SPAWN_TIME 10.0f
 #define ANIMATION_DELAY 0.25f
@@ -128,6 +128,16 @@
 #define KOOPA_DAMAGED_FRAME 4
 #define KOOPA_DAMAGED_FRAME_COUNT 1
 #define KOOPA_SCORE 1
+
+//Crab constants
+#define CRAB_SCORE 3
+#define CRAB_FRAME_COUNT 7
+#define CRAB_MOVING_FRAME 0
+#define CRAB_MOVING_FRAME_COUNT 2
+#define CRAB_ANGRY_FRAME_DIFFERENCE 2
+#define CRAB_DAMAGED_FRAME 4
+#define CRAB_DAMAGED_FRAME_COUNT 3
+#define CRAB_SPEED_MULTIPLIER 2.0f
 
 //Coin constants
 #define COIN_SPAWN_TIME 15.0f

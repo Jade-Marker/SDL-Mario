@@ -111,6 +111,7 @@ enum TILE
 enum ENEMIES
 {
 	KOOPA,
-	COIN
+	COIN,
+	CRAB
 
 };
