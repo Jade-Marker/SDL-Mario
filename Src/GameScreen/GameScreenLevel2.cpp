@@ -35,24 +35,24 @@ void GameScreenLevel2::SetUpLevel()
 		std::vector<TILE> passableTiles;
 		std::vector<TILE> impassableTiles;
 
-		impassableTiles.push_back((TILE)0x13);
-		impassableTiles.push_back((TILE)0x21);
-		impassableTiles.push_back((TILE)0x24);
-		impassableTiles.push_back((TILE)0x39);
-		impassableTiles.push_back((TILE)0x60);
-		impassableTiles.push_back((TILE)0x61);
-		impassableTiles.push_back((TILE)0x63);
-		impassableTiles.push_back((TILE)0x70);
-		impassableTiles.push_back((TILE)0x71);
-		impassableTiles.push_back((TILE)0x72);
-		impassableTiles.push_back((TILE)0x73);
-		impassableTiles.push_back((TILE)0x7f);
-		impassableTiles.push_back((TILE)0x80);
-		impassableTiles.push_back((TILE)0x81);
-		impassableTiles.push_back((TILE)0x82);
-		impassableTiles.push_back((TILE)0x8e);
-		impassableTiles.push_back((TILE)0x8f);
-		impassableTiles.push_back((TILE)0xe8);
+		impassableTiles.push_back((TILE)END_TOP_LEFT);
+		impassableTiles.push_back((TILE)END_TOP_RIGHT);
+		impassableTiles.push_back((TILE)END_BOTTOM_LEFT);
+		impassableTiles.push_back((TILE)END_BOTTOM_RIGHT);
+		impassableTiles.push_back((TILE)GROUND_TOP);
+		impassableTiles.push_back((TILE)GROUND_MID);
+		impassableTiles.push_back((TILE)GROUND_BOTTOM);
+		impassableTiles.push_back((TILE)UNBREAKABLE_TILE);
+		impassableTiles.push_back((TILE)PIPE_TOP_LEFT);
+		impassableTiles.push_back((TILE)PIPE_TOP_RIGHT);
+		impassableTiles.push_back((TILE)PIPE_BOTTOM_LEFT);
+		impassableTiles.push_back((TILE)PIPE_BOTTOM_RIGHT);
+		impassableTiles.push_back((TILE)USED_BLOCK);
+		impassableTiles.push_back((TILE)BREAKABLE_TILE);
+		impassableTiles.push_back((TILE)BREAKABLE_TILE2);
+		impassableTiles.push_back((TILE)QMARK_BLOCK);
+		impassableTiles.push_back((TILE)END_GROUND_LEFT);
+		impassableTiles.push_back((TILE)END_GROUND_RIGHT);
 
 		for (int i = 0; i < 255; i++)
 		{
@@ -75,9 +75,9 @@ void GameScreenLevel2::SetUpLevel()
 		{
 			for (int x = 0; x < mLevelMap->GetWidth(); x++)
 			{
-				if (mLevelMap->GetTileAt(y, x) == 0xf4)
+				if (mLevelMap->GetTileAt(y, x) == COIN_TILE)
 				{
-					mLevelMap->ChangeTileAt(y, x, (TILE)0x2c);
+					mLevelMap->ChangeTileAt(y, x, (TILE)EMPTY_TILE);
 
 					CharacterEnemy* coin = new CharacterCoin(mRenderer, "Images/Marioland images/Coin.png", Vector2D(x * mLevelMap->GetTileset().tileWidth, y * mLevelMap->GetTileset().tileHeight),
 						mLevelMap, FACING_RIGHT, 0.0f, 0.0f, 0.0f, 0.0f, MARIOLAND_COLLISION_RADIUS, 0.0f, MARIOLAND_COIN_FRAME_COUNT, "SFX/Marioland SFX/coin.wav", false);

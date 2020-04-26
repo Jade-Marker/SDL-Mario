@@ -27,9 +27,9 @@ void CharacterMario::HitTile()
 			blockingX = rightXPosition;
 	}
 
-	if (mCurrentLevelMap->GetTileAt(headPosition, blockingX) == (TILE)0x81)
+	if (mCurrentLevelMap->GetTileAt(headPosition, blockingX) == (TILE)QMARK_BLOCK)
 	{
-		mCurrentLevelMap->ChangeTileAt(headPosition, blockingX, (TILE)0x7f);
+		mCurrentLevelMap->ChangeTileAt(headPosition, blockingX, (TILE)USED_BLOCK);
 		currentLevel->CreateQMarkCoin(Vector2D(blockingX * mCurrentLevelMap->GetTileset().tileWidth, headPosition*mCurrentLevelMap->GetTileset().tileHeight - mCurrentLevelMap->GetTileset().tileHeight));
 	}
 
