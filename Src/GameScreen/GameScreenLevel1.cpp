@@ -5,8 +5,7 @@
 #include "PowBlock.h"
 
 //Todo
-//For Level 1:
-//Set up waves
+//Do a final pass of all code
 
 
 GameScreenLevel1::GameScreenLevel1(SDL_Renderer* renderer, GameScreenManager* manager) :
@@ -203,21 +202,23 @@ void GameScreenLevel1::SetUpEnemyWaves()
 	EnemyWave wave1 = EnemyWave();
 	EnemyWave wave2 = EnemyWave();
 	EnemyWave wave3 = EnemyWave();
+	EnemyWave wave4 = EnemyWave();
+	EnemyWave wave5 = EnemyWave();
+	EnemyWave wave6 = EnemyWave();
 
 	std::vector<WaveComponent> wave;
-	//wave.push_back(WaveComponent(KOOPA, 0.0f, Vector2D(150, 32), FACING_RIGHT, KOOPA_SPEED));
-	//wave.push_back(WaveComponent(KOOPA, 0.0f, Vector2D(325, 32), FACING_LEFT, KOOPA_SPEED));
-	wave.push_back(WaveComponent(CRAB, 0.0f, Vector2D(150, 32), FACING_RIGHT, KOOPA_SPEED));
-	wave.push_back(WaveComponent(CRAB, 0.0f, Vector2D(325, 32), FACING_LEFT, KOOPA_SPEED));
-	wave.push_back(WaveComponent(COIN, 10.0f, Vector2D(150, 32), FACING_RIGHT, COIN_SPEED));
+	wave.push_back(WaveComponent(KOOPA, 0.0f, Vector2D(150, 32), FACING_RIGHT, KOOPA_SPEED));
+	wave.push_back(WaveComponent(KOOPA, 0.0f, Vector2D(325, 32), FACING_LEFT, KOOPA_SPEED));
+	wave.push_back(WaveComponent(COIN, 5.0f, Vector2D(150, 32), FACING_RIGHT, COIN_SPEED));
+	wave.push_back(WaveComponent(COIN, 5.0f, Vector2D(325, 32), FACING_LEFT, COIN_SPEED));
 	wave1.SetWave(wave);
 	mEnemyWaves.push_back(wave1);
 
 	wave.clear();
-	wave.push_back(WaveComponent(COIN, 5.0f, Vector2D(150, 32), FACING_RIGHT, COIN_SPEED));
-	wave.push_back(WaveComponent(COIN, 6.0f, Vector2D(150, 32), FACING_RIGHT, COIN_SPEED));
-	wave.push_back(WaveComponent(COIN, 5.0f, Vector2D(325, 32), FACING_LEFT, COIN_SPEED));
-	wave.push_back(WaveComponent(COIN, 6.0f, Vector2D(325, 32), FACING_LEFT, COIN_SPEED));
+	wave.push_back(WaveComponent(COIN, 1.0f, Vector2D(150, 32), FACING_RIGHT, COIN_SPEED));
+	wave.push_back(WaveComponent(COIN, 3.0f, Vector2D(150, 32), FACING_RIGHT, COIN_SPEED));
+	wave.push_back(WaveComponent(COIN, 1.0f, Vector2D(325, 32), FACING_LEFT, COIN_SPEED));
+	wave.push_back(WaveComponent(COIN, 3.0f, Vector2D(325, 32), FACING_LEFT, COIN_SPEED));
 	wave2.SetWave(wave);
 	mEnemyWaves.push_back(wave2);
 
@@ -226,8 +227,40 @@ void GameScreenLevel1::SetUpEnemyWaves()
 	wave.push_back(WaveComponent(KOOPA, 3.0f, Vector2D(325, 32), FACING_LEFT, KOOPA_SPEED));
 	wave.push_back(WaveComponent(KOOPA, 5.0f, Vector2D(150, 32), FACING_RIGHT, KOOPA_SPEED));
 	wave.push_back(WaveComponent(KOOPA, 7.0f, Vector2D(325, 32), FACING_LEFT, KOOPA_SPEED));
+	wave.push_back(WaveComponent(KOOPA, 9.0f, Vector2D(150, 32), FACING_RIGHT, KOOPA_SPEED));
+	wave.push_back(WaveComponent(KOOPA, 11.0f, Vector2D(325, 32), FACING_LEFT, KOOPA_SPEED));
 	wave3.SetWave(wave);
 	mEnemyWaves.push_back(wave3);
+
+	wave.clear();
+	wave.push_back(WaveComponent(CRAB, 0.0f, Vector2D(150, 32), FACING_RIGHT, KOOPA_SPEED));
+	wave.push_back(WaveComponent(CRAB, 0.0f, Vector2D(325, 32), FACING_LEFT, KOOPA_SPEED));
+	wave4.SetWave(wave);
+	mEnemyWaves.push_back(wave4);
+
+	wave.clear();
+	wave.push_back(WaveComponent(KOOPA, 0.0f, Vector2D(150, 32), FACING_RIGHT, KOOPA_SPEED));
+	wave.push_back(WaveComponent(KOOPA, 0.0f, Vector2D(325, 32), FACING_LEFT, KOOPA_SPEED));
+	wave.push_back(WaveComponent(CRAB, 3.0f, Vector2D(150, 32), FACING_RIGHT, KOOPA_SPEED));
+	wave.push_back(WaveComponent(CRAB, 3.0f, Vector2D(325, 32), FACING_LEFT, KOOPA_SPEED));
+	wave.push_back(WaveComponent(KOOPA, 8.0f, Vector2D(150, 32), FACING_RIGHT, KOOPA_SPEED));
+	wave.push_back(WaveComponent(KOOPA, 8.0f, Vector2D(325, 32), FACING_LEFT, KOOPA_SPEED));
+	wave5.SetWave(wave);
+	mEnemyWaves.push_back(wave5);
+
+	wave.clear();
+	wave.push_back(WaveComponent(KOOPA, 0.0f, Vector2D(150, 32), FACING_RIGHT, KOOPA_SPEED));
+	wave.push_back(WaveComponent(KOOPA, 0.0f, Vector2D(325, 32), FACING_LEFT, KOOPA_SPEED));
+	wave.push_back(WaveComponent(COIN, 3.0f, Vector2D(150, 32), FACING_RIGHT, KOOPA_SPEED));
+	wave.push_back(WaveComponent(COIN, 3.0f, Vector2D(325, 32), FACING_LEFT, KOOPA_SPEED));
+	wave.push_back(WaveComponent(CRAB, 3.0f, Vector2D(150, 32), FACING_RIGHT, KOOPA_SPEED));
+	wave.push_back(WaveComponent(CRAB, 3.0f, Vector2D(325, 32), FACING_LEFT, KOOPA_SPEED));
+	wave.push_back(WaveComponent(KOOPA, 8.0f, Vector2D(150, 32), FACING_RIGHT, KOOPA_SPEED));
+	wave.push_back(WaveComponent(KOOPA, 8.0f, Vector2D(325, 32), FACING_LEFT, KOOPA_SPEED));
+	wave.push_back(WaveComponent(CRAB, 10.0f, Vector2D(150, 32), FACING_RIGHT, KOOPA_SPEED));
+	wave.push_back(WaveComponent(CRAB, 10.0f, Vector2D(325, 32), FACING_LEFT, KOOPA_SPEED));
+	wave6.SetWave(wave);
+	mEnemyWaves.push_back(wave6);
 
 	mCurrentWave = 0;
 }

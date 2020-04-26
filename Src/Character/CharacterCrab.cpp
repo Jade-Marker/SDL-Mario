@@ -23,6 +23,7 @@ CharacterCrab::CharacterCrab(SDL_Renderer* renderer, std::string imagePath, Vect
 	CharacterKoopa(renderer, imagePath, startPosition, map, startFacing, movementSpeed, initialJumpForce, gravity, jumpForceDecrement, collisionRadius,
 		frameDelay, noOfFrames, startingFrame, currentNumOfFrames), mEnemiesVector(enemies), mSpeedUp(false)
 {
+	mDeathSound->Load("SFX/Crab.ogg");
 }
 
 void CharacterCrab::Update(float deltaTime, SDL_Event e)
