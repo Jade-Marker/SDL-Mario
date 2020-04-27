@@ -23,7 +23,6 @@ class PowBlock;
 class GameScreenLevel1 : GameScreen
 {
 private:
-	Texture2D* mBackgroundTexture;
 	CharacterPlayable* mMarioCharacter;
 	CharacterPlayable* mLuigiCharacter;
 	LevelMap* mLevelMap;

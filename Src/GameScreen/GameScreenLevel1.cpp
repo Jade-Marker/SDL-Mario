@@ -4,9 +4,6 @@
 #include "Collisions.h"
 #include "PowBlock.h"
 
-//Todo
-//Add credits for sfx, music and graphics
-
 GameScreenLevel1::GameScreenLevel1(SDL_Renderer* renderer, GameScreenManager* manager) :
 	GameScreen(renderer), mLevelMap(NULL), mManager(manager)
 {
@@ -20,9 +17,6 @@ GameScreenLevel1::GameScreenLevel1(SDL_Renderer* renderer, GameScreenManager* ma
 
 GameScreenLevel1::~GameScreenLevel1()
 {
-	delete mBackgroundTexture;
-	mBackgroundTexture = NULL;
-
 	delete mMarioCharacter;
 	mMarioCharacter = NULL;
 
@@ -147,14 +141,6 @@ void GameScreenLevel1::HandleEnemyWave(float deltaTime)
 
 bool GameScreenLevel1::SetUpLevel()
 {
-	//Load the background texture
-	mBackgroundTexture = new Texture2D(mRenderer);
-	if (!mBackgroundTexture->LoadFromFile("Images/BackgroundMB.png"))
-	{
-		std::cout << "Failed to load background texture!" << std::endl;
-		return false;
-	}
-	
 	//Set up the player characters
 	mMarioCharacter = new CharacterPlayable(mRenderer, "Images/Mario.png", Vector2D(64, 330), SDLK_w, SDLK_d, SDLK_a, 
 		mLevelMap, MOVEMENTSPEED, &mEnemiesAndCoins, "Mario", MARIO_TEXT_POS, INITIAL_LIVES, LEVEL1_PLAYER_FRAME_DELAY, MARIO_IDLE_FRAME_COUNT, MARIO_FRAME_COUNT, MARIO_IDLE_START_FRAME,

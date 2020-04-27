@@ -1,0 +1,26 @@
+Stomp SFX: http://www.mariomayhem.com/downloads/sounds/Super_Mario_Land_sfx/stomp.wav
+Marioland Coin SFX: http://www.mariomayhem.com/downloads/sounds/Super_Mario_Land_sfx/coin.wav
+Marioland Jump SFX: http://www.mariomayhem.com/downloads/sounds/Super_Mario_Land_sfx/jump.wav
+Fly death SFX: http://www.mariomayhem.com/downloads/sounds/Super_Mario_Land_sfx/insertdie.wav
+Koopa explode SFX: http://www.mariomayhem.com/downloads/sounds/Super_Mario_Land_sfx/nokobomb.wav
+Marioland bkg music: https://downloads.khinsider.com/game-soundtracks/album/super-mario-land-gameboy-rip/01.%2520Birabuto%2520Kingdom.mp3
+
+Crab SFX: https://www.mariomayhem.com/downloads/sounds/mario_bros/smb_touch.wav
+Coin SFX: https://www.youtube.com/watch?v=fmZbgpqWqKE
+Jump SFX: https://www.youtube.com/watch?v=37-paiEz0mQ
+Shell SFX: https://www.youtube.com/watch?v=EGLpEOjotpI
+Mario bros bkg music: https://learn-eu-central-1-prod-fleet01-xythos.s3-eu-central-1.amazonaws.com/5d5fcf1f61b7d/1118221?response-content-disposition=inline%3B%20filename%2A%3DUTF-8%27%27Mario.mp3&response-content-type=audio%2Fmpeg&X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Date=20200427T011429Z&X-Amz-SignedHeaders=host&X-Amz-Expires=21600&X-Amz-Credential=AKIAZH6WM4PLYI3L4QWN%2F20200427%2Feu-central-1%2Fs3%2Faws4_request&X-Amz-Signature=b72c434686eecfd7c1c7980f4b8ac1ae540d5e7400373a98b98bce25599e4c83
+
+Crab sprite: https://learn-eu-central-1-prod-fleet01-xythos.s3-eu-central-1.amazonaws.com/5d5fcf1f61b7d/833679?response-content-disposition=inline%3B%20filename%2A%3DUTF-8%27%27NES%2520-%2520Mario%2520Bros%2520-%2520General%2520Sprites.png&response-content-type=image%2Fpng&X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Date=20200426T044409Z&X-Amz-SignedHeaders=host&X-Amz-Expires=21600&X-Amz-Credential=AKIAZH6WM4PLYI3L4QWN%2F20200426%2Feu-central-1%2Fs3%2Faws4_request&X-Amz-Signature=1219b8a6987b3d5a732e87b2ddb130d2e443ee0d27a512dff064e6d6e8b71fdc
+Coin sprite: https://learn-eu-central-1-prod-fleet01-xythos.s3-eu-central-1.amazonaws.com/5d5fcf1f61b7d/1087788?response-content-disposition=inline%3B%20filename%2A%3DUTF-8%27%27Coin.png&response-content-type=image%2Fpng&X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Date=20200427T012012Z&X-Amz-SignedHeaders=host&X-Amz-Expires=21600&X-Amz-Credential=AKIAZH6WM4PLYI3L4QWN%2F20200427%2Feu-central-1%2Fs3%2Faws4_request&X-Amz-Signature=f7c86119a5ca56c05e85df4a5ba504a798ce0f86d7a1ab66a2a77472ecb88c0c
+Koopa sprite: https://learn-eu-central-1-prod-fleet01-xythos.s3-eu-central-1.amazonaws.com/5d5fcf1f61b7d/833679?response-content-disposition=inline%3B%20filename%2A%3DUTF-8%27%27NES%2520-%2520Mario%2520Bros%2520-%2520General%2520Sprites.png&response-content-type=image%2Fpng&X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Date=20200427T012025Z&X-Amz-SignedHeaders=host&X-Amz-Expires=21600&X-Amz-Credential=AKIAZH6WM4PLYI3L4QWN%2F20200427%2Feu-central-1%2Fs3%2Faws4_request&X-Amz-Signature=ec5bb39fb3eea4adc8992c3ef537927fe785330672e19bba8befadc5486d6ce2
+Mario sprite: https://www.spriters-resource.com/resources/sheets/61/64512.png?updated=1460963555 and https://learn-eu-central-1-prod-fleet01-xythos.s3-eu-central-1.amazonaws.com/5d5fcf1f61b7d/833679?response-content-disposition=inline%3B%20filename%2A%3DUTF-8%27%27NES%2520-%2520Mario%2520Bros%2520-%2520General%2520Sprites.png&response-content-type=image%2Fpng&X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Date=20200427T012229Z&X-Amz-SignedHeaders=host&X-Amz-Expires=21600&X-Amz-Credential=AKIAZH6WM4PLYI3L4QWN%2F20200427%2Feu-central-1%2Fs3%2Faws4_request&X-Amz-Signature=0d67f57f97d3095e2a126614f5480093e265bcba233de2367c602921c05a9630
+Luigi sprite: same as mario
+Pow block sprite: https://learn-eu-central-1-prod-fleet01-xythos.s3-eu-central-1.amazonaws.com/5d5fcf1f61b7d/1087793?response-content-disposition=inline%3B%20filename%2A%3DUTF-8%27%27PowBlock.png&response-content-type=image%2Fpng&X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Date=20200427T012943Z&X-Amz-SignedHeaders=host&X-Amz-Expires=21599&X-Amz-Credential=AKIAZH6WM4PLYI3L4QWN%2F20200427%2Feu-central-1%2Fs3%2Faws4_request&X-Amz-Signature=023d031c9a2e0f67e5df24c0af6de5a2beff9f2cac8214c4883e797d015a7718
+Mario bros tileset: https://learn-eu-central-1-prod-fleet01-xythos.s3-eu-central-1.amazonaws.com/5d5fcf1f61b7d/833679?response-content-disposition=inline%3B%20filename%2A%3DUTF-8%27%27NES%2520-%2520Mario%2520Bros%2520-%2520General%2520Sprites.png&response-content-type=image%2Fpng&X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Date=20200427T012229Z&X-Amz-SignedHeaders=host&X-Amz-Expires=21600&X-Amz-Credential=AKIAZH6WM4PLYI3L4QWN%2F20200427%2Feu-central-1%2Fs3%2Faws4_request&X-Amz-Signature=0d67f57f97d3095e2a126614f5480093e265bcba233de2367c602921c05a9630
+
+Intro graphics mario bros: https://tcrf.net/File:Mariobrosarcade_title.png
+Intro graphics marioland: screenshot from bgb emulator
+
+Marioland sprites and tileset: ripped from Marioland
+Level 2: Ripped from Marioland
