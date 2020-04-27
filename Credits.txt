@@ -24,3 +24,6 @@ Intro graphics marioland: screenshot from bgb emulator
 
 Marioland sprites and tileset: ripped from Marioland
 Level 2: Ripped from Marioland
+
+Press Start 2P Font: https://www.fontspace.com/press-start-2p-font-f11591
+Tool used to create bitmap of font: http://www.codehead.co.uk/cbfg/
